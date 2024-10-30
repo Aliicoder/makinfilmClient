@@ -1,4 +1,5 @@
 import Pagination from '@/components/shared/Pagination'
+import { IoCaretBackOutline } from "react-icons/io5";
 import { Squircle } from 'corner-smoothing'
 import useVideosPagination from '@/hooks/useVideosPagination'
 import { useTranslation } from 'react-i18next'
@@ -13,13 +14,13 @@ function DashboardVideosPage() {
 
   const {videos, counter , handleLeft , handleRight} = useVideosPagination()
   return (
-    <div className='container mx-auto h-full mt-[10%] '>
+    <div className=' container mx-auto h-full mt-[10%] '>
           {
       playVideo &&
       <div className='absolute top-0 left-0 bg-black  z-50 w-lvw h-lvh '>
         <div className='relative grid place-items-center w-lvw h-lvh text-white'>
-          <IconButton onClick={()=>setPlayVideo(undefined)} className='absolute bottom-10' text='Back' direction={'left'}>
-            
+          <IconButton onClick={()=>setPlayVideo(undefined)} className='flex items-center c4 absolute top-10 left-10' text='Back' direction={'left'}>
+            <IoCaretBackOutline />
           </IconButton>
           <div className='flex flex-col'>
             <video controls autoPlay>
