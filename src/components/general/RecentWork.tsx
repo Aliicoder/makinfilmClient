@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useState } from "react"
+import { memo, useEffect, useState } from "react"
 import LinkButton from "../buttons/LinkButton"
 import { FiArrowUpRight } from "react-icons/fi"
 import { HiPlay } from "react-icons/hi2";
@@ -7,18 +7,14 @@ import { useFetchVideosMutation } from "@/store/Reducers/videoApiSlice";
 import { IVideo } from "@/utils/types/types";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
+import IconButton from "../buttons/IconButton";
+import { IoCaretBackOutline } from "react-icons/io5";
 
 const RecentWork = memo(function RecentWork() {
   const [fetchVideosMutation] = useFetchVideosMutation()
   const [t,{language}] = useTranslation()
+  const [playVideo,setPlayVideo] = useState<IVideo|undefined>()
   const [videos,setVideos] = useState<IVideo[]|undefined>()
-  const [,setPreviewVideo] = useState<IVideo|undefined>()
-  const handleOpenPreviewer = useCallback((id:string)=>{ console.log("id >>",id)
-    if( videos && videos?.length > 0){
-      const video = videos.find((video:any) => video._id === id)
-      setPreviewVideo(video)
-    }
-  },[])
   useEffect(() =>{
     const fetchVideos = async () =>{
        try{
@@ -32,15 +28,32 @@ const RecentWork = memo(function RecentWork() {
     fetchVideos()
    },[]);
   return (
-    <div className="container mx-auto">
+    <div className=" container mx-auto">
       <div className="relative flex justify-center">
         <h1 className="relative z-10 text-white c9 p-[6%] bg-black text-nowrap font-semibold md:c5 md:p-[2%]  ">{t("recentWork")} </h1>
         <div className="absolute z-0 top-1/2 bg-[#d4d4d420] blur-[0.5px] w-full h-[1px]"></div>
       </div>
+      {
+      playVideo &&
+      <div className='fixed top-0 left-0 bg-black  z-50 w-[100%] h-[100%] '>
+        <div className='relative grid place-items-center w-lvw h-lvh text-white'>
+          <IconButton onClick={()=>setPlayVideo(undefined)} className='flex items-center c4 absolute top-10 left-10' text='Back' direction={'left'}>
+            <IoCaretBackOutline />
+          </IconButton>
+          <div className='flex flex-col'>
+            <video controls autoPlay>
+              <source src={playVideo?.video.url} />
+            </video>
+            <h1 className='c5 p-[5%] font-semibold'>{playVideo.title[language as "en" | "ar"]}</h1>
+            <p className='c4 px-[5%]'>{playVideo.description[language as "en" | "ar"]}</p>
+          </div>
+        </div>
+      </div>
+    }
       <div className="grid grid-cols-2 mx-auto  my-[6%] md:grid-cols-4">
         {
           videos&&videos.map((video:any) =>(
-            <Squircle onClick={()=>handleOpenPreviewer(video._id)} key={video._id} cornerRadius={16} className="flex flex-col m-[6%] rounded-[16px] overflow-hidden">
+            <Squircle onClick={()=>setPlayVideo(video)} key={video._id} cornerRadius={16} className="flex flex-col m-[6%] rounded-[16px] overflow-hidden">
             <div>
               <img className="w-full aspect-square object-cover  scale-105 grayscale" loading="lazy" src={video.image.url} alt="" />
             </div>

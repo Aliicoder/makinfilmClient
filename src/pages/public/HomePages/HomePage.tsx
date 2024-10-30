@@ -8,7 +8,7 @@ const ContactUs = lazy(()=>import("@/components/shared/ContactUs"))
 function HomePage() { 
 
   return (
-     <div className="relative  overflow-x-hidden scroll-smooth">
+     <div className="relative overflow-x-hidden scroll-smooth">
       <Hero />
       <BehindTheSince />
       <RecentWork />

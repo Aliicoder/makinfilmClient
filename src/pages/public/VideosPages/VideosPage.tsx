@@ -17,7 +17,7 @@ function DashboardVideosPage() {
     <div className=' container mx-auto h-full mt-[10%] '>
           {
       playVideo &&
-      <div className='absolute top-0 left-0 bg-black  z-50 w-lvw h-lvh '>
+      <div className='fixed top-0 left-0 bg-black  z-50 w-lvw h-lvh '>
         <div className='relative grid place-items-center w-lvw h-lvh text-white'>
           <IconButton onClick={()=>setPlayVideo(undefined)} className='flex items-center c4 absolute top-10 left-10' text='Back' direction={'left'}>
             <IoCaretBackOutline />

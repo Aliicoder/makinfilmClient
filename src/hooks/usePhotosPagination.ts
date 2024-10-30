@@ -10,7 +10,7 @@ const usePhotosPagination = (searchValue:string = "") =>{
   const fetchPhotosAndInitCounter = async ({searchValue,curPage,perPage}:IQueryParams) =>{
     try{
       const response = await fetchPhotosMutation({searchValue,curPage,perPage}).unwrap();console.log("response >>",response)
-      //toast.success(response.message)
+      toast.success(response.message)
       setPhotos(response.photos)
       setCounter({...counter,pagesLen:response.pagesLen})
     }catch(error:any){ //console.log("error >>",error)
@@ -20,7 +20,7 @@ const usePhotosPagination = (searchValue:string = "") =>{
  const fetchPhotos = async ({searchValue,curPage,perPage}:IQueryParams) =>{
     try{
       const response = await fetchPhotosMutation({searchValue,curPage,perPage}).unwrap();console.log("response >>",response)
-      //toast.success(response.message)
+      toast.success(response.message)
       setPhotos(response.photos)
     }catch(error:any){ //console.log("error >>",error)
       toast.error(error.message ?? "try again later")
