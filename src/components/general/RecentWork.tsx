@@ -22,7 +22,7 @@ const RecentWork = memo(function RecentWork() {
   useEffect(() =>{
     const fetchVideos = async () =>{
        try{
-         const response = await fetchVideosMutation({}).unwrap();console.log("response >>",response)
+         const response = await fetchVideosMutation({searchValue:"", curPage:1,perPage:8}).unwrap();console.log("response >>",response)
          toast.success(response.message)
          setVideos(response.videos)
        }catch(error:any){ console.log("error >>",error)

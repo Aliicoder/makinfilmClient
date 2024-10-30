@@ -41,8 +41,8 @@ function DashboardVideosPage() {
             <video controls autoPlay>
               <source src={playVideo?.video.url} />
             </video>
-            <h1 className='c5 p-[5%] font-semibold'>{playVideo.title[language]}</h1>
-            <p className='c4 px-[5%]'>{playVideo.description[language]}</p>
+            <h1 className='c5 p-[5%] font-semibold'>{playVideo.title[language as "en" | "ar"]}</h1>
+            <p className='c4 px-[5%]'>{playVideo.description[language as "en" | "ar"]}</p>
           </div>
         </div>
       </div>

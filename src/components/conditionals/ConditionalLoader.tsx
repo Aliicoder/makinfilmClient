@@ -1,5 +1,6 @@
+import { CSSProperties } from "react"
 import { BarLoader } from "react-spinners"
-const overrideCss = {
+const overrideCss : CSSProperties = {
   position: "absolute",
   height: "2px",
   top: "0",

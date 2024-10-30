@@ -46,11 +46,8 @@ const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
 
 export const apiSlice = createApi({
   baseQuery: baseQueryWithReauth,
-  endpoints: builder => ({}),
+  endpoints: () => ({}),
 });
 
 
 
-// const api = axios.create({
-//   baseURL: 'http://localhost:3000/api/v1'
-// })
