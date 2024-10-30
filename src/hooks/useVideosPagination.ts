@@ -10,7 +10,7 @@ const useVideosPagination = (searchValue:string = "") =>{
   const fetchVideosAndInitCounter = async ({searchValue,curPage,perPage}:IQueryParams) =>{
     try{
       const response = await fetchVideosMutation({searchValue,curPage,perPage}).unwrap();console.log("response >>",response)
-      toast.success(response.message)
+     //toast.success(response.message)
       setVideos(response.videos)
       setCounter({...counter,pagesLen:response.pagesLen})
     }catch(error:any){ console.log("error >>",error)
@@ -20,7 +20,7 @@ const useVideosPagination = (searchValue:string = "") =>{
  const fetchVideos = async ({searchValue,curPage,perPage}:IQueryParams) =>{
     try{
       const response = await fetchVideosMutation({searchValue,curPage,perPage}).unwrap();console.log("response >>",response)
-      toast.success(response.message)
+      //toast.success(response.message)
       setVideos(response.videos)
     }catch(error:any){ //console.log("error >>",error)
       toast.error(error.message ?? "try again later")

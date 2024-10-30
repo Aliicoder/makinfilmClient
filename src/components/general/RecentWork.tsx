@@ -23,7 +23,7 @@ const RecentWork = memo(function RecentWork() {
     const fetchVideos = async () =>{
        try{
          const response = await fetchVideosMutation({searchValue:"", curPage:1,perPage:8}).unwrap();console.log("response >>",response)
-         toast.success(response.message)
+         //toast.success(response.message)
          setVideos(response.videos)
        }catch(error:any){ console.log("error >>",error)
          toast.error(error.message ?? "try again later")
