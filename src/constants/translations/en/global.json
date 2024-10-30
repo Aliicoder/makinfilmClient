@@ -1,0 +1,36 @@
+{
+  "welcomeBack":"Welcome",
+    "navigators":{
+    "home":"Home",
+    "about":"About us",
+    "videos":"Videos",
+    "photos":"Photos"
+  },
+  "MKN": {
+    "part1": "Makin",
+    "part2": "Film",
+    "part3": "Production"
+  },
+  "intro":"Turn your ideas into stunning visuals. Explore a world of creativity and excellence with a team committed to delivering nothing less than remarkable film production",
+  "contactButton":"Contact Now",
+  "ViewMoreButton":"View More",
+  "behindTheSince": "Behind the since",
+  "recentWork": "Recent Work",
+  "services": "Services",
+  "videosProduction":"Videos production",
+  "advertisement":"Advertisements",
+  "cinematography":"Cinematography",
+  "eventsCoverage":"Events coverage",
+  "videosProductionPara":"Makin Film Production is a leading film production company dedicated to creating high-quality visual storytelling. We specialize in cinematic content that captivates audiences with compelling narratives and stunning visuals. Our team of professionals brings creativity and expertise to every project, ensuring impactful results. Let us bring your vision to life on the screen.",
+  "advertisementPara":"Makin Film Production offers exceptional cinematography services, capturing every scene with artistic precision and visual excellence. Our cinematographers are skilled in crafting immersive frames that enhance storytelling and captivate viewers. We utilize state-of-the-art equipment and techniques to bring each shot to life. With Makin Film Production, your vision is transformed into stunning cinematic moments.",
+  "cinematographyPara":"Makin Film Production provides comprehensive advertisement services designed to elevate your brand's presence and engage your audience effectively. Our team creates innovative and visually stunning ad campaigns that resonate with viewers, delivering your message with impact. From concept development to final production, we ensure your advertisement stands out in a competitive market. Partner with us to transform your advertising vision into captivating content that drives results.",
+  "eventsCoveragePara":"Makin Film Production specializes in comprehensive event coverage services, capturing the essence of your special occasions with artistry and professionalism. Our experienced team uses high-quality equipment to document every moment, ensuring that your event is beautifully preserved for years to come. From corporate events to weddings, we tailor our approach to meet your unique needs, delivering captivating highlights and memorable narratives. Trust us to turn your events into stunning visual stories that you can cherish forever.",
+  "email":"Email",
+  "address":"Address",
+  "contactNumbers":"Contact Numbers",
+  "dashboard":"Dashboard",
+  "contactUs":"Contact us",
+  "riyadh":"riyadh,saudi arabia",
+  "aboutMakin":"Makin Film Production , is a company specialized in creative production advertisements for the government and private sectors , stablished in 2018 . We are a group of talented and experienced people who are enthusiastic about our passion to filmmaking. producers , directors, and cinematographers know how to approach each project of every scale and kind, from camera studio interviews, to high commercial shoots. We are easy dealing with our client’s expectations, no matter the time or budget, we are here to help you succeed.",
+  "partners":"Partners"
+}
