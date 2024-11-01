@@ -1,6 +1,7 @@
-import { Route, Routes } from "react-router-dom"
-import { lazy } from "react"
+import { Route, Routes, useLocation } from "react-router-dom"
+import { lazy, Suspense } from "react"
 import ProtectedRoutes from "./components/shared/ProtectedRoutes"
+import { AnimatePresence } from "framer-motion"
 
 const RootLayout = lazy(()=>import("@/components/layouts/RootLayout"))
 const MainLayout = lazy(() =>import("@/components/layouts/MainLayout"))
@@ -20,29 +21,32 @@ const EditVideoPage = lazy(()=>import("@/pages/private/VideosPages/EditVideoPage
 
 
 function App() {
+  const location = useLocation()
   return (
-    <Routes>
-      <Route element={<RootLayout/>}>
-      <Route path="/login" element={<LogInPage/>} />
-      <Route path="/dashboard" element={<DashboardLayout/>}>
-        <Route element={<ProtectedRoutes/>}>
-          <Route index element={<DashboardPage/>} />
-          <Route path="videos" element={<DashboardVideosPage/>} />
-          <Route path="videos/addVideo" element={<AddVideoPage/>} />
-          <Route path="videos/Edit/:videoId" element={<EditVideoPage/>} />
-          <Route path="photos" element={<DashboardPhotosPage/>} />
-          <Route path="photos/addPhoto" element={<AddPhotoPage/>} />
+   <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route element={<RootLayout/>}>
+        <Route path="/login" element={<LogInPage/>} />
+        <Route path="/dashboard" element={<DashboardLayout/>}>
+          <Route element={<ProtectedRoutes/>}>
+            <Route index element={<DashboardPage/>} />
+            <Route path="videos" element={<DashboardVideosPage/>} />
+            <Route path="videos/addVideo" element={<AddVideoPage/>} />
+            <Route path="videos/Edit/:videoId" element={<EditVideoPage/>} />
+            <Route path="photos" element={<DashboardPhotosPage/>} />
+            <Route path="photos/addPhoto" element={<AddPhotoPage/>} />
+          </Route>
         </Route>
-      </Route>
-        <Route path="/" element={<MainLayout/>} >  
-          <Route index element={<HomePage/>} />
-          <Route path="/aboutUs" element={<AboutUsPage/>} />
-          <Route path="/videos" element={<VideosPage/>} />
-          <Route path="/photos" element={<PhotosPage/>} />
+          <Route path="/" element={<MainLayout/>} >  
+            <Route index element={<Suspense> <HomePage/> </Suspense>} />
+            <Route path="/aboutUs" element={<Suspense ><AboutUsPage/></Suspense>} />
+            <Route path="/videos" element={<Suspense ><VideosPage/></Suspense>} />
+            <Route path="/photos" element={<Suspense ><PhotosPage/></Suspense>} />
+          </Route>
         </Route>
-      </Route>
-      <Route path="*" element={<NotFoundPage/>} />
-    </Routes>
+        <Route path="*" element={<NotFoundPage/>} />
+      </Routes>
+   </AnimatePresence>
   )
 }
 

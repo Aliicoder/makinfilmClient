@@ -1,6 +1,5 @@
 import { ICounter, IPhoto, IQueryParams } from "@/utils/types/types";
 import { useCallback, useEffect, useState } from "react"
-import toast from "react-hot-toast";
 import { useFetchPhotosMutation } from "@/store/Reducers/photosApiSlice";
 const perPage = 8 ;
 const usePhotosPagination = (searchValue:string = "") =>{
@@ -10,20 +9,20 @@ const usePhotosPagination = (searchValue:string = "") =>{
   const fetchPhotosAndInitCounter = async ({searchValue,curPage,perPage}:IQueryParams) =>{
     try{
       const response = await fetchPhotosMutation({searchValue,curPage,perPage}).unwrap();console.log("response >>",response)
-      toast.success(response.message)
+      //toast.success(response.message)
       setPhotos(response.photos)
       setCounter({...counter,pagesLen:response.pagesLen})
-    }catch(error:any){ //console.log("error >>",error)
-      toast.error(error.message ?? "try again later")
+    }catch(error:any){ console.log("error >>",error)
+      //toast.error(error.message ?? "try again later")
     }
  }
  const fetchPhotos = async ({searchValue,curPage,perPage}:IQueryParams) =>{
     try{
       const response = await fetchPhotosMutation({searchValue,curPage,perPage}).unwrap();console.log("response >>",response)
-      toast.success(response.message)
+      //toast.success(response.message)
       setPhotos(response.photos)
-    }catch(error:any){ //console.log("error >>",error)
-      toast.error(error.message ?? "try again later")
+    }catch(error:any){ console.log("error >>",error)
+      //toast.error(error.message ?? "try again later")
     }
   }
   const handleLeft = useCallback(() =>{

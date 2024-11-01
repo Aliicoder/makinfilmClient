@@ -19,7 +19,7 @@ function Pagination({counter,onLeftClick,onRightClick,className}:PaginationParam
             <li className="font-semibold">{counter.curPage}</li>
             {counter.curPage >= counter.pagesLen?<li></li>:<li className="scale-75 transition-all">{counter.next}</li> }
           </ul>
-          <div className="cursor-pointer flex items-center gap-1" onClick={onRightClick}>
+          <div className="cursor-pointer flex items-center gap-1 bg-white text-black p-[3%] rounded-md pl-[6%]" onClick={onRightClick}>
             <div className="pb-1 font-semibold hover:underline">Next</div><FaAngleRight />
           </div>
       </div>

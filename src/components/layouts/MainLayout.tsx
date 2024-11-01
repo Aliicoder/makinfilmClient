@@ -5,7 +5,8 @@ const Actions = lazy(()=>import("@/components/shared/Actions"))
 
 function MainLayout() { 
   return (
-    <div className="relative bg-black">
+    <div
+       className="relative bg-black">
       <Header />
       <Outlet />   
       <Actions />

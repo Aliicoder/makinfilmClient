@@ -2,10 +2,13 @@ import { Squircle} from "corner-smoothing"
 import { memo } from "react"
 import LinkButton from "../buttons/LinkButton"
 import { useTranslation } from "react-i18next"
+import { motion } from "framer-motion"
+
 const ContactUs = memo(function ContactUs() {
   const [t] = useTranslation()
   return (
-    <div id="contactUs" className="container mx-auto mt-[6%]">
+    <motion.div
+      id="contactUs" className="container mx-auto mt-[6%]">
       <div className="relative flex justify-center">
         <h1 className="relative z-10 text-white c9 p-[6%] bg-black text-nowrap font-semibold md:c5 md:p-[2%]">{t("contactUs")}</h1>
         <div className="absolute z-0 top-1/2 bg-[#d4d4d420] blur-[0.5px] w-full h-[1px]"></div>
@@ -54,7 +57,7 @@ const ContactUs = memo(function ContactUs() {
           </div>
         </div>
       </Squircle>
-    </div>
+    </motion.div>
   )
 })
 

@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react'
+import { lazy, StrictMode, Suspense } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import './utils/i18n.ts'
@@ -10,6 +10,7 @@ import Contexts from './Context/Contexts.tsx'
 const App = lazy(()=>import('./App.tsx'))
 
 createRoot(document.getElementById('root')!).render(
+    <StrictMode >
     <BrowserRouter>
     <Provider store={store}>
       <Contexts>
@@ -21,4 +22,5 @@ createRoot(document.getElementById('root')!).render(
       </Contexts>
       </Provider>
     </BrowserRouter>,
+    </StrictMode >
 )

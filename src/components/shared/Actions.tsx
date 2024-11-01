@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { RxCross1 } from "react-icons/rx";
 import LinkButton from "../buttons/LinkButton";
 import { useTranslation } from "react-i18next";
+import { motion } from "framer-motion";
 const Actions = memo(function Actions() {
   const [t] = useTranslation()
   const redirect = useNavigate()
@@ -46,11 +47,21 @@ const Actions = memo(function Actions() {
       </Squircle>
       {
         isOpenMenu&& 
-        <div className="fixed bg-black top-0 left-0 flex justify-end w-full h-full md:hidden rtl:flex-row-reverse">
+        <motion.div 
+          initial={{ opacity: 0 ,x:"100%" , animation:"linear"}}
+          animate={{opacity:1 , x:"0%" , animation:"linear" ,transition:{
+          }}}
+          exit={{opacity:0 , transition:{
+            duration: 1
+          }}}
+          className="fixed bg-black top-0 left-0 flex justify-end w-full h-full md:hidden rtl:flex-row-reverse">
           <div className="w-1/3 flex justify-center mb-[20%] items-center ">
             <RxCross1 onClick={()=>setIsOpenMenu(prev=>!prev)} className="text-white c9"/>
           </div>
-          <div className="w-2/3 h-full text-white flex flex-col justify-between bg-[#d4d4d420] ">
+          <motion.div
+            initial={{width:0}}
+            animate={{width:"100%"}}
+            className="w-2/3 h-full text-white flex flex-col justify-between bg-[#d4d4d420] ">
             <div />
             <div>
               <ul className="c9 text-[#ffffff42]">
@@ -76,8 +87,8 @@ const Actions = memo(function Actions() {
             <LinkButton  className="border border-white bg-transparent px-[4%] py-[4%] " text={`${t("dashboard")}`} direction={"right"} to={"/dashboard"}>
             </LinkButton>
           </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
         }
     </div>
   )

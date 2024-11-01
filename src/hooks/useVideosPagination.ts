@@ -1,6 +1,5 @@
 import { ICounter, IQueryParams, IVideo } from "@/utils/types/types";
 import { useCallback, useEffect, useState } from "react"
-import toast from "react-hot-toast";
 import { useFetchVideosMutation } from "@/store/Reducers/videoApiSlice";
 const perPage = 8 ;
 const useVideosPagination = (searchValue:string = "") =>{
@@ -14,7 +13,7 @@ const useVideosPagination = (searchValue:string = "") =>{
       setVideos(response.videos)
       setCounter({...counter,pagesLen:response.pagesLen})
     }catch(error:any){ console.log("error >>",error)
-      toast.error(error.message ?? "try again later")
+      //toast.error(error.message ?? "try again later")
     }
  }
  const fetchVideos = async ({searchValue,curPage,perPage}:IQueryParams) =>{
@@ -22,8 +21,8 @@ const useVideosPagination = (searchValue:string = "") =>{
       const response = await fetchVideosMutation({searchValue,curPage,perPage}).unwrap();console.log("response >>",response)
       //toast.success(response.message)
       setVideos(response.videos)
-    }catch(error:any){ //console.log("error >>",error)
-      toast.error(error.message ?? "try again later")
+    }catch(error:any){ console.log("error >>",error)
+      //toast.error(error.message ?? "try again later")
     }
   }
   const handleLeft = useCallback(() =>{

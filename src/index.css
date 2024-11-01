@@ -21,6 +21,8 @@
   }
   html{
     scroll-behavior: smooth;
+    background-color: black;
+
   }
   :root {
     --main-color: #f8fafc;

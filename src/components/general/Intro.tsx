@@ -4,11 +4,11 @@ import { memo } from "react"
 import { useTranslation } from "react-i18next"
 
 const Intro = memo(function Intro() {
-  const { t } = useTranslation()
+  const [t,{language}] = useTranslation()
   return (
     <>
         <div className="relative flex flex-col z-10 font-bold text-[40px] p-[6%] my-[5%] md:my-[2%] rtl:justify-end">
-          <h1>
+          <h1 className={`${language == "ar" ?"c9":""} `}>
           {t("MKN.part1")}
           </h1>
           <h1>
@@ -25,10 +25,10 @@ const Intro = memo(function Intro() {
         </div>
  
         <div className="relative z-10 flex gap-[4%] font-normal justify-center p-[10%] md:justify-start md:">
-          <a  className="flex-nowrap  hidden md:block bg-transparent text-white font-s px-[4%] py-[2%] c8 md:c3 md:py-[1%] md:px-[2%]" href={"#contactUs"} >
+          <a  className="flex-nowrap border-white hover:scale-95 transition-all border rounded-md  hidden md:block bg-transparent text-white font-s px-[4%] py-[2%] c8 md:c3 md:py-[1%] md:px-[2%]" href={"#contactUs"} >
             {t("contactButton")}
           </a>
-          <LinkButton className="flex-nowrap bg-white text-black font-s px-[4%] py-[2%] c8 md:c3 md:py-[1%] md:px-[2%]
+          <LinkButton className="flex-nowrap hover:scale-95 transition-all bg-white text-black font-s px-[4%] py-[2%] c8 md:c3 md:py-[1%] md:px-[2%]
            border ring-4 ring-[#fafafa42] outline-8 outline-[#fafafa28] outline " text={`${t("ViewMoreButton")}`} to={"aboutUs"} direction={"right"}>
             <FiArrowUpRight />
           </LinkButton>

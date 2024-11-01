@@ -8,7 +8,8 @@ export const productApiSlice = apiSlice.injectEndpoints({
           url:`/video?search=${credentials.searchValue}&&curPage=${credentials.curPage}&&perPage=${credentials.perPage}`,
           method:'get',
         }
-      }  
+      },
+      
     }),
     addVideo:builder.mutation({
       query:credentials=>{
