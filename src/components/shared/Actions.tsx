@@ -1,16 +1,16 @@
 import { memo, useCallback, useState } from "react"
 import { Squircle } from "corner-smoothing"
-import useBaseUrl from "@/hooks/useBaseUrl"
 import { useNavigate } from "react-router-dom"
 import { RxCross1 } from "react-icons/rx";
 import LinkButton from "../buttons/LinkButton";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
+import useSegment from "@/hooks/useSegment";
 const Actions = memo(function Actions() {
   const [t] = useTranslation()
   const redirect = useNavigate()
   const [isOpenMenu, setIsOpenMenu] = useState(false)
-  const { baseUrl } = useBaseUrl()
+  const  firstSegment = useSegment(1)
   const handleGoTo = useCallback((link:string)=>{
     redirect(link)
     setIsOpenMenu(false)
@@ -67,19 +67,19 @@ const Actions = memo(function Actions() {
               <ul className="c9 text-[#ffffff42]">
                 <li
                   onClick={()=>handleGoTo("")} 
-                  className={` ${baseUrl == "" ? "text-white font-bold" : ""}
+                  className={` ${firstSegment == "" ? "text-white font-bold" : ""}
                   text-end p-[6%] rtl:text-start`}>{t("navigators.home")}</li>
                 <li
                   onClick={()=>handleGoTo("aboutUs")}  
-                  className={` ${baseUrl == "aboutUs" ? "text-white font-bold" : ""}
+                  className={` ${firstSegment == "aboutUs" ? "text-white font-bold" : ""}
                   text-end p-[6%] rtl:text-start`}>{t("navigators.about")}</li>
                 <li 
                   onClick={()=>handleGoTo("videos")} 
-                  className={` ${baseUrl == "videos" ? "text-white font-bold" : ""}
+                  className={` ${firstSegment == "videos" ? "text-white font-bold" : ""}
                   text-end p-[6%] rtl:text-start`}>{t("navigators.videos")}</li>
                 <li
                   onClick={()=>handleGoTo("photos")}  
-                  className={` ${baseUrl == "photos" ? "text-white font-bold" : ""}
+                  className={` ${firstSegment == "photos" ? "text-white font-bold" : ""}
                   text-end p-[6%] rtl:text-start`}>{t("navigators.photos")}</li>
               </ul>
             </div>

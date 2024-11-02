@@ -18,6 +18,7 @@ const VideosPage = lazy(()=>import("@/pages/public/VideosPages/VideosPage"))
 const PhotosPage = lazy(()=>import("@/pages/public/PhotosPages/PhotosPage"))
 const NotFoundPage = lazy(()=>import("@/pages/public/NotFoundPage"))
 const EditVideoPage = lazy(()=>import("@/pages/private/VideosPages/EditVideoPage"))
+const EditPhotoPage = lazy(()=>import("./pages/private/PhotosPages/EditPhotoPage"))
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
             <Route path="videos/Edit/:videoId" element={<EditVideoPage/>} />
             <Route path="photos" element={<DashboardPhotosPage/>} />
             <Route path="photos/addPhoto" element={<AddPhotoPage/>} />
+            <Route path="photos/Edit/:photoId" element={<EditPhotoPage/>} />
           </Route>
         </Route>
           <Route path="/" element={<MainLayout/>} >  

@@ -12,7 +12,7 @@ interface AuthResponse {
 }
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'https://makinfilmserver.site/api/v1',
+  baseUrl: 'http://localhost:3000/api/v1',
   credentials: 'include',
   prepareHeaders: (headers, { getState }) => {
     const state = getState() as RootState;

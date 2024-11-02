@@ -20,9 +20,29 @@ export const productApiSlice = apiSlice.injectEndpoints({
         }
       }  
     }),
+    updatePhoto:builder.mutation({
+      query:credentials=>{
+        const formData = formidable(credentials.values);console.log(formData)
+        return{
+          url:`/photo/${credentials.photoId}`,
+          method:'PATCH',
+          body:formData
+        }
+      }  
+    }),
+    deletePhoto:builder.mutation({
+      query:credentials=>{
+        return{
+          url:`/photo/${credentials.photoId}`,
+          method:'DELETE',
+        }
+      }  
+    }),
   })
 })
 export const {
  useAddPhotoMutation,
- useFetchPhotosMutation
+ useFetchPhotosMutation,
+ useDeletePhotoMutation,
+ useUpdatePhotoMutation
 } = productApiSlice

@@ -11,8 +11,8 @@ function DashboardLayout() {
       isLoading ?
       <ConditionalLoader condition={isLoading} /> 
       :
-      <div className="container mx-auto flex h-lvh bg-black text-white overflow-hidden ">
-        <div className="grow overflow-x-scroll">
+      <div className="container mx-auto flex h-lvh bg-black text-white overflow-hidden rtl:flex-row-reverse ">
+        <div className="grow ">
           <DashboardHeader />
           <Outlet />
         </div>

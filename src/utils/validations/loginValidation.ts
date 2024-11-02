@@ -5,7 +5,7 @@ export default  z.object({
     message: "invalid email",
   }),
   password: z.string().min(8, {
-    message: "password is too short",
+    message: "password is too short should be at least 8 characters long",
   }),
   rememberMe: z.boolean().default(false).optional(),
 })

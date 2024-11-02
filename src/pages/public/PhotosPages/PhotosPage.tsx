@@ -5,7 +5,9 @@ import usePhotosPagination from '@/hooks/usePhotosPagination'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import { IPhoto } from '@/utils/types/types'
+import { useTranslation } from 'react-i18next'
 function PhotosPage() {
+  const [,{language}] = useTranslation()
   const [selectedImage,setSelectedImage] = useState<string|undefined>()
   const {photos , counter , handleLeft , handleRight} = usePhotosPagination()
   const scrollTopAndLeft = () =>{
@@ -28,13 +30,15 @@ function PhotosPage() {
     }}}
      className='container mt-[10%] mx-auto'>
     <div className=' h-full '>
-      <div className="columns-2 md:columns-4">
+      <div
+        style={{ direction: language == "ar" ? "ltr" : "ltr"}} 
+        className="columns-2 gap-0 md:columns-4 p-[3%]">
         {
           photos&&photos.map((photo:IPhoto,i) =>(
           <motion.div 
             onClick={()=>handleIsExpanded(photo.image.url)}
-            initial={{ scale : 0.5, opacity: 0 , y: 60}}
-            whileInView={{ scale : 1 , opacity: 1 , y: 0 , animation: "ease" ,transition: {
+            initial={{ opacity: 0 , y: 60}}
+            whileInView={{ opacity: 1 , y: 0 , animation: "ease" ,transition: {
               delay: i * 0.2
             }}}
             viewport={{ once: true}}

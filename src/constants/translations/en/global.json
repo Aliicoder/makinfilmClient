@@ -32,5 +32,25 @@
   "contactUs":"Contact us",
   "riyadh":"riyadh,saudi arabia",
   "aboutMakin":"Makin Film Production , is a company specialized in creative production advertisements for the government and private sectors , stablished in 2018 . We are a group of talented and experienced people who are enthusiastic about our passion to filmmaking. producers , directors, and cinematographers know how to approach each project of every scale and kind, from camera studio interviews, to high commercial shoots. We are easy dealing with our client’s expectations, no matter the time or budget, we are here to help you succeed.",
-  "partners":"Partners"
+  "partners":"Partners",
+  "search":"search",
+  "addPhotoForm":{
+    "image":"Image",
+    "arTitle":"Arabic title",
+    "enTitle":"English title",
+    "submit":"Submit"
+  },
+  "addVideoForm":{
+    "image":"Image",
+    "video":"Video",
+    "arTitle":"Arabic title",
+    "enTitle":"English title",
+    "arDescription":"Arabic description",
+    "enDescription":"English description",
+    "submit":"Submit"
+  },
+  "pagination":{
+    "next":"next",
+    "previous":"previous"
+  }
 }

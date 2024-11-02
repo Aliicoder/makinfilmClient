@@ -31,10 +31,19 @@ export const productApiSlice = apiSlice.injectEndpoints({
         }
       }  
     }),
+    deleteVideo:builder.mutation({
+      query:credentials=>{
+        return{
+          url:`/video/${credentials.videoId}`,
+          method:'DELETE',
+        }
+      }  
+    }),
   })
 })
 export const {
   useAddVideoMutation,
   useFetchVideosMutation,
-  useUpdateVideoMutation
+  useUpdateVideoMutation,
+  useDeleteVideoMutation
 } = productApiSlice

@@ -1,28 +1,41 @@
 import { motion } from 'framer-motion'
 import { Squircle } from "corner-smoothing"
 import { HiMenu } from "react-icons/hi";
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useBaseUrl from '@/hooks/useBaseUrl';
+import useBaseUrl from '@/hooks/useSegment';
 import { RxCross1 } from 'react-icons/rx';
 import IconButton from '../buttons/IconButton';
 import { LuLogOut } from "react-icons/lu";
-
+import { useTranslation } from 'react-i18next';
+import LinkButton from '../buttons/LinkButton';
+import { IoReturnDownBackOutline } from "react-icons/io5";
 function DashboardHeader() {
   const redirect = useNavigate()
-  const { baseUrl } = useBaseUrl()
+  const firstSegment = useBaseUrl(0)
   const [isOpenMenu,setIsOpenMenu] = useState(false)
+  const [,{language,changeLanguage}] = useTranslation()
   const handleGoTo = useCallback((link:string)=>{
     redirect(link)
     setIsOpenMenu(false)
   },[])
+  const handleChangeLanguage = useCallback((lang:string)=>{
+    changeLanguage(lang)
+  },[])
+  useEffect(() =>{
+    document.documentElement.setAttribute("dir",language == "en" ? "ltr" : "rtl")
+  },[language])
   const logOut = useCallback(()=>{
 
   },[])
   return (
     <motion.div
-      className="container flex justify-center md:px-[10%] items-center mx-auto md:sticky top-0 h-[100px] md:justify-between z-40  ">
-      <Squircle cornerRadius={16} className="grow flex justify-center items-center  
+      className="container flex justify-between  md:px-[10%] md:justify-between rtl:flex-row-reverse
+        items-center mx-auto md:sticky top-0 h-[100px]  z-40  ">
+      <LinkButton className='text-white font-bold' to={'/'} text='Home' direction={'left'}>
+       <IoReturnDownBackOutline />
+      </LinkButton>
+      <Squircle cornerRadius={16} className="grow md:grow-0 flex justify-center items-center  
         c4 -mt-4 pt-2 px-[10%] md:px-0 border-[linear-gradient(108deg, rgba(0,0,0,0.3309698879551821) 17%, rgba(102,102,102,1) 100%)]  ">
       <svg className="c5 md:c2" width="9em" height="9em" viewBox="0 0 107 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M54.0542 0.0551758H60.6014V11.1773H60.7092L66.8922 0.0551758H73.7652L67.0647 12.1323L73.4825 23.6963H66.2861L60.7092 13.8688H60.6014V23.6963H54.0542V0.0551758Z" fill="white"/>
@@ -33,7 +46,12 @@ function DashboardHeader() {
         <path d="M35.2226 3.71045L35.043 4.58701L35.2202 3.71045H35.2226Z" fill="white"/>
       </svg>
     </Squircle>
-    
+    <div className='flex c7   gap-[20%] text-[#ffffff42] md:c3 rtl:flex-row-reverse '>
+      <div onClick={()=>handleChangeLanguage("en")} 
+        className={`${language == "en" ? "text-white font-semibold":""} transition-all cursor-pointer hover:text-[#ffffff9a]`}>English</div> 
+      <div  onClick={()=>handleChangeLanguage("ar")} 
+        className={`${language == "ar" ? "text-white font-semibold":""} transition-all cursor-pointer hover:text-[#ffffff9a]`}>عربي</div>
+    </div>
     <div onClick={()=>setIsOpenMenu(prev=>!prev)} className='md:hidden px-[10%]'>
       <HiMenu className='c9' />
     </div>
@@ -46,19 +64,19 @@ function DashboardHeader() {
           <ul className="c9 text-[#ffffff42]">
             <li
               onClick={()=>handleGoTo("/")} 
-              className={` ${baseUrl == "" ? "text-white font-bold" : ""}
+              className={` ${firstSegment == "" ? "text-white font-bold" : ""}
               text-end p-[6%]`}>Home</li>
             <li
               onClick={()=>handleGoTo("/dashboard")} 
-              className={` ${baseUrl == "" ? "text-white font-bold" : ""}
+              className={` ${firstSegment == "" ? "text-white font-bold" : ""}
               text-end p-[6%]`}>Dashboard</li>
             <li 
               onClick={()=>handleGoTo("/dashboard/videos")} 
-              className={` ${baseUrl == "videos" ? "text-white font-bold" : ""}
+              className={` ${firstSegment == "videos" ? "text-white font-bold" : ""}
               text-end p-[6%]`}>Videos</li>
             <li
               onClick={()=>handleGoTo("/dashboard/photos")}  
-              className={` ${baseUrl == "photos" ? "text-white font-bold" : ""}
+              className={` ${firstSegment == "photos" ? "text-white font-bold" : ""}
               text-end p-[6%]`}>Photos</li>
           </ul>
         </div>

@@ -2,14 +2,14 @@
 import { memo, useCallback, useEffect, useState } from 'react';
 import { MdClose } from "react-icons/md";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import useBaseUrl from '@/hooks/useBaseUrl';
+import useSegment from '@/hooks/useSegment';
 import { useTranslation } from 'react-i18next';
 const Header = memo(function Header() {
   const location = useLocation()
   const [background,setBackground] = useState(false)
   const [t,{language,changeLanguage}] = useTranslation()
   const redirect = useNavigate()
-  const { baseUrl } = useBaseUrl()
+  const firstSegment = useSegment(1)
   const [isOpenMenu,setIsOpenMenu] = useState(false)
   const handleChangeLanguage = useCallback((lang:string)=>{
     changeLanguage(lang)
@@ -52,13 +52,13 @@ const Header = memo(function Header() {
         <div className='hidden md:flex justify-between ga  text-[#ffffff42] '>
           <ul className='flex gap-[10%] font-semibold text-nowrap'>
             <Link to={""} 
-              className={`${baseUrl == "" ? "text-white":""} cursor-pointer transition-all hover:text-[#ffffff9a]`} >{t("navigators.home")}</Link>
+              className={`${firstSegment == "" ? "text-white":""} cursor-pointer transition-all hover:text-[#ffffff9a]`} >{t("navigators.home")}</Link>
             <Link to={"aboutUs"} 
-              className={`${baseUrl == "aboutUs" ? "text-white":""} cursor-pointer transition-all hover:text-[#ffffff9a]`}>{t("navigators.about")}</Link>
+              className={`${firstSegment == "aboutUs" ? "text-white":""} cursor-pointer transition-all hover:text-[#ffffff9a]`}>{t("navigators.about")}</Link>
             <Link to={'videos'}  
-              className={`${baseUrl == "videos" ? "text-white":""} cursor-pointer transition-all hover:text-[#ffffff9a]`}>{t("navigators.videos")}</Link>
+              className={`${firstSegment == "videos" ? "text-white":""} cursor-pointer transition-all hover:text-[#ffffff9a]`}>{t("navigators.videos")}</Link>
             <Link to={"photos"} 
-              className={`${baseUrl == "photos" ? "text-white":""} cursor-pointer transition-all hover:text-[#ffffff9a]`}>{t("navigators.photos")}</Link>
+              className={`${firstSegment == "photos" ? "text-white":""} cursor-pointer transition-all hover:text-[#ffffff9a]`}>{t("navigators.photos")}</Link>
           </ul>
          
         </div>

@@ -17,8 +17,10 @@ import toast from "react-hot-toast"
 import addPhotoValidation from "@/utils/validations/addPhotoValidation"
 import { useAddPhotoMutation } from "@/store/Reducers/photosApiSlice"
 import ConditionalLoader from "@/components/conditionals/ConditionalLoader"
+import { useTranslation } from "react-i18next"
 
 const AddPhotoPage = memo(function AddVideoPage() {
+  const [t] = useTranslation()
   const [addPhotoMutation,{isLoading}] = useAddPhotoMutation()
   const form = useForm<z.infer<typeof addPhotoValidation>>({ resolver:zodResolver(addPhotoValidation)})
   const handleFileChange = (e:ChangeEvent<HTMLInputElement>,fieldChange :(value:File)=> void) =>{
@@ -32,8 +34,8 @@ const AddPhotoPage = memo(function AddVideoPage() {
       toast.success(response.message)
       form.reset({
         image: undefined,
-        arDescription:undefined,
-        enDescription:undefined
+        arTitle:undefined,
+        enTitle:undefined
       })
     } catch (error:any) { console.log(error)
       toast.error(error?.data?.message ?? "try again later")
@@ -60,7 +62,7 @@ const AddPhotoPage = memo(function AddVideoPage() {
                       placeholder="upload the video" />
                   </FormControl>
                   <FormDescription>
-                    Image.
+                    {t("addPhotoForm.image")}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -68,14 +70,14 @@ const AddPhotoPage = memo(function AddVideoPage() {
             />
              <FormField
               control={form.control}
-              name="arDescription"
+              name="arTitle"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input className="border-slate-700" placeholder="Arabic description" {...field} />
+                    <Input className="border-slate-700"  {...field} />
                   </FormControl>
                   <FormDescription>
-                    Description.
+                    {t("addPhotoForm.arTitle")}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -83,20 +85,20 @@ const AddPhotoPage = memo(function AddVideoPage() {
             />
             <FormField
               control={form.control}
-              name="enDescription"
+              name="enTitle"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input className="border-slate-700" placeholder="English description" {...field} />
+                    <Input className="border-slate-700"  {...field} />
                   </FormControl>
                   <FormDescription>
-                    Description.
+                    {t("addPhotoForm.enTitle")}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit">Submit</Button>
+            <Button type="submit">{t("addPhotoForm.submit")}</Button>
           </form>
         </Form>
       </Squircle>

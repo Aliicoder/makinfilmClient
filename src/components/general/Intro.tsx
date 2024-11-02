@@ -8,7 +8,7 @@ const Intro = memo(function Intro() {
   return (
     <>
         <div className="relative flex flex-col z-10 font-bold text-[40px] p-[6%] my-[5%] md:my-[2%] rtl:justify-end">
-          <h1 className={`${language == "ar" ?"c9":""} `}>
+          <h1 className={`${language == "ar" ?"  md:c9 ":""} `}>
           {t("MKN.part1")}
           </h1>
           <h1>

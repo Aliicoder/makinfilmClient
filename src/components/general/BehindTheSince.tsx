@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { IMAGES } from "@/constants/images";
 
 const BehindTheSince = memo(function BehindTheSince() {
-  const [t] = useTranslation();
+  const [t,{language}] = useTranslation();
   const [selectedImage, setSelectedImage] = useState<string|undefined>();
 
   const handleExpand = (image:string) => {
@@ -17,7 +17,7 @@ const BehindTheSince = memo(function BehindTheSince() {
   return (
     <motion.div
       initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1, animation: "ease" }}
+      whileInView={{ opacity: 1 }}
       className="container mx-auto c9 mt-[6%] p-[3%]"
     >
       <div className="relative flex justify-center">
@@ -26,17 +26,17 @@ const BehindTheSince = memo(function BehindTheSince() {
         </h1>
         <div className="absolute z-0 top-1/2 bg-[#d4d4d420] blur-[0.5px] w-full h-[1px]"></div>
       </div>
-      <div className="columns-2 gap-0 my-[6%] md:columns-4">
+      <div
+        style={{ direction: language == "ar" ? "ltr" : "ltr"}}
+        className="columns-2 gap-0 my-[6%] md:columns-4">
         {IMAGES.map((image, i) => (
           <motion.div
             key={i} 
-            initial={{ scale: 0.5, opacity: 0, y: 60 }}
+            initial={{  opacity: 0, y: 60 }}
             whileInView={{
-              scale: 1,
               opacity: 1,
               y: 0,
-              animation: "ease",
-              transition: { delay: i * 0.2 },
+              transition: {delay: 0.2 * i , ease: "easeInOut"},
             }}
             viewport={{ once: true }}
             className="p-[6%]"

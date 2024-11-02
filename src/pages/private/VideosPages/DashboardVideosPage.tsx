@@ -1,5 +1,4 @@
 import { useCallback, useState } from 'react'
-import DashboardPhotosHeader from '@/components/general/DashboardPhotosHeader'
 import useSetTimeout from '@/hooks/useSetTimeout'
 import Pagination from '@/components/shared/Pagination'
 import { Squircle } from 'corner-smoothing'
@@ -12,6 +11,8 @@ import { TbEditCircle } from "react-icons/tb";
 import useRedirect from '@/hooks/useRedirect'
 import { IVideo } from '@/utils/types/types'
 import { IoCloseSharp } from "react-icons/io5";
+import DashboardMediaHeader from '@/components/general/DashboardMediaHeader'
+import DeleteVideoPortal from '@/components/portals/DeleteVideoPortal'
 function DashboardVideosPage() {
   const [,{language}] = useTranslation()
   const redirect = useRedirect()
@@ -19,6 +20,8 @@ function DashboardVideosPage() {
   const [playVideo,setPlayVideo] = useState<IVideo|undefined>()
   const [searchValue,setSearchValue] = useState("")
   const {videos, counter , handleLeft , handleRight} = useVideosPagination(searchValue)
+  const [videoToBeDeleted,setVideoToBeDeleted] = useState<IVideo|undefined>() 
+  const [isDeleteVideo,setIsDeleteVideo] = useState<boolean>(false)
   const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
    timeouter(()=>{
@@ -29,9 +32,14 @@ function DashboardVideosPage() {
   const handlePlayVideo = (video:IVideo)=>{
     setPlayVideo(video);
   }
+  const handleDeleteVideo = (video:IVideo) =>{
+    setIsDeleteVideo(true)
+    setVideoToBeDeleted(video);
+  }
   return (
    <div className=''>
-    <DashboardPhotosHeader onSearchChange={handleSearchChange} />
+    <DeleteVideoPortal condition={isDeleteVideo} video={videoToBeDeleted} setIsDeleteVideo={setIsDeleteVideo} />
+    <DashboardMediaHeader url='video' onSearchChange={handleSearchChange} />
     {
       playVideo &&
       <div className='absolute top-0 left-0 bg-black  z-40 w-lvw h-lvh '>
@@ -48,12 +56,14 @@ function DashboardVideosPage() {
       </div>
     }
     <div className=' h-full '>
-      <div className="grid grid-cols-2 md:grid-cols-4">
+      <div
+        style={{ direction: language == "ar" ? "ltr" : "ltr"}}
+        className="grid grid-cols-2 md:grid-cols-4">
         {
-          videos&&videos.map((video:any) =>(
+          videos&&videos.map((video:IVideo) =>(
             <Squircle  key={video._id} cornerRadius={16} className="group relative flex flex-col m-[6%] rounded-[16px] overflow-hidden">
               <div>
-                <img className="w-full aspect-square object-cover  scale-105 grayscale" loading="lazy" src={video.image.url} alt="" />
+                <img className="w-full aspect-square object-cover  scale-105 grayscale group-hover:grayscale-0 transition-all" loading="lazy" src={video.image.url} alt="" />
               </div>
               <div className="bg-[#d4d4d420] p-[9%] pt-0">
                 <div className="relative z-40">
@@ -63,17 +73,17 @@ function DashboardVideosPage() {
                   <HiPlay className="opacity-0" />
                 </div>
                 <h1 className="text-white font-bold c6 md:c3 rtl:text-end ">
-                  {video.title[language]}
+                  {video.title[language as "ar" | "en"]}
                 </h1>
-                <p className=" text-white mt-[4%] line-clamp-2 c4 md:c2">
-                  {video.description[language]}
+                <p className=" text-white mt-[4%] line-clamp-2 c4 md:c2 rtl:text-end">
+                  {video.description[language as "ar" | "en"]}
                 </p>
               </div>
               <div className="absolute left-1/2 -translate-x-1/2 translate-y-full top-full flex items-center gap-2 z-40 transition-all group-hover:top-1/2">
                 <div  onClick={()=>handlePlayVideo(video)}  className="flex justify-center items-center bg-white rounded-full cp-6 cursor-pointer">
                   <RiEyeFill className='text-black' />
                 </div>
-                <div  className="flex justify-center items-center bg-white rounded-full cp-6 cursor-pointer">
+                <div onClick={()=>handleDeleteVideo(video)} className="flex justify-center items-center bg-white rounded-full cp-6 cursor-pointer">
                   <MdDelete className='text-black'/>
                 </div>
                 <div

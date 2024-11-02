@@ -14,39 +14,36 @@ import { Input } from "@/components/ui/input"
 import { ChangeEvent, memo } from "react"
 import {Squircle} from "corner-smoothing"
 import toast from "react-hot-toast"
+import { useUpdatePhotoMutation } from "@/store/Reducers/photosApiSlice"
 import ConditionalLoader from "@/components/conditionals/ConditionalLoader"
-import { useLocation } from "react-router-dom"
-import updateVideoValidation from "@/utils/validations/updateVideoValidation"
-import { useUpdateVideoMutation } from "@/store/Reducers/videoApiSlice"
+import updatePhotoValidation from "@/utils/validations/updatePhotoValidation"
 import { useTranslation } from "react-i18next"
-const EditVideoPage = memo(function AddVideoPage() {
-  const [t] = useTranslation()
+import { useLocation } from "react-router-dom"
+
+const AddPhotoPage = memo(function AddVideoPage() {
   const { state } = useLocation(); console.log(state)
-  const [updateVideoMutation,{isLoading}] = useUpdateVideoMutation()
-  const form = useForm<z.infer<typeof updateVideoValidation>>({ 
-    resolver:zodResolver(updateVideoValidation),
-    defaultValues: {
-      arTitle:state.title.ar,
-      enTitle:state.title.en,
-      arDescription:state.description.ar,
-      enDescription:state.description.en
-    },
+  const [t,{language}] = useTranslation()
+  const [updatePhotoMutation,{isLoading}] = useUpdatePhotoMutation()
+  const form = useForm<z.infer<typeof updatePhotoValidation>>({ 
+    resolver:zodResolver(updatePhotoValidation),
+    defaultValues:{
+      arTitle:state.title[language as "ar" | "en"],
+      enTitle:state.title[language as "ar" | "en"],
+    }
   })
   const handleFileChange = (e:ChangeEvent<HTMLInputElement>,fieldChange :(value:File)=> void) =>{
     if(e.target.files && e.target.files.length > 0){
       fieldChange(e.target.files[0])
     }
   }
-  async function onSubmit(values: z.infer<typeof updateVideoValidation>) {
+  async function onSubmit(values: z.infer<typeof updatePhotoValidation>) {
     try {
-      const response = await updateVideoMutation({values,videoId:state._id}).unwrap()
+      const response = await updatePhotoMutation(values).unwrap()
       toast.success(response.message)
       form.reset({
         image: undefined,
-        video: undefined,
-        arTitle: undefined,
-        arDescription:undefined,
-        enDescription:undefined
+        arTitle:undefined,
+        enTitle:undefined
       })
     } catch (error:any) { console.log(error)
       toast.error(error?.data?.message ?? "try again later")
@@ -73,34 +70,13 @@ const EditVideoPage = memo(function AddVideoPage() {
                       placeholder="upload the video" />
                   </FormControl>
                   <FormDescription>
-                    {t("addVideoForm.image")}
+                    {t("addPhotoForm.image")}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
-              <FormField
-              control={form.control}
-              name="video"
-              render={({ field }) => (
-                <FormItem className="">
-                  <FormControl>
-                    <Input 
-                      className="file:text-slate-500 file:bg-slate-800 file:rounded-md
-                        border-0 "
-                      onChange={(e)=>handleFileChange(e, field.onChange)}
-                      type="file" 
-                      accept="video/*"
-                      placeholder="upload the video" />
-                  </FormControl>
-                  <FormDescription>
-                  {t("addVideoForm.video")}
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
+             <FormField
               control={form.control}
               name="arTitle"
               render={({ field }) => (
@@ -109,13 +85,13 @@ const EditVideoPage = memo(function AddVideoPage() {
                     <Input className="border-slate-700"  {...field} />
                   </FormControl>
                   <FormDescription>
-                  {t("addVideoForm.arTitle")}
+                    {t("addPhotoForm.arTitle")}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
-             <FormField
+            <FormField
               control={form.control}
               name="enTitle"
               render={({ field }) => (
@@ -124,48 +100,17 @@ const EditVideoPage = memo(function AddVideoPage() {
                     <Input className="border-slate-700"  {...field} />
                   </FormControl>
                   <FormDescription>
-                    {t("addVideoForm.enTitle")}
+                    {t("addPhotoForm.enTitle")}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            
-             <FormField
-              control={form.control}
-              name="arDescription"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input className="border-slate-700"  {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    {t("addVideoForm.arDescription")}
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="enDescription"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input className="border-slate-700" {...field} />
-                  </FormControl>
-                  <FormDescription>
-                  {t("addVideoForm.arDescription")}
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type="submit">{t("addVideoForm.submit")}</Button>
+            <Button type="submit">{t("addPhotoForm.submit")}</Button>
           </form>
         </Form>
       </Squircle>
     </div>
   )
 })
-export default EditVideoPage
+export default AddPhotoPage

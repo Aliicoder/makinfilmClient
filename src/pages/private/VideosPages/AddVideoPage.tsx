@@ -17,6 +17,7 @@ import toast from "react-hot-toast"
 import addVideoValidation from "@/utils/validations/addVideoValidation"
 import { useAddVideoMutation } from "@/store/Reducers/videoApiSlice"
 import ConditionalLoader from "@/components/conditionals/ConditionalLoader"
+import { t } from "i18next"
 
 const AddVideoPage = memo(function AddVideoPage() {
   const [addVideoMutation,{isLoading}] = useAddVideoMutation()
@@ -43,118 +44,118 @@ const AddVideoPage = memo(function AddVideoPage() {
   }
   return (
     <div className="p-[6%]">
-      <ConditionalLoader condition={isLoading} />
-      <Squircle cornerRadius={16} className="rounded border-transparent bg-[#d4d4d420]">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 p-[6%] overflow-x-scroll">
+    <ConditionalLoader condition={isLoading} />
+    <Squircle cornerRadius={16} className="rounded border-transparent bg-[#d4d4d420]">
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 p-[6%] overflow-x-scroll">
+        <FormField
+            control={form.control}
+            name="image"
+            render={({ field }) => (
+              <FormItem className="">
+                <FormControl>
+                  <Input 
+                    className="file:text-slate-500 file:bg-slate-800 file:rounded-md 
+                     border-0"
+                    onChange={(e)=>handleFileChange(e, field.onChange)}
+                    type="file" 
+                    accept="image/*"
+                    placeholder="upload the video" />
+                </FormControl>
+                <FormDescription>
+                  {t("addVideoForm.image")}
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+            <FormField
+            control={form.control}
+            name="video"
+            render={({ field }) => (
+              <FormItem className="">
+                <FormControl>
+                  <Input 
+                    className="file:text-slate-500 file:bg-slate-800 file:rounded-md
+                      border-0 "
+                    onChange={(e)=>handleFileChange(e, field.onChange)}
+                    type="file" 
+                    accept="video/*"
+                    placeholder="upload the video" />
+                </FormControl>
+                <FormDescription>
+                {t("addVideoForm.video")}
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
-              control={form.control}
-              name="image"
-              render={({ field }) => (
-                <FormItem className="">
-                  <FormControl>
-                    <Input 
-                      className="file:text-slate-500 file:bg-slate-800 file:rounded-md 
-                       border-0"
-                      onChange={(e)=>handleFileChange(e, field.onChange)}
-                      type="file" 
-                      accept="image/*"
-                      placeholder="upload the video" />
-                  </FormControl>
-                  <FormDescription>
-                    Image.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-              <FormField
-              control={form.control}
-              name="video"
-              render={({ field }) => (
-                <FormItem className="">
-                  <FormControl>
-                    <Input 
-                      className="file:text-slate-500 file:bg-slate-800 file:rounded-md
-                        border-0 "
-                      onChange={(e)=>handleFileChange(e, field.onChange)}
-                      type="file" 
-                      accept="video/*"
-                      placeholder="upload the video" />
-                  </FormControl>
-                  <FormDescription>
-                    Video.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="arTitle"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input className="border-slate-700" placeholder="Arabic title" {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    Title.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-             <FormField
-              control={form.control}
-              name="enTitle"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input className="border-slate-700" placeholder="English title" {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    Title.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            
-             <FormField
-              control={form.control}
-              name="arDescription"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input className="border-slate-700" placeholder="Arabic description" {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    Description.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="enDescription"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input className="border-slate-700" placeholder="English description" {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    Description.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type="submit">Submit</Button>
-          </form>
-        </Form>
-      </Squircle>
-    </div>
+            control={form.control}
+            name="arTitle"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input className="border-slate-700"  {...field} />
+                </FormControl>
+                <FormDescription>
+                {t("addVideoForm.arTitle")}
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+           <FormField
+            control={form.control}
+            name="enTitle"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input className="border-slate-700"  {...field} />
+                </FormControl>
+                <FormDescription>
+                  {t("addVideoForm.enTitle")}
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          
+           <FormField
+            control={form.control}
+            name="arDescription"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input className="border-slate-700"  {...field} />
+                </FormControl>
+                <FormDescription>
+                  {t("addVideoForm.arDescription")}
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="enDescription"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input className="border-slate-700" {...field} />
+                </FormControl>
+                <FormDescription>
+                {t("addVideoForm.arDescription")}
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button type="submit">{t("addVideoForm.submit")}</Button>
+        </form>
+      </Form>
+    </Squircle>
+  </div>
   )
 })
 export default AddVideoPage

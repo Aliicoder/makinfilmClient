@@ -47,12 +47,14 @@ function DashboardVideosPage() {
           </div>
         </div>
       }
-      <div className="grid grid-cols-2 md:grid-cols-4">
+      <div
+        style={{ direction: language == "ar" ? "ltr" : "ltr"}} 
+        className="grid grid-cols-2 md:grid-cols-4">
         {
           videos&&videos.map((video:any,i) =>(
            <motion.div
-              initial={{ scale : 0.5, opacity: 0 , y: 60}}
-              whileInView={{ scale : 1 , opacity: 1 , y: 0 , animation: "ease" ,transition: {
+              initial={{ opacity: 0 , y: 60}}
+              whileInView={{  opacity: 1 , y: 0 , animation: "ease" ,transition: {
                 delay: i * 0.2
               }}}
               viewport={{ once: true}}

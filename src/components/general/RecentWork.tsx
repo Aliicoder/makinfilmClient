@@ -31,7 +31,7 @@ const RecentWork = memo(function RecentWork() {
     <motion.div
       initial={{opacity:0}} 
       whileInView={{opacity:1 , animation: "ease"}} 
-      className=" container mx-auto">
+      className=" container mx-auto p-[3%]">
       <div className="relative flex justify-center">
         <h1 className="relative z-10 text-white c9 p-[6%] bg-black text-nowrap font-semibold md:c5 md:p-[2%]  ">{t("recentWork")} </h1>
         <div className="absolute z-0 top-1/2 bg-[#d4d4d420] blur-[0.5px] w-full h-[1px]"></div>
@@ -54,12 +54,14 @@ const RecentWork = memo(function RecentWork() {
         </div>
       }
       <div
+        style={{ direction: language == "ar" ? "ltr" : "ltr"}}
         className="grid grid-cols-2 mx-auto  my-[6%] md:grid-cols-4">
         {
-          videos&&videos.map((video:any,i) =>(
+          videos&&videos.map((video:IVideo,i) =>(
            <motion.div
-              initial={{ scale : 0.5, opacity: 0 , y: 60}}
-              whileInView={{ scale : 1 , opacity: 1 , y: 0 , animation: "ease" ,transition: {
+              key={video._id}
+              initial={{  opacity: 0 , y: 60}}
+              whileInView={{ opacity: 1 , y: 0 , animation: "ease" ,transition: {
                 delay: i * 0.2
               }}}
               viewport={{ once: true}}
@@ -76,10 +78,10 @@ const RecentWork = memo(function RecentWork() {
                   <HiPlay className="opacity-0" />
                 </div>
                 <h1 className="text-white font-bold c6 md:c3 rtl:text-end ">
-                  {video.title[language]}
+                  {video.title[language as "ar" | "en"]}
                 </h1>
                 <p className=" text-white mt-[4%] line-clamp-2 c4 md:c2">
-                  {video.description[language]}
+                  {video.description[language as "ar" | "en"]}
                 </p>
               </div>
             </Squircle>
@@ -88,7 +90,7 @@ const RecentWork = memo(function RecentWork() {
         }
       </div>
       <div className="flex font-normal justify-end p-[6%] rtl:justify-start">
-        <LinkButton className="bg-white c8 text-black flex px-[4%] py-[2%] border md:px-[2%] md:py-[1%] md:c3 rtl:flex-row-reverse
+        <LinkButton className="bg-white c8 text-black flex px-[4%] py-[2%] border md:px-[2%] md:py-[1%] md:c3 
          ring-4 ring-[#fafafa42] outline-8 outline-[#fafafa28] outline " text={`${t("ViewMoreButton")}`} to={"/videos"} direction={"right"}>
           <FiArrowUpRight />
         </LinkButton>
