@@ -44,7 +44,7 @@ const RecentWork = memo(function RecentWork() {
               <IoCaretBackOutline />
             </IconButton>
             <div className='flex flex-col'>
-              <video controls autoPlay>
+              <video controls>
                 <source src={playVideo?.video.url} />
               </video>
               <h1 className='c5 p-[5%] font-semibold'>{playVideo.title[language as "en" | "ar"]}</h1>

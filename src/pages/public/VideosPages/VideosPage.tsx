@@ -44,7 +44,7 @@ const VideosPage = memo(function VideosPage() { useInitialRendersCounter("Videos
               <IoCaretBackOutline />
             </IconButton>
             <div className='flex flex-col'>
-              <video ref={refVideo} controls autoPlay>
+              <video ref={refVideo} controls >
                 <source src={playVideo?.video.url} />
               </video>
               <h1 className='c5 p-[5%] font-semibold'>{playVideo.title[language as "en" | "ar"]}</h1>
