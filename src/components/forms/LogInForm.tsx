@@ -30,7 +30,7 @@ const LogInForm = () => {
     setShowInput(false)
   }
   async function onSubmit(values: z.infer<typeof loginValidation>) {
-    try {
+    try { console.log("values >>",values)
       const response = await login(values).unwrap();console.log("response >>",response)
       dispatch(setCredentials(response.user))
       toast.success(response.message)

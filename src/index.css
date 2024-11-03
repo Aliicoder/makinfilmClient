@@ -3,6 +3,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* transition: [property] [duration] [timing-function] [delay]; */
+/* animation: [name] [duration] [timing-function] [delay] [iteration-count] [direction] [fill-mode]; */
 @layer base {
   *{
     box-sizing: border-box;
@@ -25,6 +27,7 @@
 
   }
   :root {
+    --wrapperOverflowWidth: 1000px;
     --main-color: #f8fafc;
     --secondary-color: #f8fafc;
     --text-color: rgba(0, 0, 0, 0.774);
@@ -150,32 +153,35 @@ background: radial-gradient(circle, rgba(217,217,217,1) 0%, rgba(0,0,0,0) 50%);
   .-aspect-triangle {
     aspect-ratio: 4/5;
   }
-  .cp-6{
-    padding: clamp(0.09375rem, 0.0938rem + 0.3vw, 0.375rem)
+  /* transition: [property] [duration] [timing-function] [delay]; */
+  /* animation: [name] [duration] [timing-function] [delay] [iteration-count] [direction] [fill-mode]; */
+
+  .partnersWrapper {
+    animation: scrollX 30s ease-in-out 0 infinite alternate ;
+    -webkit-animation: scrollX 30s ease-in-out 0 infinite alternate ;
+  } 
+    @keyframes scrollX {
+      from {
+        left: 0;
+      }to{
+        transform: translateX(-100%);
+        -webkit-transform: translateX(-100%);
+        -moz-transform: translateX(-100%);
+        -ms-transform: translateX(-100%);
+        -o-transform: translateX(-100%);
+      }
+    }
+
+  .my-masonry-grid {
+    display: -webkit-box; 
+    display: -ms-flexbox; 
+    display: flex;
   }
-  .cp-24{
-    padding: clamp(0.375rem, 0.375rem + 1.2vw, 1.5rem);
+ .wrapperr::-webkit-scrollbar {
+    display: none;
   }
-  .cp-x-2_5{
-    padding-left:clamp(0.125rem, 0.125rem + 0.2vw, 0.3125rem);
-    padding-right:clamp(0.125rem, 0.125rem + 0.2vw, 0.3125rem);
-  }
-  .cp-x-2_7{
-    padding-left:clamp(0.0625rem, 0.0625rem + 0.4vw, 0.4375rem);
-    padding-right:clamp(0.0625rem, 0.0625rem + 0.4vw, 0.4375rem);
-  }
-  .cp-y-1_4{
-    padding-top: clamp(0.0625rem, 0.0625rem + 0.2vw, 0.25rem) ;
-    padding-bottom: clamp(0.0625rem, 0.0625rem + 0.2vw, 0.25rem) ;
-  }
-  .cp-y-1_6{
-    padding-top:clamp(0.0625rem, 0.0625rem + 0.3333vw, 0.375rem);
-    padding-bottom:clamp(0.0625rem, 0.0625rem + 0.3333vw, 0.375rem);
-  }
-  .partnersWrapper::-webkit-scrollbar{
-    width: 0px ;
-    height: 0px;
-  }
+
+
 }
 @layer base {
   * {

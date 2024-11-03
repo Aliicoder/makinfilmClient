@@ -1,23 +1,12 @@
-import { memo, useCallback, useState } from "react"
+import { lazy, memo , useState } from "react"
 import { Squircle } from "corner-smoothing"
-import { useNavigate } from "react-router-dom"
-import { RxCross1 } from "react-icons/rx";
-import LinkButton from "../buttons/LinkButton";
-import { useTranslation } from "react-i18next";
-import { motion } from "framer-motion";
-import useSegment from "@/hooks/useSegment";
+const ConditionalMenu = lazy(()=>import("@/components/conditionals/ConditionalMenu"))
 const Actions = memo(function Actions() {
-  const [t] = useTranslation()
-  const redirect = useNavigate()
   const [isOpenMenu, setIsOpenMenu] = useState(false)
-  const  firstSegment = useSegment(1)
-  const handleGoTo = useCallback((link:string)=>{
-    redirect(link)
-    setIsOpenMenu(false)
-  },[])
+
   return (
     <div className="fixed bottom-0 z-40 w-full md:w-fit p-[4%] md:hidden l">
-      <Squircle cornerRadius={16} className="flex justify-between p-[8%] bg-[#d4d4d420] backdrop-blur rtl:flex-row-reverse ">    
+      <Squircle cornerRadius={16} className="flex justify-between p-[8%] bg-[#d4d4d420] backdrop-blur rtl:flex-row-reverse  text-white">    
         <a href="mailto:makinfilm@gmail.com">
           <svg className="text-[25px]" width="1em" height="1em" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M24 4.24219V15.6002C24.0001 16.5184 23.6492 17.402 23.0193 18.0701C22.3893 18.7382 21.5279 19.1403 20.6112 19.1942L20.4 19.2002H3.6C2.68175 19.2002 1.79818 18.8494 1.13009 18.2194C0.461992 17.5895 0.059871 16.7281 0.00600014 15.8114L0 15.6002V4.24219L11.334 11.7986L11.4732 11.8778C11.6372 11.9579 11.8174 11.9996 12 11.9996C12.1826 11.9996 12.3628 11.9579 12.5268 11.8778L12.666 11.7986L24 4.24219Z" fill="white"/>
@@ -40,56 +29,12 @@ const Actions = memo(function Actions() {
           </svg>
         </a>
         <div onClick={()=>setIsOpenMenu((prev)=>!prev)}>
-          <svg  className="text-[25px]" width="1em" height="1em" viewBox="0 0 19 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M1 0C0.734784 0 0.48043 0.105357 0.292893 0.292893C0.105357 0.48043 0 0.734784 0 1C0 1.26522 0.105357 1.51957 0.292893 1.70711C0.48043 1.89464 0.734784 2 1 2H18C18.2652 2 18.5196 1.89464 18.7071 1.70711C18.8946 1.51957 19 1.26522 19 1C19 0.734784 18.8946 0.48043 18.7071 0.292893C18.5196 0.105357 18.2652 0 18 0H1ZM0 7C0 6.73478 0.105357 6.48043 0.292893 6.29289C0.48043 6.10536 0.734784 6 1 6H18C18.2652 6 18.5196 6.10536 18.7071 6.29289C18.8946 6.48043 19 6.73478 19 7C19 7.26522 18.8946 7.51957 18.7071 7.70711C18.5196 7.89464 18.2652 8 18 8H1C0.734784 8 0.48043 7.89464 0.292893 7.70711C0.105357 7.51957 0 7.26522 0 7ZM0 13.001C0 12.7358 0.105357 12.4814 0.292893 12.2939C0.48043 12.1064 0.734784 12.001 1 12.001H18C18.2652 12.001 18.5196 12.1064 18.7071 12.2939C18.8946 12.4814 19 12.7358 19 13.001C19 13.2662 18.8946 13.5206 18.7071 13.7081C18.5196 13.8956 18.2652 14.001 18 14.001H1C0.734784 14.001 0.48043 13.8956 0.292893 13.7081C0.105357 13.5206 0 13.2662 0 13.001Z" fill="white"/>
+          <svg className="text-[25px]" width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 6C4 5.73478 4.10536 5.48043 4.29289 5.29289C4.48043 5.10536 4.73478 5 5 5H19C19.2652 5 19.5196 5.10536 19.7071 5.29289C19.8946 5.48043 20 5.73478 20 6C20 6.26522 19.8946 6.51957 19.7071 6.70711C19.5196 6.89464 19.2652 7 19 7H5C4.73478 7 4.48043 6.89464 4.29289 6.70711C4.10536 6.51957 4 6.26522 4 6ZM4 18C4 17.7348 4.10536 17.4804 4.29289 17.2929C4.48043 17.1054 4.73478 17 5 17H19C19.2652 17 19.5196 17.1054 19.7071 17.2929C19.8946 17.4804 20 17.7348 20 18C20 18.2652 19.8946 18.5196 19.7071 18.7071C19.5196 18.8946 19.2652 19 19 19H5C4.73478 19 4.48043 18.8946 4.29289 18.7071C4.10536 18.5196 4 18.2652 4 18ZM11 11C10.7348 11 10.4804 11.1054 10.2929 11.2929C10.1054 11.4804 10 11.7348 10 12C10 12.2652 10.1054 12.5196 10.2929 12.7071C10.4804 12.8946 10.7348 13 11 13H19C19.2652 13 19.5196 12.8946 19.7071 12.7071C19.8946 12.5196 20 12.2652 20 12C20 11.7348 19.8946 11.4804 19.7071 11.2929C19.5196 11.1054 19.2652 11 19 11H11Z" fill="white"/>
           </svg>
-      </div>
+        </div>
       </Squircle>
-      {
-        isOpenMenu&& 
-        <motion.div 
-          initial={{ opacity: 0 ,x:"100%" , animation:"linear"}}
-          animate={{opacity:1 , x:"0%" , animation:"linear" ,transition:{
-          }}}
-          exit={{opacity:0 , transition:{
-            duration: 1
-          }}}
-          className="fixed bg-black top-0 left-0 flex justify-end w-full h-full md:hidden rtl:flex-row-reverse">
-          <div className="w-1/3 flex justify-center mb-[20%] items-center ">
-            <RxCross1 onClick={()=>setIsOpenMenu(prev=>!prev)} className="text-white c9"/>
-          </div>
-          <motion.div
-            initial={{width:0}}
-            animate={{width:"100%"}}
-            className="w-2/3 h-full text-white flex flex-col justify-between bg-[#d4d4d420] ">
-            <div />
-            <div>
-              <ul className="c9 text-[#ffffff42]">
-                <li
-                  onClick={()=>handleGoTo("")} 
-                  className={` ${firstSegment == "" ? "text-white font-bold" : ""}
-                  text-end p-[6%] rtl:text-start`}>{t("navigators.home")}</li>
-                <li
-                  onClick={()=>handleGoTo("aboutUs")}  
-                  className={` ${firstSegment == "aboutUs" ? "text-white font-bold" : ""}
-                  text-end p-[6%] rtl:text-start`}>{t("navigators.about")}</li>
-                <li 
-                  onClick={()=>handleGoTo("videos")} 
-                  className={` ${firstSegment == "videos" ? "text-white font-bold" : ""}
-                  text-end p-[6%] rtl:text-start`}>{t("navigators.videos")}</li>
-                <li
-                  onClick={()=>handleGoTo("photos")}  
-                  className={` ${firstSegment == "photos" ? "text-white font-bold" : ""}
-                  text-end p-[6%] rtl:text-start`}>{t("navigators.photos")}</li>
-              </ul>
-            </div>
-            <div className="flex justify-center p-[6%] mb-[6%]">
-            <LinkButton  className="border border-white bg-transparent px-[4%] py-[4%] " text={`${t("dashboard")}`} direction={"right"} to={"/dashboard"}>
-            </LinkButton>
-          </div>
-          </motion.div>
-        </motion.div>
-        }
+      <ConditionalMenu condition={isOpenMenu} setIsOpenMenu={setIsOpenMenu} />
     </div>
   )
 })

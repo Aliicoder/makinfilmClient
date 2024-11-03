@@ -6,8 +6,8 @@ const Intro = lazy(() =>import('./Intro'))
 const Hero = memo(function Hero() {
   return (
     <motion.div  
-      initial={{ opacity: 0, scale:0.5 , animation : "ease-in-out" }}
-      animate={{ opacity:1 , scale:1 , transition : { type: 'tween'}}}
+      initial={{ opacity: 0, scale:0.5 }}
+      animate={{ opacity:1 , scale:1 }}
       viewport={{once:true}}
       className="container relative  text-white montserrat mx-auto overscroll-y-none  mt-[6%] md:mt-0">
       <div className='relative flex flex-col mx-[6%] h-full'>

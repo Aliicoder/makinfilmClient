@@ -3,13 +3,16 @@ import { Squircle } from 'corner-smoothing'
 import ContactUs from '@/components/shared/ContactUs'
 import usePhotosPagination from '@/hooks/usePhotosPagination'
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { IPhoto } from '@/utils/types/types'
 import { useTranslation } from 'react-i18next'
-function PhotosPage() {
+import Masonry from 'react-masonry-css'
+import useInitialRendersCounter from '@/hooks/useRendersCount'
+import PreviewImage from '@/components/shared/PreviewImage'
+function PhotosPage() { useInitialRendersCounter("PhotosPage")
   const [,{language}] = useTranslation()
   const [selectedImage,setSelectedImage] = useState<string|undefined>()
-  const {photos , counter , handleLeft , handleRight} = usePhotosPagination()
+  const { photos , counter , handleLeft , handleRight} = usePhotosPagination()
   const scrollTopAndLeft = () =>{
     window.scrollTo({top:0})
     handleLeft()
@@ -18,62 +21,54 @@ function PhotosPage() {
     window.scrollTo({top:0})
     handleRight()
   }
-  const handleIsExpanded = (image:string) =>{
+  const handleExpand = (image:string) =>{
     setSelectedImage(image ? image : undefined)
   }
+  useEffect(() =>{
+    console.log(photos)
+  },[photos])
   return (
    <motion.div 
     initial={{opacity:0}} 
-    whileInView={{opacity:1 , animation: "ease"}} 
+    whileInView={{opacity:1}} 
     exit={{opacity:0 , transition:{
-      duration: 0.2
+      duration: 0.2 , when:"beforeChildren"
     }}}
      className='container mt-[10%] mx-auto'>
+    <PreviewImage selectedImage={selectedImage} handleExpand={handleExpand} />
     <div className=' h-full '>
-      <div
-        style={{ direction: language == "ar" ? "ltr" : "ltr"}} 
-        className="columns-2 gap-0 md:columns-4 p-[3%]">
-        {
-          photos&&photos.map((photo:IPhoto,i) =>(
-          <motion.div 
-            onClick={()=>handleIsExpanded(photo.image.url)}
-            initial={{ opacity: 0 , y: 60}}
-            whileInView={{ opacity: 1 , y: 0 , animation: "ease" ,transition: {
-              delay: i * 0.2
-            }}}
-            viewport={{ once: true}}
-            className="p-[6%]">
+    <Masonry
+        breakpointCols={{
+          default:4,
+          640:2,
+          768:4
+        }}
+        className="my-masonry-grid"
+        style={{ direction: language == "ar" ? "ltr" : "ltr"}}>
+        {photos&&photos.map((photo:IPhoto, i) => (
+          <motion.div
+            key={photo._id} 
+            initial={{  opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1 , y: 0 , transition: 
+              { type : "tween" , delay: 0.5 * i , duration: 0.5 , ease: "easeInOut"},
+            }}
+            layout
+            viewport={{ once: true }}
+            className="p-[6%]"
+            onClick={() => handleExpand(photo.image.url)}
+          >
             <Squircle cornerRadius={16} className="border-transparent rounded-[16px]">
-              <img className="w-full" src={photo.image.url} loading="lazy" alt="" />
+              <img
+                className="w-full h-full object-cover grayscale hover:grayscale-0 cursor-pointer hover:scale-105 transition-all"
+                src={photo.image.url}
+                loading="lazy"
+                alt=""
+              />
             </Squircle>
           </motion.div>
-          ))
-        }
-      </div>
-      {selectedImage && (
-        <motion.div
-          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50"
-          onClick={()=>handleIsExpanded("")}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 ,animation:"ease" }}
-        >
-          <motion.img
-            initial={{ scale: 0.5 ,animation:"ease" }}
-            animate={{ scale: 1 , animation:"ease" ,transition:{
-              bounce: true
-            }}}
-            src={selectedImage}
-            alt=""
-            className="max-w-[90%] max-h-[90%] object-contain"
-          />
-        </motion.div>
-      )}
-     {
-      photos&&photos.length > 0 ?
-       <Pagination className='flex mt-[10%] justify-center text-white' onLeftClick={scrollTopAndLeft} onRightClick={scrollTopAndRight} counter={counter} />
-       :
-       <></>
-     }
+        ))}
+      </Masonry>
+      <Pagination className='flex mt-[10%] justify-center text-white' onLeftClick={scrollTopAndLeft} onRightClick={scrollTopAndRight} counter={counter} />
       <ContactUs />
     </div>
   </motion.div>

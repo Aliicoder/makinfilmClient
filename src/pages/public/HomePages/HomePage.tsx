@@ -1,12 +1,14 @@
+import useInitialRendersCounter from "@/hooks/useRendersCount"
 import { motion } from "framer-motion"
-import {lazy, Suspense} from "react"
+import {lazy, memo, Suspense} from "react"
 const Hero = lazy(()=>import("@/components/general/Hero"))
 const BehindTheSince = lazy(()=>import("@/components/general/BehindTheSince"))
 const RecentWork = lazy(()=>import("@/components/general/RecentWork"))
 const Services = lazy(()=>import("@/components/general/Services"))
 const ContactUs = lazy(()=>import("@/components/shared/ContactUs"))
 
-function HomePage() { 
+const HomePage = memo(function HomePage() {  useInitialRendersCounter("HomePage")
+
   return (
      <motion.div 
       initial={{opacity: 0}}
@@ -22,6 +24,6 @@ function HomePage() {
       <Suspense fallback={null}><ContactUs /></Suspense>
      </motion.div>
   )
-}
+})
 
 export default HomePage

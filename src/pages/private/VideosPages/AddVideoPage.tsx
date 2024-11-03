@@ -29,7 +29,7 @@ const AddVideoPage = memo(function AddVideoPage() {
   }
   async function onSubmit(values: z.infer<typeof addVideoValidation>) {
     try {
-      const response = await addVideoMutation(values).unwrap()
+      const response = await addVideoMutation(values).unwrap();console.log("response >>",response);
       toast.success(response.message)
       form.reset({
         image: undefined,

@@ -13,10 +13,11 @@ const Header = memo(function Header() {
   const [isOpenMenu,setIsOpenMenu] = useState(false)
   const handleChangeLanguage = useCallback((lang:string)=>{
     changeLanguage(lang)
+    localStorage.setItem('language', lang)
   },[])
-  const handleMenu = () =>{
+  const handleMenu = useCallback(() =>{
     setIsOpenMenu(!isOpenMenu)
-  }
+  },[isOpenMenu])
   useEffect(() =>{
     document.documentElement.setAttribute("dir",language == "en" ? "ltr" : "rtl")
   },[language])
@@ -29,7 +30,7 @@ const Header = memo(function Header() {
     }
     window.addEventListener("scroll",trackScrolling)
     return ()=> window.removeEventListener("scroll",trackScrolling)
-  },[]); useEffect(()=> console.log(background),[background])
+  },[]);
   useEffect(() =>{
     window.scrollTo({top:0,behavior:"instant"})
   },[location])

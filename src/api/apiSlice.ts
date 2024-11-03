@@ -12,11 +12,11 @@ interface AuthResponse {
 }
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'http://localhost:3000/api/v1',
+  baseUrl: 'https://makinfilmserver.site/api/v1',
   credentials: 'include',
   prepareHeaders: (headers, { getState }) => {
-    const state = getState() as RootState;
-    const { accessToken } = state.auth.user; //console.log("(apiSlice) access token to be sent >>",accessToken);
+    const state = getState() as RootState; console.log("(apiSlice) user to be sent >>",state.auth.user)
+    const { accessToken } = state.auth.user; console.log("(apiSlice) access token to be sent >>",accessToken);
     if (accessToken) {
       headers.set('authorization', `Bearer ${accessToken}`); //console.log('Authorization header set:', headers.get('authorization'));
     }

@@ -57,7 +57,7 @@ const RecentWork = memo(function RecentWork() {
         style={{ direction: language == "ar" ? "ltr" : "ltr"}}
         className="grid grid-cols-2 mx-auto  my-[6%] md:grid-cols-4">
         {
-          videos&&videos.map((video:IVideo,i) =>(
+          videos && videos.length > 0 && videos.map((video:IVideo,i) =>(
            <motion.div
               key={video._id}
               initial={{  opacity: 0 , y: 60}}
@@ -72,7 +72,8 @@ const RecentWork = memo(function RecentWork() {
               </div>
               <div className="bg-[#d4d4d420] p-[9%] pt-0">
                 <div className="relative z-40">
-                  <div className="absolute top-0 right-0  flex justify-center items-center p-[5%] bg-white rounded-full">
+                  <div className="absolute top-0 right-0  flex justify-center items-center rtl:right-auto
+                  p-[5%] bg-white rounded-full ">
                     <HiPlay className="c3 z m-[6%]]" />
                   </div>
                   <HiPlay className="opacity-0" />
@@ -80,7 +81,7 @@ const RecentWork = memo(function RecentWork() {
                 <h1 className="text-white font-bold c6 md:c3 rtl:text-end ">
                   {video.title[language as "ar" | "en"]}
                 </h1>
-                <p className=" text-white mt-[4%] line-clamp-2 c4 md:c2">
+                <p className=" text-white mt-[4%] line-clamp-2 c4 md:c2 rtl:text-end">
                   {video.description[language as "ar" | "en"]}
                 </p>
               </div>
@@ -90,7 +91,7 @@ const RecentWork = memo(function RecentWork() {
         }
       </div>
       <div className="flex font-normal justify-end p-[6%] rtl:justify-start">
-        <LinkButton className="bg-white c8 text-black flex px-[4%] py-[2%] border md:px-[2%] md:py-[1%] md:c3 
+        <LinkButton className="bg-white c8 text-black flex px-[4%] py-[2%] border md:px-[2%] md:py-[1%] md:c3 hover:scale-95 transition-all 
          ring-4 ring-[#fafafa42] outline-8 outline-[#fafafa28] outline " text={`${t("ViewMoreButton")}`} to={"/videos"} direction={"right"}>
           <FiArrowUpRight />
         </LinkButton>
