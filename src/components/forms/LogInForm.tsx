@@ -17,8 +17,12 @@ import { VscEye } from "react-icons/vsc";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import LinkButton from "../buttons/LinkButton";
+import { useTranslation } from "react-i18next";
+import { IoIosArrowRoundBack } from "react-icons/io";
 const LogInForm = () => {
   const [showInput,setShowInput] = useState(false)
+  const [t] = useTranslation()
   const {setLoading} = useLoader()
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -51,7 +55,10 @@ const LogInForm = () => {
     }
   }, [isLoggedIn]);
   return ( 
-   <div className="flex justify-center items-center  h-lvh bg-black  ">
+   <div className="relative flex justify-center items-center  h-lvh bg-black   ">
+      <LinkButton className="text-white absolute top-6 left-6 font-semibold gap-2" to={"/"} text={t("navigators.home")} direction={"left"}>
+       <IoIosArrowRoundBack />
+      </LinkButton>
       <Form {...form}>
       <motion.form
           initial={{
