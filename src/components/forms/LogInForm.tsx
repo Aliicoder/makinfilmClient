@@ -16,13 +16,14 @@ import { VscEyeClosed } from "react-icons/vsc";
 import { VscEye } from "react-icons/vsc";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import useRedirect from "@/hooks/useRedirect";
+import { useNavigate } from "react-router-dom";
 const LogInForm = () => {
   const [showInput,setShowInput] = useState(false)
   const {setLoading} = useLoader()
   const dispatch = useDispatch()
-  const redirect = useRedirect()
+  const navigate = useNavigate()
   const [login,{isLoading}] = useLoginMutation()
+  const [isLoggedIn,setIsLoggedIn] = useState(false)
   const form = useForm<z.infer<typeof loginValidation>>({resolver: zodResolver(loginValidation),});//console.log(user)
   const handleShowInput = (status:boolean) =>{
     if(status == true)
@@ -34,7 +35,7 @@ const LogInForm = () => {
       const response = await login(values).unwrap();console.log("response >>",response)
       dispatch(setCredentials(response.user))
       toast.success(response.message)
-      redirect("/dashboard/videos")
+      setIsLoggedIn(true)
     } catch (error:any) {
       console.log(error)
       toast.error(error?.data?.message ?? "try again later")
@@ -44,6 +45,11 @@ const LogInForm = () => {
     console.log("isLoading >>",isLoading);
     setLoading(isLoading)
   },[isLoading])
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/dashboard/videos",{replace:true});
+    }
+  }, [isLoggedIn]);
   return ( 
    <div className="flex justify-center items-center  h-lvh bg-black  ">
       <Form {...form}>
