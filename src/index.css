@@ -157,13 +157,17 @@ background: radial-gradient(circle, rgba(217,217,217,1) 0%, rgba(0,0,0,0) 50%);
   /* animation: [name] [duration] [timing-function] [delay] [iteration-count] [direction] [fill-mode]; */
 
   .partnersWrapper {
-    animation: scrollX 30s ease-in-out 0 infinite alternate ;
-    -webkit-animation: scrollX 30s ease-in-out 0 infinite alternate ;
-  } 
+    animation: scrollX 20s ease-in-out  infinite  ;
+    -webkit-animation: scrollX 20s ease-in-out  infinite  ;
+} 
     @keyframes scrollX {
       from {
-        left: 0;
-      }to{
+        transform: translateX(0%);
+        -webkit-transform: translateX(0%);
+        -moz-transform: translateX(0%);
+        -ms-transform: translateX(0%);
+        -o-transform: translateX(0%);
+}to{
         transform: translateX(-100%);
         -webkit-transform: translateX(-100%);
         -moz-transform: translateX(-100%);

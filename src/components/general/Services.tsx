@@ -1,8 +1,10 @@
-import { SERVICES } from "@/constants/services"
+import useServices from "@/hooks/useServices";
 import { motion } from "framer-motion"
 import { t } from "i18next"
+import { memo } from "react";
 import { v4 as uuid4 } from 'uuid';
-const Services = function Services() {
+const Services = memo(function Services() {
+  const SERVICES  = useServices()
   return (
     <div  
       className="container mx-auto">
@@ -31,6 +33,6 @@ const Services = function Services() {
       </motion.div>  
     </div>
   )
-}
+})
 
 export default Services

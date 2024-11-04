@@ -6,7 +6,7 @@ import Tawuniya from '../customIcons/Tawuniya'
 function PartnersCarousel() {
 
   return (
-    <div  className="relative flex  overflow-x-auto   pointer-events-none">
+    <div  className="relative flex wrapperr  overflow-x-auto   pointer-events-none">
       <div  className='relative partnersWrapper flex w-full h-full'>
         <div className=" basis-1/4  p-[5%] shrink-0  flex justify-center items-center">
          <GEAIcon/>

@@ -40,11 +40,13 @@ const RecentWork = memo(function RecentWork() {
         playVideo &&
         <div className='fixed top-0 left-0 bg-black  z-50 w-[100%] h-[100%] '>
           <div className='relative grid place-items-center w-lvw h-lvh text-white'>
-            <IconButton onClick={()=>setPlayVideo(undefined)} className='flex items-center c4 absolute top-10 left-10' text='Back' direction={'left'}>
+            <IconButton onClick={()=>setPlayVideo(undefined)} className='flex items-center c4 absolute top-10 left-10' 
+              text={t("back")}  direction={`${language == "en" ? "left":"right"}`}>
               <IoCaretBackOutline />
             </IconButton>
             <div className='flex flex-col'>
-              <video controls>
+              <video controls autoPlay playsInline controlsList="nodownload" preload="metadata" >
+                <source src={playVideo?.video.url} type="preload" />
                 <source src={playVideo?.video.url} />
               </video>
               <h1 className='c5 p-[5%] font-semibold'>{playVideo.title[language as "en" | "ar"]}</h1>
@@ -57,7 +59,8 @@ const RecentWork = memo(function RecentWork() {
         style={{ direction: language == "ar" ? "ltr" : "ltr"}}
         className="grid grid-cols-2 mx-auto  my-[6%] md:grid-cols-4">
         {
-          videos && videos.length > 0 && videos.map((video:IVideo,i) =>(
+          videos && videos.length > 0 ? 
+          videos.map((video:IVideo,i) =>(
            <motion.div
               key={video._id}
               initial={{  opacity: 0 , y: 60}}
@@ -88,7 +91,30 @@ const RecentWork = memo(function RecentWork() {
             </Squircle>
            </motion.div>
           ))
-        }
+          :
+          <div>
+            <Squircle cornerRadius={16} className="flex flex-col m-[6%] rounded-[16px] overflow-hidden animate-pulse">
+              <div>
+                <img className="w-full aspect-square object-cover" loading="lazy" src={"placeholder/placeholder1.jpg"} alt="" />
+              </div>
+              <div className="bg-[#d4d4d420] p-[9%] pt-0">
+                <div className="relative z-40 opacity-0">
+                  <div className="absolute top-0 right-0  flex justify-center items-center rtl:right-auto
+                  p-[5%] bg-white rounded-full">
+                    <HiPlay className="c3 z m-[6%]]" />
+                  </div>
+                  <HiPlay className="opacity-0" />
+                </div>
+                <h1 className="text-white font-bold c6 md:c3 rtl:text-end opacity-0">
+                  loading...
+                </h1>
+                <p className=" text-white mt-[4%] line-clamp-2 c4 md:c2 rtl:text-end opacity-0">
+                  loading...
+                </p>
+              </div>
+              </Squircle>
+          </div>
+         }
       </div>
       <div className="flex font-normal justify-end p-[6%] rtl:justify-start">
         <LinkButton className="bg-white c8 text-black flex px-[4%] py-[2%] border md:px-[2%] md:py-[1%] md:c3 hover:scale-95 transition-all 

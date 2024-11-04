@@ -52,5 +52,6 @@
   "pagination":{
     "next":"التالي",
     "previous":"السابق"
-  }
+  },
+  "back":"أغلق"
 }

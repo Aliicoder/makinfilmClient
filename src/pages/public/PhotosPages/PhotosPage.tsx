@@ -45,7 +45,8 @@ function PhotosPage() { useInitialRendersCounter("PhotosPage")
         }}
         className="my-masonry-grid"
         style={{ direction: language == "ar" ? "ltr" : "ltr"}}>
-        {photos&&photos.map((photo:IPhoto, i) => (
+        {photos&&photos.length > 0 ?
+          photos.map((photo:IPhoto, i) => (
           <motion.div
             key={photo._id} 
             initial={{  opacity: 0, y: 60 }}
@@ -66,7 +67,21 @@ function PhotosPage() { useInitialRendersCounter("PhotosPage")
               />
             </Squircle>
           </motion.div>
-        ))}
+        ))
+        :
+        <div
+            className="p-[6%]"
+          >
+            <Squircle cornerRadius={16} className="border-transparent rounded-[16px] animate-pulse">
+              <img
+                className="w-full h-full object-cover"
+                src={"placeholder/placeholder1.jpg"}
+                loading="lazy"
+                alt=""
+              />
+            </Squircle>
+          </div>
+      }
       </Masonry>
       <Pagination className='flex mt-[10%] justify-center text-white' onLeftClick={scrollTopAndLeft} onRightClick={scrollTopAndRight} counter={counter} />
       <ContactUs />

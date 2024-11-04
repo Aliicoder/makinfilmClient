@@ -52,5 +52,6 @@
   "pagination":{
     "next":"next",
     "previous":"previous"
-  }
+  },
+  "back":"Back"
 }
