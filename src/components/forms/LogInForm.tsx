@@ -66,7 +66,7 @@ const LogInForm = () => {
             <FormItem >
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="Enter your email address" {...field} />
+                <Input autoFocus={false}  placeholder="Enter your email address" {...field} />
               </FormControl>
 
               <FormMessage />
@@ -87,7 +87,7 @@ const LogInForm = () => {
                     :
                     <VscEyeClosed onClick={()=>handleShowInput(true)} className="absolute top-1/2 right-2 -translate-x-1/2 -translate-y-1/2" />
                   }
-                  <Input type={showInput ? "text" : "password"} placeholder="Enter your password"  {...field} />
+                  <Input autoFocus={false} type={showInput ? "text" : "password"} placeholder="Enter your password"  {...field} />
                 </div>
               </FormControl>
               <FormDescription>
