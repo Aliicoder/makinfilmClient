@@ -4,7 +4,6 @@ import { z } from "zod"
 import { FaGoogle } from "react-icons/fa";
 import {Form,FormControl,FormField,FormItem,FormLabel,FormMessage,FormDescription} from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { useNavigate } from "react-router-dom"
 import loginValidation from "@/utils/validations/loginValidation";
 import toast from "react-hot-toast";
 import { useLoginMutation } from "@/store/Reducers/authApiSlice";
@@ -17,11 +16,12 @@ import { VscEyeClosed } from "react-icons/vsc";
 import { VscEye } from "react-icons/vsc";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import useRedirect from "@/hooks/useRedirect";
 const LogInForm = () => {
   const [showInput,setShowInput] = useState(false)
   const {setLoading} = useLoader()
-  const navigate = useNavigate()
   const dispatch = useDispatch()
+  const redirect = useRedirect()
   const [login,{isLoading}] = useLoginMutation()
   const form = useForm<z.infer<typeof loginValidation>>({resolver: zodResolver(loginValidation),});//console.log(user)
   const handleShowInput = (status:boolean) =>{
@@ -34,7 +34,7 @@ const LogInForm = () => {
       const response = await login(values).unwrap();console.log("response >>",response)
       dispatch(setCredentials(response.user))
       toast.success(response.message)
-      navigate("/dashboard")
+      redirect("/dashboard/videos")
     } catch (error:any) {
       console.log(error)
       toast.error(error?.data?.message ?? "try again later")

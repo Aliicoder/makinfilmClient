@@ -37,7 +37,7 @@ function DashboardPhotosPage() {
     <div className=' h-full '>
       <div 
         style={{ direction: language == "ar" ? "ltr" : "ltr"}}
-        className="columns-2 md:columns-4 ltr:columns-">
+        className="columns-2 gap-0 md:columns-4 ltr:columns-">
         {
           photos&&photos.map((photo:IPhoto) =>(
             <div onClick={()=>handleDeletePhoto(photo)} key={photo._id} className="group relative p-[6%] overflow-hidden">

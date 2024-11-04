@@ -1,6 +1,4 @@
-
 import { memo, useCallback, useEffect, useState } from 'react';
-import { MdClose } from "react-icons/md";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useSegment from '@/hooks/useSegment';
 import { useTranslation } from 'react-i18next';
@@ -10,14 +8,10 @@ const Header = memo(function Header() {
   const [t,{language,changeLanguage}] = useTranslation()
   const redirect = useNavigate()
   const firstSegment = useSegment(1)
-  const [isOpenMenu,setIsOpenMenu] = useState(false)
   const handleChangeLanguage = useCallback((lang:string)=>{
     changeLanguage(lang)
     localStorage.setItem('language', lang)
   },[])
-  const handleMenu = useCallback(() =>{
-    setIsOpenMenu(!isOpenMenu)
-  },[isOpenMenu])
   useEffect(() =>{
     document.documentElement.setAttribute("dir",language == "en" ? "ltr" : "rtl")
   },[language])
@@ -37,7 +31,7 @@ const Header = memo(function Header() {
   return (
    <div className={`${background ?"md:bg-[#d4d4d420] md:backdrop-blur":""} transition-all md:sticky md:top-0 z-40  `}>
       <div
-        className={`container mx-auto   h-[100px] flex justify-center flex-col items-center 
+        className={`container mx-auto  flex justify-center flex-col items-center 
            lg:flex-row md:justify-between px-[10%] `}>
         <div onClick={()=>redirect("/")} 
            className=" c4 -mt-4 pt-2 cursor-pointer flex justify-center items-center   border-[linear-gradient(108deg, rgba(0,0,0,0.3309698879551821) 17%, rgba(102,102,102,1) 100%)]  ">
@@ -69,22 +63,6 @@ const Header = memo(function Header() {
           <div  onClick={()=>handleChangeLanguage("ar")} 
             className={`${language == "ar" ? "text-white font-semibold":""} transition-all cursor-pointer hover:text-[#ffffff9a]`}>عربي</div>
         </div>
-        {
-          isOpenMenu&& 
-          <div className='flex justify-end h-[100vh] w-[100vw] top-0 right-0 bg-[#00000034] '>
-            <div className='flex flex-col w-2/3 h-full bg-white'>
-              <div className='flex justify-end basis-4/12' >
-                <MdClose onClick={handleMenu} className='m-[10%] c9 scale-150' />
-              </div>
-              <div className='basis-4/12'>
-  
-              </div>
-              <div className='basis-4/12'>
-  
-              </div>
-            </div>
-          </div>
-        }
       </div>
    </div>
   )
