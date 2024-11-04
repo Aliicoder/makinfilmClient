@@ -46,8 +46,8 @@ const RecentWork = memo(function RecentWork() {
             </IconButton>
             <div className='flex flex-col'>
               <video controls autoPlay playsInline controlsList="nodownload" preload="metadata" >
-                <source src={playVideo?.video.url} type="preload" />
-                <source src={playVideo?.video.url} />
+                <source src={playVideo?.video.url} type="video/mp4" />
+                <source src={playVideo?.video.url} type="video/webm" />
               </video>
               <h1 className='c5 p-[5%] font-semibold'>{playVideo.title[language as "en" | "ar"]}</h1>
               <p className='c4 px-[5%]'>{playVideo.description[language as "en" | "ar"]}</p>
