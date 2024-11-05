@@ -5,15 +5,30 @@ import { memo, SetStateAction, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useSegment from '@/hooks/useSegment';
 import IconButton from '../buttons/IconButton';
+import { useDispatch } from 'react-redux';
+import { logOut } from '@/store/Reducers/authReducer';
+import toast from 'react-hot-toast';
+import { useLogOutMutation } from '@/store/Reducers/authApiSlice';
 interface ConditionalDashboardMenu {
   condition : boolean
   setIsOpenMenu: React.Dispatch<SetStateAction<boolean>>
 }
 const ConditionalDashboardMenu = memo(function ConditionalMenu({condition,setIsOpenMenu}:ConditionalDashboardMenu) {
+  const dispatch = useDispatch()
+  const [logOutMutation] = useLogOutMutation()
   const [t,{language}] = useTranslation()
   const redirect = useNavigate()
   const  firstSegment = useSegment(2)
-  const handleLogOut = () =>{}
+  const handleLogOut = async () =>{
+    try{
+      console.log("dsdf")
+      const response = await logOutMutation({}).unwrap();
+      toast.success(response.message)
+      dispatch(logOut())
+    }catch(error:any){ console.log("error >>",error)
+      toast.error(error?.data?.message)
+    }
+  }
   const handleGoToAndClose = useCallback((link:string)=>{
     redirect(link)
     setIsOpenMenu(false)
@@ -52,7 +67,7 @@ const ConditionalDashboardMenu = memo(function ConditionalMenu({condition,setIsO
               text-end p-[6%] `}>{t("navigators.photos")}</li>
           </ul>
           <div className="flex justify-center p-[6%] mb-[6%]">
-          <IconButton onClick={()=>handleLogOut}  className="border text-nowrap border-white bg-transparent px-[4%] py-[4%] " text={`log out`} direction={"right"}>
+          <IconButton onClick={handleLogOut}  className="border text-nowrap border-white bg-transparent px-[4%] py-[4%] " text={`log out`} direction={"right"}>
           </IconButton>
         </div>
         </motion.div>

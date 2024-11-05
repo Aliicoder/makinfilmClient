@@ -3,7 +3,7 @@ import { lazy, Suspense } from "react"
 import ProtectedRoutes from "./components/shared/ProtectedRoutes"
 import { AnimatePresence } from "framer-motion"
 
-const PersistLayout = lazy(()=>import("@/components/layouts/PersistLogin"))
+const PersistLogin = lazy(()=>import("@/components/layouts/PersistLogin"))
 const MainLayout = lazy(() =>import("@/components/layouts/MainLayout"))
 const HomePage = lazy(()=>import("@/pages/public/HomePages/HomePage"))
 const AboutUsPage = lazy(()=>import("@/pages/public/AboutUsPages/AboutUsPage"))
@@ -26,7 +26,7 @@ function App() {
   return (
    <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
-        <Route element={<PersistLayout/>}>
+        <Route element={<PersistLogin/>}>
         <Route path="/login" element={<Suspense><LogInPage/></Suspense>} />
         <Route path="/dashboard" element={<DashboardLayout/>}>
             <Route element={<ProtectedRoutes/>}>

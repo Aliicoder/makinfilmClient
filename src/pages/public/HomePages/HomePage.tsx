@@ -11,6 +11,7 @@ const HomePage = memo(function HomePage() {  useInitialRendersCounter("HomePage"
 
   return (
      <motion.div 
+      
       initial={{opacity: 0}}
       animate={{opacity: 1}}
       exit={{opacity:0 , transition:{

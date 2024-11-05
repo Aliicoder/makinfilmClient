@@ -16,7 +16,7 @@ function DashboardHeader() {
   },[language])
   return (
     <motion.div
-      className="relative container mx-auto  flex justify-center flex-col items-center  mb-[7%]
+      className="relative container mx-auto  flex justify-center flex-col items-center  mb-[7%] md:mb-[2%]
            lg:flex-row md:justify-between px-[10%]">
       <div className="grow basis-full md:basis-auto md:grow-0 flex justify-center items-center  
         c4 -mt-4 pt-2 px-[10%] md:px-0 border-[linear-gradient(108deg, rgba(0,0,0,0.3309698879551821) 17%, rgba(102,102,102,1) 100%)]  ">
