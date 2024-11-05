@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 
 function SideBar() {
   const [t] = useTranslation()
-  const secondSegment = useSegment(2) ;console.log(secondSegment)
+  const secondSegment = useSegment(2) ; //console.log(secondSegment)
   return (
     <div className="hidden md:flex p-[3%]   h-full bg-[#d4d4d420] text-[#ffffff42]">
       <div className=" flex flex-col items-center rtl:items-center  ">

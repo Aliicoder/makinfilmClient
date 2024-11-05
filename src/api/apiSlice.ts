@@ -15,8 +15,8 @@ const baseQuery = fetchBaseQuery({
   baseUrl: 'https://makinfilmserver.site/api/v1',
   credentials: 'include',
   prepareHeaders: (headers, { getState }) => {
-    const state = getState() as RootState; console.log("(apiSlice) user to be sent >>",state.auth.user)
-    const { accessToken } = state.auth.user; console.log("(apiSlice) access token to be sent >>",accessToken);
+    const state = getState() as RootState; //console.log("(apiSlice) user to be sent >>",state.auth.user)
+    const { accessToken } = state.auth.user; //console.log("(apiSlice) access token to be sent >>",accessToken);
     if (accessToken) {
       headers.set('authorization', `Bearer ${accessToken}`); //console.log('Authorization header set:', headers.get('authorization'));
     }
@@ -26,7 +26,7 @@ const baseQuery = fetchBaseQuery({
 
 const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
   let result:any = await baseQuery(args, api, extraOptions); //console.log("initial result >>", result);
-  if (result?.error?.originalStatus === 403 || result?.error?.status == 403) { console.log(" ***refreshing user")
+  if (result?.error?.originalStatus === 403 || result?.error?.status == 403) { console.log("token expired")
     const refreshResult = await baseQuery('/refresh', api,extraOptions);
     if(refreshResult.data) {
       const { user } = refreshResult.data as AuthResponse;

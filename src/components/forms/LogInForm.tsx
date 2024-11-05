@@ -51,7 +51,7 @@ const LogInForm = () => {
   },[isLoading])
   useEffect(() => {
     if (isLoggedIn) {
-      navigate("/dashboard/videos",{replace:true});
+      navigate("/dashboard/videos");
     }
   }, [isLoggedIn]);
   return ( 

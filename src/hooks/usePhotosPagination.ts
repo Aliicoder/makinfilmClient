@@ -8,7 +8,7 @@ const usePhotosPagination = (searchValue:string = "") =>{
   const [counter,setCounter] = useState<ICounter>({prev:0,curPage:1,next:2,pagesLen:2});
   const fetchPhotosAndInitCounter = async ({searchValue,curPage,perPage}:IQueryParams) =>{
     try{
-      const response = await fetchPhotosMutation({searchValue,curPage,perPage}).unwrap();console.log("response >>",response)
+      const response = await fetchPhotosMutation({searchValue,curPage,perPage}).unwrap();//console.log("response >>",response)
       //toast.success(response.message)
       setPhotos(response.photos)
       setCounter({...counter,pagesLen:response.pagesLen})
@@ -18,7 +18,7 @@ const usePhotosPagination = (searchValue:string = "") =>{
  }
  const fetchPhotos = async ({searchValue,curPage,perPage}:IQueryParams) =>{
     try{
-      const response = await fetchPhotosMutation({searchValue,curPage,perPage}).unwrap();console.log("response >>",response)
+      const response = await fetchPhotosMutation({searchValue,curPage,perPage}).unwrap();//console.log("response >>",response)
       //toast.success(response.message)
       setPhotos(response.photos)
     }catch(error:any){ console.log("error >>",error)

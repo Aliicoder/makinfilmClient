@@ -8,7 +8,7 @@ const useVideosPagination = (searchValue:string = "") =>{
   const [counter,setCounter] = useState<ICounter>({prev:0,curPage:1,next:2,pagesLen:2});
   const fetchVideosAndInitCounter = async ({searchValue,curPage,perPage}:IQueryParams) =>{
     try{
-      const response = await fetchVideosMutation({searchValue,curPage,perPage}).unwrap();console.log("response >>",response)
+      const response = await fetchVideosMutation({searchValue,curPage,perPage}).unwrap();//console.log("response >>",response)
      //toast.success(response.message)
       setVideos(response.videos)
       setCounter({...counter,pagesLen:response.pagesLen})
@@ -18,7 +18,7 @@ const useVideosPagination = (searchValue:string = "") =>{
  }
  const fetchVideos = async ({searchValue,curPage,perPage}:IQueryParams) =>{
     try{
-      const response = await fetchVideosMutation({searchValue,curPage,perPage}).unwrap();console.log("response >>",response)
+      const response = await fetchVideosMutation({searchValue,curPage,perPage}).unwrap();//console.log("response >>",response)
       //toast.success(response.message)
       setVideos(response.videos)
     }catch(error:any){ console.log("error >>",error)
@@ -42,9 +42,7 @@ const useVideosPagination = (searchValue:string = "") =>{
   useEffect(() =>{
     fetchVideosAndInitCounter({searchValue,curPage:counter.curPage,perPage})
   },[searchValue]);
-  useEffect(() =>{
-    console.log("counter >>" ,counter)
-  },[counter]);
+
   return { videos , counter , handleLeft , handleRight}
 }
 export default useVideosPagination

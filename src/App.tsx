@@ -3,7 +3,7 @@ import { lazy, Suspense } from "react"
 import ProtectedRoutes from "./components/shared/ProtectedRoutes"
 import { AnimatePresence } from "framer-motion"
 
-const RootLayout = lazy(()=>import("@/components/layouts/RootLayout"))
+const PersistLayout = lazy(()=>import("@/components/layouts/PersistLogin"))
 const MainLayout = lazy(() =>import("@/components/layouts/MainLayout"))
 const HomePage = lazy(()=>import("@/pages/public/HomePages/HomePage"))
 const AboutUsPage = lazy(()=>import("@/pages/public/AboutUsPages/AboutUsPage"))
@@ -26,26 +26,26 @@ function App() {
   return (
    <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
-        <Route element={<RootLayout/>}>
+        <Route element={<PersistLayout/>}>
+        <Route path="/login" element={<Suspense><LogInPage/></Suspense>} />
         <Route path="/dashboard" element={<DashboardLayout/>}>
-          <Route element={<ProtectedRoutes/>}>
-            <Route index element={<DashboardPage/>} />
-            <Route path="videos" element={<DashboardVideosPage/>} />
-            <Route path="videos/addVideo" element={<AddVideoPage/>} />
-            <Route path="videos/Edit/:videoId" element={<EditVideoPage/>} />
-            <Route path="photos" element={<DashboardPhotosPage/>} />
-            <Route path="photos/addPhoto" element={<AddPhotoPage/>} />
-            <Route path="photos/Edit/:photoId" element={<EditPhotoPage/>} />
+            <Route element={<ProtectedRoutes/>}>
+              <Route index element={<DashboardPage/>} />
+              <Route path="videos" element={<DashboardVideosPage/>} />
+              <Route path="videos/addVideo" element={<AddVideoPage/>} />
+              <Route path="videos/Edit/:videoId" element={<EditVideoPage/>} />
+              <Route path="photos" element={<DashboardPhotosPage/>} />
+              <Route path="photos/addPhoto" element={<AddPhotoPage/>} />
+              <Route path="photos/Edit/:photoId" element={<EditPhotoPage/>} />
+            </Route>
           </Route>
         </Route>
           <Route path="/" element={<MainLayout/>} >  
             <Route index element={<Suspense> <HomePage/> </Suspense>} />
-            <Route path="/login" element={<Suspense><LogInPage/></Suspense>} />
             <Route path="/aboutUs" element={<Suspense ><AboutUsPage/></Suspense>} />
             <Route path="/videos" element={<Suspense ><VideosPage/></Suspense>} />
             <Route path="/photos" element={<Suspense ><PhotosPage/></Suspense>} />
           </Route>
-        </Route>
         <Route path="*" element={<NotFoundPage/>} />
       </Routes>
    </AnimatePresence>
