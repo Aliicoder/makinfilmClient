@@ -1,4 +1,3 @@
-import { IoCaretBackOutline } from "react-icons/io5";
 import { Squircle } from 'corner-smoothing'
 import useVideosPagination from '@/hooks/useVideosPagination'
 import { useTranslation } from 'react-i18next'
@@ -6,13 +5,13 @@ import { HiPlay } from 'react-icons/hi2'
 import { lazy , memo, useState } from 'react'
 import { IVideo } from '@/utils/types/types'
 import { motion } from 'framer-motion';
-import IconButton from "@/components/buttons/IconButton";
 import useInitialRendersCounter from "@/hooks/useRendersCount";
+import VideoPlayer from '@/components/conditionals/VideoPlayer'
 const ContactUs = lazy(()=>import('@/components/shared/ContactUs'))
 const Pagination = lazy(()=>import('@/components/shared/Pagination'))
 
 const VideosPage = memo(function VideosPage() { useInitialRendersCounter("VideosPage")
-  const [t,{language}] = useTranslation()
+  const [,{language}] = useTranslation()
   const [playVideo,setPlayVideo] = useState<IVideo|undefined>()
   const {videos, counter , handleLeft , handleRight} = useVideosPagination()
   const scrollTopAndLeft = () =>{
@@ -23,10 +22,6 @@ const VideosPage = memo(function VideosPage() { useInitialRendersCounter("Videos
     window.scrollTo({top:0})
     handleRight()
   }
-  const closeVideo = () =>{
-    setPlayVideo(undefined)
-  }
-
   return (
     <motion.div
       initial={{opacity:0}} 
@@ -35,25 +30,7 @@ const VideosPage = memo(function VideosPage() { useInitialRendersCounter("Videos
         duration: 0.2
       }}}
       className=' container mx-auto h-full mt-[10%] '>
-      {
-        playVideo &&
-        <div className='fixed top-0 left-0 bg-black  z-50 w-[100%] h-[100%] '>
-          <div className='relative grid place-items-center w-lvw h-lvh text-white'>
-            <IconButton onClick={closeVideo} className='flex items-center c4 absolute top-10 left-10'
-              text={t("back")}  direction={`${language == "en" ? "left":"right"}`}>
-              <IoCaretBackOutline />
-            </IconButton>
-            <div className='flex flex-col'>
-              <video controls autoPlay playsInline controlsList="nodownload" preload="metadata" >
-                <source src={playVideo?.video.url} type="video/mp4" />
-                <source src={playVideo?.video.url} type="video/webm"/>
-              </video>
-              <h1 className='c5 p-[5%] font-semibold'>{playVideo.title[language as "en" | "ar"]}</h1>
-              <p className='c4 px-[5%]'>{playVideo.description[language as "en" | "ar"]}</p>
-            </div>
-          </div>
-        </div>
-      }
+      <VideoPlayer playVideo={playVideo} setPlayVideo={setPlayVideo} />
       <div
         style={{ direction: language == "ar" ? "ltr" : "ltr"}} 
         className="grid grid-cols-2 md:grid-cols-4">
@@ -80,7 +57,7 @@ const VideosPage = memo(function VideosPage() { useInitialRendersCounter("Videos
                   </div>
                   <HiPlay className="opacity-0" />
                 </div>
-                <h1 className="text-white font-bold c6 md:c3 rtl:text-end ">
+                <h1 className="text-white font-bold c6 md:c3 rtl:text-end text-nowrap ">
                   {video.title[language as "en" | "ar"]}
                 </h1>
                 <p className=" text-white mt-[4%] line-clamp-2 c4 md:c2 rtl:text-end">
@@ -116,7 +93,7 @@ const VideosPage = memo(function VideosPage() { useInitialRendersCounter("Videos
         }
       </div>
       {
-        videos&&videos.length > 0 ?
+        videos&&videos.length > 8 ?
         <Pagination className='flex mt-[10%]  justify-center text-white' onLeftClick={scrollTopAndLeft} onRightClick={scrollTopAndRight} counter={counter} />
         :
         <></>

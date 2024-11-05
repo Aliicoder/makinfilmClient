@@ -8,10 +8,6 @@ function SideBar() {
   return (
     <div className="hidden md:flex p-[3%]   h-full bg-[#d4d4d420] text-[#ffffff42]">
       <div className=" flex flex-col items-center rtl:items-center  ">
-        <Link to={"/dashboard"}  className="flex justify-between text-nowrap items-center rtl:flex-row-reverse rtl:text-end ">
-          <h1 className={` ${secondSegment === undefined ? "text-white font-semibold" : ""}
-            transition-all py-[6%] `}>{t("dashboard")}</h1>
-        </Link>
       <Link to={"/dashboard/videos"} className="flex justify-between text-nowrap items-center 
         rtl:flex-row-reverse rtl:justify-start rtl:text-end ">
           <h1 className={` ${secondSegment === "videos" ? "text-white font-semibold " : ""}

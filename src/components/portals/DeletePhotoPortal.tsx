@@ -35,9 +35,9 @@ function DeletePhotoPortal({condition,photo,setIsDeletePhoto}:DeleteVideoParams)
   }
   return ReactDOM.createPortal(
    <>
-      {condition&&<div onClick={handleClosePopUp} className="absolute bg-[#00000057] z-50 grid w-[100vw] h-[100vh] ">
+      {condition&&<div onClick={handleClosePopUp} className="absolute bg-[#00000057] z-[100] grid w-[100vw] h-[100vh] ">
        <div className="place-self-center " ref={popUpsRef}>
-         <Squircle cornerRadius={16} className="bg-[#d4d4d420] text-white flex flex-col p-[10%] rounded montserrat w-fit">
+         <Squircle cornerRadius={16} className="bg-[#303030] text-white flex flex-col p-[10%] rounded montserrat w-fit">
             <div onClick={()=>setIsDeletePhoto(false)} className="flex ">
               <IoClose  />
             </div>

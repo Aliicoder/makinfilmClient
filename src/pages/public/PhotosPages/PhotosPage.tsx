@@ -83,7 +83,12 @@ function PhotosPage() { useInitialRendersCounter("PhotosPage")
           </div>
       }
       </Masonry>
-      <Pagination className='flex mt-[10%] justify-center text-white' onLeftClick={scrollTopAndLeft} onRightClick={scrollTopAndRight} counter={counter} />
+      {
+        photos&&photos.length > 8 ?
+        <Pagination className='flex mt-[10%]  justify-center text-white' onLeftClick={scrollTopAndLeft} onRightClick={scrollTopAndRight} counter={counter} />
+        :
+        <></>
+      }
       <ContactUs />
     </div>
   </motion.div>

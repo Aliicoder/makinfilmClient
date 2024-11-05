@@ -12,7 +12,7 @@ function DashboardLayout() {
       <ConditionalLoader condition={isLoading} /> 
       :
       <div className="container mx-auto flex h-lvh bg-black text-white overflow-hidden rtl:flex-row-reverse ">
-        <div className="grow ">
+        <div className="grow relative">
           <DashboardHeader />
           <Outlet />
         </div>
