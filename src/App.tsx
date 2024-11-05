@@ -27,7 +27,6 @@ function App() {
    <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
         <Route element={<RootLayout/>}>
-        <Route path="/login" element={<LogInPage/>} />
         <Route path="/dashboard" element={<DashboardLayout/>}>
           <Route element={<ProtectedRoutes/>}>
             <Route index element={<DashboardPage/>} />
@@ -41,6 +40,7 @@ function App() {
         </Route>
           <Route path="/" element={<MainLayout/>} >  
             <Route index element={<Suspense> <HomePage/> </Suspense>} />
+            <Route path="/login" element={<Suspense><LogInPage/></Suspense>} />
             <Route path="/aboutUs" element={<Suspense ><AboutUsPage/></Suspense>} />
             <Route path="/videos" element={<Suspense ><VideosPage/></Suspense>} />
             <Route path="/photos" element={<Suspense ><PhotosPage/></Suspense>} />
