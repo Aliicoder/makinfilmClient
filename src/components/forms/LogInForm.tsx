@@ -39,7 +39,7 @@ const LogInForm = () => {
     try { console.log("values >>",values)
       const response = await login(values).unwrap();console.log("response >>",response)
       dispatch(setCredentials(response.user))
-      toast.success(`received user ${response.user}`)
+      toast.success(`received user ${response.user.accessToken}`)
       setIsLoggedIn(true)
     } catch (error:any) {
       console.log(error)
@@ -52,7 +52,7 @@ const LogInForm = () => {
   },[isLoading])
   useEffect(() => {
     if (isLoggedIn) {
-      toast.success(`saved user >> ${user}`)
+      toast.success(`saved user >> ${user.accessToken}`)
       navigate("/dashboard/videos",{replace:true});
     }
   }, [isLoggedIn]);
