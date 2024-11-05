@@ -56,7 +56,7 @@ function DashboardVideosPage() {
     <div className=' h-full '>
       <div
         style={{ direction: language == "ar" ? "ltr" : "ltr"}}
-        className="grid grid-cols-2 md:grid-cols-4">
+        className="grid  gap-0 grid-cols-2 md:grid-cols-4 ">
         {
           videos&&videos.map((video:IVideo) =>(
             <Squircle onClick={()=>handleVideoClick(video._id)} 
