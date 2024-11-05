@@ -7,8 +7,8 @@ import { Input } from "@/components/ui/input"
 import loginValidation from "@/utils/validations/loginValidation";
 import toast from "react-hot-toast";
 import { useLoginMutation } from "@/store/Reducers/authApiSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { selectCurrentUser, setCredentials } from "@/store/Reducers/authReducer";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "@/store/Reducers/authReducer";
 import IconButton from "../buttons/IconButton";
 import { IoLogIn } from "react-icons/io5";
 import { useLoader } from "@/hooks/useLoader";
@@ -26,7 +26,6 @@ const LogInForm = () => {
   const {setLoading} = useLoader()
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const user = useSelector(selectCurrentUser)
   const [login,{isLoading}] = useLoginMutation()
   const [isLoggedIn,setIsLoggedIn] = useState(false)
   const form = useForm<z.infer<typeof loginValidation>>({resolver: zodResolver(loginValidation),});//console.log(user)
@@ -39,7 +38,7 @@ const LogInForm = () => {
     try { console.log("values >>",values)
       const response = await login(values).unwrap();console.log("response >>",response)
       dispatch(setCredentials(response.user))
-      toast.success(`received user ${response.user.accessToken}`)
+      toast.success(response.message)
       setIsLoggedIn(true)
     } catch (error:any) {
       console.log(error)
@@ -52,7 +51,6 @@ const LogInForm = () => {
   },[isLoading])
   useEffect(() => {
     if (isLoggedIn) {
-      toast.success(`saved user >> ${user.accessToken}`)
       navigate("/dashboard/videos",{replace:true});
     }
   }, [isLoggedIn]);
