@@ -7,7 +7,6 @@ import { IVideo } from '@/utils/types/types'
 import { motion } from 'framer-motion';
 import useInitialRendersCounter from "@/hooks/useRendersCount";
 import VideoPlayer from '@/components/conditionals/VideoPlayer'
-const ContactUs = lazy(()=>import('@/components/shared/ContactUs'))
 const Pagination = lazy(()=>import('@/components/shared/Pagination'))
 
 const VideosPage = memo(function VideosPage() { useInitialRendersCounter("VideosPage")

@@ -1,6 +1,6 @@
 import useInitialRendersCounter from "@/hooks/useRendersCount"
 import { motion } from "framer-motion"
-import { lazy, Suspense } from "react"
+import { lazy } from "react"
 import { useTranslation } from "react-i18next"
 const PartnersCarousel = lazy(()=>import("@/components/Carousels/PartnersCarousel"))
 const AboutMakin = lazy(()=>import("@/components/dedicated/AboutPage/AboutMakin"))

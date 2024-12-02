@@ -1,6 +1,5 @@
 import Pagination from '@/components/shared/Pagination'
 import { Squircle } from 'corner-smoothing'
-import ContactUs from '@/components/shared/ContactUs'
 import usePhotosPagination from '@/hooks/usePhotosPagination'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
