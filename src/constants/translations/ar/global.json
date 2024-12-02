@@ -53,5 +53,27 @@
     "next":"التالي",
     "previous":"السابق"
   },
-  "back":"أغلق"
+  "back":"أغلق",
+  "loginForm":{
+    "email":"البريد الالكتروني",
+    "password":"كلمة المرور",
+    "note":"نسيت كلمة المرور",
+    "link":"تغيير",
+    "login":" دخول"
+  },
+  "addVideo":"إضافة فيديو",
+  "addPhoto":"إضافة صورة",
+  "logOut":"تسجيل الخروج",
+  "actions":"الإجراءات",
+  "edit":"تعديل",
+  "view":"عرض",
+  "delete":"حذف",
+  "play":"تشغيل",
+  "deleteAlert":"هل أنت متأكد من أنك تريد الحذف؟",
+  "changePhoto": "تغيير الصورة",
+  "changeVideo": "تغيير الفيديو",
+  "choosePhoto": "اختر صورة",
+  "chooseVideo": "اختر فيديو",
+  "fileSelected": "تم اختيار الملف",
+  "noFileSelected": "لم يتم اختيار أي ملف"
 }

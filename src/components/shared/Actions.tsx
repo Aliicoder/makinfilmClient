@@ -1,6 +1,6 @@
 import { lazy, memo , useState } from "react"
 import { Squircle } from "corner-smoothing"
-const ConditionalMenu = lazy(()=>import("@/components/conditionals/ConditionalMenu"))
+const ConditionalMenu = lazy(()=>import("@/components/shared/ConditionalMenu"))
 const Actions = memo(function Actions() {
   const [isOpenMenu, setIsOpenMenu] = useState(false)
 

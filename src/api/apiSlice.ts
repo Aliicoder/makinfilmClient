@@ -1,6 +1,7 @@
 import { fetchBaseQuery, createApi } from "@reduxjs/toolkit/query/react";
-import { setCredentials, logOut } from "@/store/Reducers/authReducer";
+import { setCredentials } from "@/store/Reducers/authReducer";
 import { RootState } from "@/store";
+import toast from "react-hot-toast";
 
 interface AuthResponse {
   user:{
@@ -10,42 +11,57 @@ interface AuthResponse {
     accessToken:string
   }
 }
-
+// https://makinfilmserver.site/api/v1
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'https://makinfilmserver.site/api/v1',
+  baseUrl: 'http://localhost:3000/api/v1',
   credentials: 'include',
   prepareHeaders: (headers, { getState }) => {
-    const state = getState() as RootState; //console.log("(apiSlice) user to be sent >>",state.auth.user)
-    const { accessToken } = state.auth.user; //console.log("(apiSlice) access token to be sent >>",accessToken);
-    if (accessToken) {
-      headers.set('authorization', `Bearer ${accessToken}`); //console.log('Authorization header set:', headers.get('authorization'));
-    }
+    const state = getState() as RootState;
+    const { accessToken } = state.auth.user; 
+    if (accessToken) 
+      headers.set('authorization', `Bearer ${accessToken}`)
     return headers;
   },
 });
 
+//! all 403 and 400 errors will be handled here
 const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
-  let result:any = await baseQuery(args, api, extraOptions); //console.log("initial result >>", result);
-  if (result?.error?.originalStatus === 403 || result?.error?.status == 403) { console.log("token expired")
+  let response:any = await baseQuery(args, api, extraOptions); 
+  
+  if (response?.error?.originalStatus === 500 || response?.error?.status == 500) {
+    if(import.meta.env.ENV == "development"){
+      console.log("500 status error",response)
+      toast.error("something went wrong")
+    }
+    return response
+  }
+
+  if (response?.error?.originalStatus === 400 || response?.error?.status == 400){
+    if(import.meta.env.ENV === "development"){
+      console.log("mode is >>",import.meta.env.ENV)
+      toast.error(response?.error?.data?.message)
+      console.error("400 status error >>",response?.error)
+    }
+    return response
+  }
+  if (response?.error?.originalStatus === 403 || response?.error?.status == 403){ 
+    console.log("initial auth error >>", response?.error)
+
     const refreshResult = await baseQuery('/refresh', api,extraOptions);
     if(refreshResult.data) {
       const { user } = refreshResult.data as AuthResponse;
-      if (user) { console.log('refresh data credentials >> ' , user)
-        api.dispatch(setCredentials(user));
-      } else {
-        api.dispatch(setCredentials({ user: "", token: "" }));
-      }
-      result = await baseQuery(args, api, extraOptions);
+      api.dispatch(setCredentials(user));
+      response = await baseQuery(args, api, extraOptions);
     } else {
-      api.dispatch(logOut());
+      toast.error("Session expired. Please log in again.");
     }
   }
-
-  return result; // Ensure to return the result
+  return response; 
 };
 
 export const apiSlice = createApi({
   baseQuery: baseQueryWithReauth,
+  tagTypes:["Photos","Videos"],
   endpoints: () => ({}),
 });
 

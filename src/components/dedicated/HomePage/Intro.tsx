@@ -1,7 +1,7 @@
 import { FiArrowUpRight } from "react-icons/fi"
-import LinkButton from "../buttons/LinkButton"
 import { memo } from "react"
 import { useTranslation } from "react-i18next"
+import LinkButton from "@/components/buttons/LinkButton"
 
 const Intro = memo(function Intro() {
   const [t,{language}] = useTranslation()

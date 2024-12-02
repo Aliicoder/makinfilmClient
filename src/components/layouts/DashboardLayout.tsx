@@ -1,14 +1,16 @@
 import { Outlet } from "react-router-dom"
 import DashboardHeader from "../shared/DashBoardHeader"
-import SideBar from "../shared/SideBar"
+import DashboardConditionalMenu from "../shared/DashboardConditionalMenu"
+import useInitialRendersCounter from "@/hooks/useRendersCount"
 function DashboardLayout() { 
+  useInitialRendersCounter("dashboardLayout")
   return (
     <div className="container mx-auto flex h-lvh bg-black text-white overflow-hidden rtl:flex-row-reverse ">
-      <div className="grow relative overflow-y-scroll ">
+      <div className="grow relative overflow-y-scroll scroll-bar">
         <DashboardHeader />
         <Outlet />
       </div>
-      <SideBar />
+      <DashboardConditionalMenu />
     </div>
   
   )

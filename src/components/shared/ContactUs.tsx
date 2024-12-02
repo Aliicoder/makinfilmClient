@@ -41,7 +41,7 @@ const ContactUs = memo(function ContactUs() {
             <h1 className=" ">{t("email")}</h1>
             <p className="pt-[3%]">info@gmail.com</p>
             <div className="hidden md:flex justify-center p-[6%] mt-[6%] ">
-            <LinkButton  className="border border-white bg-transparent p-[4%] md:p-[6%] mt-[6%] " text={`${t("dashboard")}`} direction={"right"} to={"/dashboard"}>
+            <LinkButton  className="border border-white bg-transparent p-[4%] md:p-[6%] mt-[6%] " text={`${t("dashboard")}`} direction={"right"} to={"/login"}>
             </LinkButton>
           </div>
           </div>

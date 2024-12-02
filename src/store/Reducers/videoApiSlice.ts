@@ -2,14 +2,10 @@ import { apiSlice } from "@/api/apiSlice"
 import { formidable } from "@/utils/helpers/formidable"
 export const productApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
-    fetchVideos:builder.mutation({
-      query:(credentials)=>{
-        return{
-          url:`/video?search=${credentials.searchValue}&&curPage=${credentials.curPage}&&perPage=${credentials.perPage}`,
-          method:'get',
-        }
-      },
-      
+    fetchVideos:builder.query({
+      query:({searchValue,curPage,perPage})=>
+        `/video?search=${searchValue}&&curPage=${curPage}&&perPage=${perPage}`,
+        providesTags:["Videos"]      
     }),
     addVideo:builder.mutation({
       query:credentials=>{
@@ -43,7 +39,8 @@ export const productApiSlice = apiSlice.injectEndpoints({
 })
 export const {
   useAddVideoMutation,
-  useFetchVideosMutation,
+  useFetchVideosQuery,
   useUpdateVideoMutation,
-  useDeleteVideoMutation
+  useDeleteVideoMutation,
+  util
 } = productApiSlice

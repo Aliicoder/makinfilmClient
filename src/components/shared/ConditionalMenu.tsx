@@ -59,7 +59,7 @@ const ConditionalMenu = memo(function ConditionalMenu({condition,setIsOpenMenu}:
               text-end p-[6%] `}>{t("navigators.photos")}</li>
           </ul>
           <div className="flex justify-center p-[6%] mb-[6%]">
-          <LinkButton  className="border text-nowrap border-white bg-transparent px-[4%] py-[4%] " text={`${t("dashboard")}`} direction={"right"} to={"/dashboard"}>
+          <LinkButton  className="border text-nowrap border-white bg-transparent px-[4%] py-[4%] " text={`${t("dashboard")}`} direction={"right"} to={"/login"}>
           </LinkButton>
         </div>
         </motion.div>

@@ -1,14 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 /* transition: [property] [duration] [timing-function] [delay]; */
 /* animation: [name] [duration] [timing-function] [delay] [iteration-count] [direction] [fill-mode]; */
 @layer base {
-  *{
-    box-sizing: border-box;
-  }
   .titillium {
     font-family: "Titillium Web", sans-serif;
     font-style: normal;
@@ -18,20 +15,19 @@
     font-optical-sizing: auto;
     font-style: normal;
   }
-  #root{
+  #root {
     background-color: black;
   }
-  html{
+  html {
     scroll-behavior: smooth;
     background-color: black;
-
   }
   :root {
     --wrapperOverflowWidth: 1000px;
     --main-color: #f8fafc;
     --secondary-color: #f8fafc;
     --text-color: rgba(0, 0, 0, 0.774);
-    --border-color : #e5e7eb;
+    --border-color: #e5e7eb;
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
     --card: 0 0% 100%;
@@ -56,7 +52,8 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --radius: 0.5rem}
+    --radius: 0.5rem;
+  }
   .dark {
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
@@ -81,37 +78,41 @@
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%
+    --chart-5: 340 75% 55%;
   }
-  #light{
-    background: rgb(217,217,217);
-background: radial-gradient(circle, rgba(217,217,217,1) 0%, rgba(0,0,0,0) 50%);
+  #light {
+    background: rgb(217, 217, 217);
+    background: radial-gradient(
+      circle,
+      rgba(217, 217, 217, 1) 0%,
+      rgba(0, 0, 0, 0) 50%
+    );
   }
-  .c1{
+  .c1 {
     font-size: clamp(0.25rem, 0.25rem + 0.4vw, 0.625rem);
   }
-  .c2{
+  .c2 {
     font-size: clamp(0.25rem, 0.25rem + 0.6vw, 0.8125rem);
   }
-  .c3{
+  .c3 {
     font-size: clamp(0.25rem, 0.25rem + 0.8vw, 1rem);
   }
-  .c4{
+  .c4 {
     font-size: clamp(0.25rem, 0.25rem + 1.0667vw, 1.25rem);
   }
-  .c5{
+  .c5 {
     font-size: clamp(0.25rem, 0.25rem + 1.4vw, 1.5625rem);
   }
-  .c6{
+  .c6 {
     font-size: clamp(0.25rem, 0.25rem + 1.8vw, 1.9375rem);
   }
-  .c7{
+  .c7 {
     font-size: clamp(0.25rem, 0.25rem + 2.3333vw, 2.4375rem);
   }
-  .c8{
+  .c8 {
     font-size: clamp(0.25rem, 0.25rem + 3vw, 3.0625rem);
   }
-  .c9{
+  .c9 {
     font-size: clamp(0.25rem, 0.25rem + 3.8vw, 3.8125rem);
   }
   ::-webkit-scrollbar {
@@ -119,32 +120,32 @@ background: radial-gradient(circle, rgba(217,217,217,1) 0%, rgba(0,0,0,0) 50%);
     height: 0.5em; /* Adjusts the height of the scrollbar */
   }
 
-  ::-webkit-scrollbar-track {
-    background: white;
+  *::-webkit-scrollbar-track {
+    background: transparent;
   }
 
   ::-webkit-scrollbar-thumb {
     background: hsl(0, 0%, 59%);
   }
-  .videosWrapper::-webkit-scrollbar-track{
+  .videosWrapper::-webkit-scrollbar-track {
     background: transparent !important;
     opacity: 0;
   }
-  .videosWrapper::-webkit-scrollbar-thumb{
+  .videosWrapper::-webkit-scrollbar-thumb {
     border-radius: 16px;
     -webkit-border-radius: 16px;
     -moz-border-radius: 16px;
     -ms-border-radius: 16px;
     -o-border-radius: 16px;
   }
-  .videosWrapper::-webkit-scrollbar-track{
+  .videosWrapper::-webkit-scrollbar-track {
     height: 0px;
     width: 0;
   }
-  *{
+  * {
     outline: uto;
   }
-  .active{
+  .active {
     background-color: gray;
   }
   .aspect-triangle {
@@ -157,35 +158,42 @@ background: radial-gradient(circle, rgba(217,217,217,1) 0%, rgba(0,0,0,0) 50%);
   /* animation: [name] [duration] [timing-function] [delay] [iteration-count] [direction] [fill-mode]; */
 
   .partnersWrapper {
-    animation: scrollX 20s ease-in-out  infinite  ;
-    -webkit-animation: scrollX 20s ease-in-out  infinite  ;
-} 
-    @keyframes scrollX {
-      from {
-        transform: translateX(0%);
-        -webkit-transform: translateX(0%);
-        -moz-transform: translateX(0%);
-        -ms-transform: translateX(0%);
-        -o-transform: translateX(0%);
-}to{
-        transform: translateX(-100%);
-        -webkit-transform: translateX(-100%);
-        -moz-transform: translateX(-100%);
-        -ms-transform: translateX(-100%);
-        -o-transform: translateX(-100%);
-      }
+    animation: scrollX 20s ease-in-out infinite;
+    -webkit-animation: scrollX 20s ease-in-out infinite;
+  }
+  @keyframes scrollX {
+    from {
+      transform: translateX(0%);
+      -webkit-transform: translateX(0%);
+      -moz-transform: translateX(0%);
+      -ms-transform: translateX(0%);
+      -o-transform: translateX(0%);
     }
+    to {
+      transform: translateX(-100%);
+      -webkit-transform: translateX(-100%);
+      -moz-transform: translateX(-100%);
+      -ms-transform: translateX(-100%);
+      -o-transform: translateX(-100%);
+    }
+  }
 
   .my-masonry-grid {
-    display: -webkit-box; 
-    display: -ms-flexbox; 
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
   }
- .wrapperr::-webkit-scrollbar {
+  .wrapperr::-webkit-scrollbar {
     display: none;
   }
 
+  .scroll-bar::-webkit-scrollbar {
+    background: black;
+  }
 
+  .scroll-bar::-webkit-scrollbar-track {
+    background: transparent;
+  }
 }
 @layer base {
   * {

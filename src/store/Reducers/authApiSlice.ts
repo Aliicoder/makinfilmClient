@@ -1,12 +1,10 @@
 import { apiSlice } from "@/api/apiSlice"
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
-    refresh:builder.mutation({
-      query:()=>({
-        url:"/refresh",
-        method:"get",
-      })
+    persistLogin:builder.mutation({
+      query:()=>("/refresh")
     }),
+
     Login:builder.mutation({
       query:credentials=>({
         url:'/user/login',
@@ -18,14 +16,14 @@ export const authApiSlice = apiSlice.injectEndpoints({
       query:()=>{
         return{
           url:'/refresh/cancel',
-          method:'PATCH',
+          method:'get',
         }
       }
     }),
   })
 })
 export const {
- useRefreshMutation,
+ usePersistLoginMutation,
  useLoginMutation,
  useLogOutMutation,
 } = authApiSlice

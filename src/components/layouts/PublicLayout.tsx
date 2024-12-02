@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom"
 import { lazy } from "react"
-const Header = lazy(()=>import("@/components/shared/Header"))
+import ContactUs from "../shared/ContactUs"
+const Header = lazy(()=>import("@/components/shared/PublicHeader"))
 const Actions = lazy(()=>import("@/components/shared/Actions"))
 
 function MainLayout() { 
@@ -10,6 +11,7 @@ function MainLayout() {
       <Header />
       <Outlet />   
       <Actions />
+      <ContactUs />
       <div className="h-[18vh]" />
     </div> 
   )

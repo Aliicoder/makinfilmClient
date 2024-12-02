@@ -1,5 +1,4 @@
 import { memo, useState } from "react";
-import LinkButton from "../buttons/LinkButton";
 import { FiArrowUpRight } from "react-icons/fi";
 import { Squircle } from "corner-smoothing";
 import { useTranslation } from "react-i18next";
@@ -7,6 +6,7 @@ import { motion } from "framer-motion";
 import { IMAGES } from "@/constants/images";
 
 import Masonry from "react-masonry-css"
+import LinkButton from "@/components/buttons/LinkButton";
 const BehindTheSince = memo(function BehindTheSince() {
   const [t,{language}] = useTranslation();
   const [selectedImage, setSelectedImage] = useState<string|undefined>();

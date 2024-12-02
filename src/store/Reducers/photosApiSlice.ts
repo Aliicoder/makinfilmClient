@@ -2,13 +2,10 @@ import { apiSlice } from "@/api/apiSlice"
 import { formidable } from "@/utils/helpers/formidable"
 export const productApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
-    fetchPhotos:builder.mutation({
-      query:(credentials)=>{ 
-        return{
-          url:`/photo?search=${credentials.searchValue}&&curPage=${credentials.curPage}&&perPage=${credentials.perPage}`,
-          method:'get',
-        }
-      }  
+    fetchPhotos:builder.query({
+      query:({searchValue,curPage,perPage})=>
+        `/photo?search=${searchValue}&&curPage=${curPage}&&perPage=${perPage}`,
+      providesTags:["Photos"]
     }),
     addPhoto:builder.mutation({
       query:credentials=>{
@@ -22,7 +19,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
     }),
     updatePhoto:builder.mutation({
       query:credentials=>{
-        const formData = formidable(credentials.values);console.log(formData)
+        const formData = formidable(credentials);console.log(formData)
         return{
           url:`/photo/${credentials.photoId}`,
           method:'PATCH',
@@ -42,7 +39,8 @@ export const productApiSlice = apiSlice.injectEndpoints({
 })
 export const {
  useAddPhotoMutation,
- useFetchPhotosMutation,
+ useFetchPhotosQuery,
  useDeletePhotoMutation,
- useUpdatePhotoMutation
+ useUpdatePhotoMutation,
+ util
 } = productApiSlice

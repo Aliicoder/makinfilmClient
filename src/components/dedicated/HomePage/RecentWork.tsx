@@ -1,32 +1,19 @@
-import { memo, useEffect, useState } from "react"
-import LinkButton from "../buttons/LinkButton"
+import { memo , useState } from "react"
 import { FiArrowUpRight } from "react-icons/fi"
 import { HiPlay } from "react-icons/hi2";
 import { Squircle } from "corner-smoothing"
-import { useFetchVideosMutation } from "@/store/Reducers/videoApiSlice";
 import { IVideo } from "@/utils/types/types";
 import { useTranslation } from "react-i18next";
-import IconButton from "../buttons/IconButton";
 import { IoCaretBackOutline } from "react-icons/io5";
 import { motion } from "framer-motion";
+import useVideosPagination from "@/hooks/useVideosPagination";
+import IconButton from "@/components/buttons/IconButton";
+import LinkButton from "@/components/buttons/LinkButton";
 
 const RecentWork = memo(function RecentWork() {
-  const [fetchVideosMutation] = useFetchVideosMutation()
+  const { videos } = useVideosPagination("")
   const [t,{language}] = useTranslation()
   const [playVideo,setPlayVideo] = useState<IVideo|undefined>()
-  const [videos,setVideos] = useState<IVideo[]|undefined>()
-  useEffect(() =>{
-    const fetchVideos = async () =>{
-       try{
-         const response = await fetchVideosMutation({searchValue:"", curPage:1,perPage:8}).unwrap();console.log("response >>",response)
-         //toast.success(response.message)
-         setVideos(response.videos)
-       }catch(error:any){ console.log("error >>",error)
-         //toast.error(error.message ?? "try again later")
-       }
-    }
-    fetchVideos()
-   },[]);
   return (
     <motion.div
       initial={{opacity:0}} 
@@ -60,7 +47,7 @@ const RecentWork = memo(function RecentWork() {
         className="grid grid-cols-2 mx-auto  my-[6%] md:grid-cols-4">
         {
           videos && videos.length > 0 ? 
-          videos.map((video:IVideo,i) =>(
+          videos.map((video:IVideo,i:number) =>(
            <motion.div
               key={video._id}
               initial={{  opacity: 0 , y: 60}}

@@ -19,9 +19,14 @@ import { useLocation } from "react-router-dom"
 import updateVideoValidation from "@/utils/validations/updateVideoValidation"
 import { useUpdateVideoMutation } from "@/store/Reducers/videoApiSlice"
 import { useTranslation } from "react-i18next"
+import useRedirect from "@/hooks/useRedirect"
+import LinkButton from "@/components/buttons/LinkButton"
+import { IoIosArrowRoundBack } from "react-icons/io"
+import IconButton from "@/components/buttons/IconButton"
 const EditVideoPage = memo(function AddVideoPage() {
   const [t] = useTranslation()
   const { state } = useLocation(); console.log(state)
+  const redirect = useRedirect()
   const [updateVideoMutation,{isLoading}] = useUpdateVideoMutation()
   const form = useForm<z.infer<typeof updateVideoValidation>>({ 
     resolver:zodResolver(updateVideoValidation),
@@ -48,6 +53,7 @@ const EditVideoPage = memo(function AddVideoPage() {
         arDescription:undefined,
         enDescription:undefined
       })
+      redirect("/dashboard/videos")
     } catch (error:any) { console.log(error)
       toast.error(error?.data?.message ?? "try again later")
     }
@@ -55,6 +61,11 @@ const EditVideoPage = memo(function AddVideoPage() {
   return (
     <div className="p-[6%]">
       <ConditionalLoader condition={isLoading} />
+      <LinkButton 
+        className={` font-semibold gap-2 p-[3%] rtl:flex-row-reverse`} 
+        to={".."} text={t("navigators.photos")} direction={"left"}>
+       <IoIosArrowRoundBack />
+      </LinkButton>
       <Squircle cornerRadius={16} className="rounded border-transparent bg-[#d4d4d420]">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 p-[6%] overflow-x-scroll">
@@ -64,13 +75,24 @@ const EditVideoPage = memo(function AddVideoPage() {
               render={({ field }) => (
                 <FormItem className="">
                   <FormControl>
-                    <Input 
-                      className="file:text-slate-500 file:bg-slate-800 file:rounded-md 
-                       border-0"
-                      onChange={(e)=>handleFileChange(e, field.onChange)}
-                      type="file" 
-                      accept="image/*"
-                      placeholder="upload the video" />
+                  <div className="relative ">
+                      <Input 
+                        className="z-120 opacity-0 cursor-pointer outline w-full h-full  file:bg-slate-800 file:rounded-md border-0"
+                        onChange={(e)=>handleFileChange(e, field.onChange)}
+                        type="file" 
+                        accept="image/*"
+                        placeholder="upload the video" />
+
+                        <div className="absolute flex justify-between items-center p-[3%] z-[-1] top-0 w-full h-full rtl:flex-row-reverse ">
+                          <h1>
+                            {
+                              form.getValues("image") ? t("fileSelected") : t("noFileSelected")
+                            }
+                          </h1>
+                          <IconButton className="c4" type="button"  direction={"left"} text={t("changePhoto")} >
+                          </IconButton>
+                        </div>
+                    </div>
                   </FormControl>
                   <FormDescription>
                     {t("addVideoForm.image")}
@@ -85,13 +107,23 @@ const EditVideoPage = memo(function AddVideoPage() {
               render={({ field }) => (
                 <FormItem className="">
                   <FormControl>
-                    <Input 
-                      className="file:text-slate-500 file:bg-slate-800 file:rounded-md
-                        border-0 "
-                      onChange={(e)=>handleFileChange(e, field.onChange)}
-                      type="file" 
-                      accept="video/*"
-                      placeholder="upload the video" />
+                  <div className="relative ">
+                      <Input 
+                        className="z-120 opacity-0 cursor-pointer outline w-full h-full  file:bg-slate-800 file:rounded-md border-0"
+                        onChange={(e)=>handleFileChange(e, field.onChange)}
+                        type="file" 
+                        accept="video/*"/>
+
+                        <div className="absolute flex justify-between items-center p-[3%] z-[-1] top-0 w-full h-full rtl:flex-row-reverse ">
+                          <h1>
+                            {
+                              form.getValues("video") ? t("fileSelected") : t("noFileSelected")
+                            }
+                          </h1>
+                          <IconButton className="c4" type="button"  direction={"left"} text={t("changeVideo")} >
+                          </IconButton>
+                        </div>
+                    </div>
                   </FormControl>
                   <FormDescription>
                   {t("addVideoForm.video")}
@@ -161,7 +193,7 @@ const EditVideoPage = memo(function AddVideoPage() {
                 </FormItem>
               )}
             />
-            <Button type="submit">{t("addVideoForm.submit")}</Button>
+            <Button disabled={isLoading ? true : false} type="submit">{t("addVideoForm.submit")}</Button>
           </form>
         </Form>
       </Squircle>

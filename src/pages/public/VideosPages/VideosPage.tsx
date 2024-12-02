@@ -98,7 +98,6 @@ const VideosPage = memo(function VideosPage() { useInitialRendersCounter("Videos
         :
         <></>
       }
-      <ContactUs />
     </motion.div>
   )
 }

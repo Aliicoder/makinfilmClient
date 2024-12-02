@@ -1,48 +1,26 @@
-import { ICounter, IQueryParams, IVideo } from "@/utils/types/types";
+import { ICounter } from "@/utils/types/types";
 import { useCallback, useEffect, useState } from "react"
-import { useFetchVideosMutation } from "@/store/Reducers/videoApiSlice";
+import { useFetchVideosQuery , util } from "@/store/Reducers/videoApiSlice";
 const perPage = 8 ;
 const useVideosPagination = (searchValue:string = "") =>{
-  const [videos,setVideos] = useState<IVideo[]|undefined>()
-  const [fetchVideosMutation] = useFetchVideosMutation()
   const [counter,setCounter] = useState<ICounter>({prev:0,curPage:1,next:2,pagesLen:2});
-  const fetchVideosAndInitCounter = async ({searchValue,curPage,perPage}:IQueryParams) =>{
-    try{
-      const response = await fetchVideosMutation({searchValue,curPage,perPage}).unwrap();//console.log("response >>",response)
-     //toast.success(response.message)
-      setVideos(response.videos)
-      setCounter({...counter,pagesLen:response.pagesLen})
-    }catch(error:any){ console.log("error >>",error)
-      //toast.error(error.message ?? "try again later")
-    }
- }
- const fetchVideos = async ({searchValue,curPage,perPage}:IQueryParams) =>{
-    try{
-      const response = await fetchVideosMutation({searchValue,curPage,perPage}).unwrap();//console.log("response >>",response)
-      //toast.success(response.message)
-      setVideos(response.videos)
-    }catch(error:any){ console.log("error >>",error)
-      //toast.error(error.message ?? "try again later")
-    }
-  }
+  const {data:response} = useFetchVideosQuery({searchValue,perPage,curPage:counter.curPage})
   const handleLeft = useCallback(() =>{
-    if(counter.prev > 0)
-    setCounter((counter:ICounter)=>{ 
-      fetchVideos({searchValue,curPage:counter.curPage-1,perPage})
-      return {...counter,prev:counter.prev-1,curPage:counter.curPage-1,next:counter.next-1}
-    })
+    if(counter.prev > 0){
+      setCounter( {...counter,prev:counter.prev-1,curPage:counter.curPage-1,next:counter.next-1})
+      util.invalidateTags(["Videos"])
+    }
   },[counter])
   const handleRight = useCallback( () =>{
-    if(counter.next <= counter.pagesLen)
-      setCounter((counter:ICounter)=>{
-        fetchVideos({searchValue,curPage:counter.curPage+1,perPage})
-        return {...counter,prev:counter.prev+1,curPage:counter.curPage+1,next:counter.next+1}
-      })
+    if(counter.next <= counter.pagesLen){
+      setCounter({...counter,prev:counter.prev+1,curPage:counter.curPage+1,next:counter.next+1})
+      util.invalidateTags(["Videos"])
+    }
   },[counter])
-  useEffect(() =>{
-    fetchVideosAndInitCounter({searchValue,curPage:counter.curPage,perPage})
-  },[searchValue]);
-
-  return { videos , counter , handleLeft , handleRight}
+  useEffect(()=>{
+    if(response?.photos)
+      setCounter({...counter,pagesLen:response.pagesLen})
+  },[])
+  return { videos:response?.videos , counter , handleLeft , handleRight}
 }
 export default useVideosPagination

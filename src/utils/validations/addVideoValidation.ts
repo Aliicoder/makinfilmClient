@@ -3,7 +3,7 @@ import { z } from "zod";
 export default z.object({
   image: z
   .any()
-  .refine((file) => file instanceof File && file.type === "image/webp", {
+  .refine((file) => file instanceof File && file.type === "image/*", {
     message: "only image of webp format is allowed because it enhance the performance of the website.",
   }),
   video: z

@@ -2,7 +2,9 @@ import { memo, useCallback, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useSegment from '@/hooks/useSegment';
 import { useTranslation } from 'react-i18next';
+import useInitialRendersCounter from '@/hooks/useRendersCount';
 const Header = memo(function Header() {
+  useInitialRendersCounter('publicHeader')
   const location = useLocation()
   const [background,setBackground] = useState(false)
   const [t,{language,changeLanguage}] = useTranslation()
@@ -12,9 +14,6 @@ const Header = memo(function Header() {
     changeLanguage(lang)
     localStorage.setItem('language', lang)
   },[])
-  useEffect(() =>{
-    document.documentElement.setAttribute("dir",language == "en" ? "ltr" : "rtl")
-  },[language])
   useEffect(() =>{
     const trackScrolling = () =>{
       if(window.scrollY > 0)
@@ -29,10 +28,11 @@ const Header = memo(function Header() {
     window.scrollTo({top:0,behavior:"instant"})
   },[location])
   return (
-   <div className={`${background ?"md:bg-[#d4d4d420] md:backdrop-blur":""} transition-all md:sticky md:top-0 z-40  `}>
+   <div className={`${background ?"md:bg-[#d4d4d420] md:backdrop-blur":""} transition-all md:sticky md:top-0 z-40 `}>
       <div
-        className={`container mx-auto  flex justify-center flex-col items-center 
+        className={`container mx-auto  flex justify-center flex-col items-center  lg:rtl:flex-row-reverse 
            lg:flex-row md:justify-between px-[10%] `}>
+            
         <div onClick={()=>redirect("/")} 
            className=" c4 -mt-4 pt-2 cursor-pointer flex justify-center items-center   border-[linear-gradient(108deg, rgba(0,0,0,0.3309698879551821) 17%, rgba(102,102,102,1) 100%)]  ">
           <svg className="c5 md:c2" width="9em" height="9em" viewBox="0 0 107 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -46,13 +46,13 @@ const Header = memo(function Header() {
         </div>
         <div className='hidden md:flex justify-between ga  text-[#ffffff42] '>
           <ul className='flex gap-[10%] font-semibold text-nowrap'>
-            <Link to={""} 
+            <Link to={""} replace
               className={`${firstSegment == "" ? "text-white":""} cursor-pointer transition-all hover:text-[#ffffff9a]`} >{t("navigators.home")}</Link>
-            <Link to={"aboutUs"} 
+            <Link to={"aboutUs"} replace
               className={`${firstSegment == "aboutUs" ? "text-white":""} cursor-pointer transition-all hover:text-[#ffffff9a]`}>{t("navigators.about")}</Link>
-            <Link to={'videos'}  
+            <Link to={'videos'}  replace
               className={`${firstSegment == "videos" ? "text-white":""} cursor-pointer transition-all hover:text-[#ffffff9a]`}>{t("navigators.videos")}</Link>
-            <Link to={"photos"} 
+            <Link to={"photos"} replace
               className={`${firstSegment == "photos" ? "text-white":""} cursor-pointer transition-all hover:text-[#ffffff9a]`}>{t("navigators.photos")}</Link>
           </ul>
          

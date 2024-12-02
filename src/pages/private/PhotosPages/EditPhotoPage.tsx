@@ -18,10 +18,14 @@ import { useUpdatePhotoMutation } from "@/store/Reducers/photosApiSlice"
 import ConditionalLoader from "@/components/conditionals/ConditionalLoader"
 import updatePhotoValidation from "@/utils/validations/updatePhotoValidation"
 import { useTranslation } from "react-i18next"
-import { useLocation } from "react-router-dom"
+import { useLocation, useParams } from "react-router-dom"
+import IconButton from "@/components/buttons/IconButton"
+import LinkButton from "@/components/buttons/LinkButton"
+import { IoIosArrowRoundBack } from "react-icons/io"
 
 const AddPhotoPage = memo(function AddVideoPage() {
-  const { state } = useLocation(); console.log(state)
+  const { photoId } = useParams()
+  const { state } = useLocation()
   const [t,{language}] = useTranslation()
   const [updatePhotoMutation,{isLoading}] = useUpdatePhotoMutation()
   const form = useForm<z.infer<typeof updatePhotoValidation>>({ 
@@ -38,36 +42,50 @@ const AddPhotoPage = memo(function AddVideoPage() {
   }
   async function onSubmit(values: z.infer<typeof updatePhotoValidation>) {
     try {
-      const response = await updatePhotoMutation(values).unwrap()
-      toast.success(response.message)
-      form.reset({
-        image: undefined,
-        arTitle:undefined,
-        enTitle:undefined
-      })
-    } catch (error:any) { console.log(error)
-      toast.error(error?.data?.message ?? "try again later")
-    }
+      values.photoId = photoId ; console.log( "photoId >> ",values.photoId)
+      if(photoId) {
+        const response = await updatePhotoMutation(values).unwrap()
+        toast.success(response.message)
+        form.reset({})
+      }
+    } catch (error:any) {}
   }
   return (
     <div className="p-[6%]">
       <ConditionalLoader condition={isLoading} />
+      <LinkButton 
+        className={` font-semibold gap-2 p-[3%] rtl:flex-row-reverse`} 
+        to={".."} text={t("navigators.photos")} direction={"left"}>
+       <IoIosArrowRoundBack />
+      </LinkButton>
       <Squircle cornerRadius={16} className="rounded border-transparent bg-[#d4d4d420]">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 p-[6%] overflow-x-scroll">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col h-full space-y-8 p-[6%] ">
+
           <FormField
               control={form.control}
               name="image"
               render={({ field }) => (
                 <FormItem className="">
                   <FormControl>
-                    <Input 
-                      className="file:text-slate-500 file:bg-slate-800 file:rounded-md 
-                       border-0"
-                      onChange={(e)=>handleFileChange(e, field.onChange)}
-                      type="file" 
-                      accept="image/*"
-                      placeholder="upload the video" />
+                    <div className="relative ">
+                      <Input 
+                        className="z-120 opacity-0 cursor-pointer outline w-full h-full  file:bg-slate-800 file:rounded-md border-0"
+                        onChange={(e)=>handleFileChange(e, field.onChange)}
+                        type="file" 
+                        accept="image/*"
+                        placeholder="upload the video" />
+
+                        <div className="absolute flex justify-between items-center p-[3%] z-[-1] top-0 w-full h-full rtl:flex-row-reverse ">
+                          <h1>
+                            {
+                              form.getValues("image") ? t("fileSelected") : t("noFileSelected")
+                            }
+                          </h1>
+                          <IconButton className="c4" type="button"  direction={"left"} text={t("changePhoto")} >
+                          </IconButton>
+                        </div>
+                    </div>
                   </FormControl>
                   <FormDescription>
                     {t("addPhotoForm.image")}
@@ -76,6 +94,7 @@ const AddPhotoPage = memo(function AddVideoPage() {
                 </FormItem>
               )}
             />
+
              <FormField
               control={form.control}
               name="arTitle"
@@ -91,6 +110,7 @@ const AddPhotoPage = memo(function AddVideoPage() {
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="enTitle"
@@ -106,7 +126,7 @@ const AddPhotoPage = memo(function AddVideoPage() {
                 </FormItem>
               )}
             />
-            <Button type="submit">{t("addPhotoForm.submit")}</Button>
+            <Button disabled={isLoading ? true : false} type="submit">{t("addPhotoForm.submit")}</Button>
           </form>
         </Form>
       </Squircle>

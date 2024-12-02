@@ -53,5 +53,27 @@
     "next":"next",
     "previous":"previous"
   },
-  "back":"Back"
+  "back":"Back",
+  "loginForm":{
+    "email":"Email",
+    "password":"Password",
+    "note":"forgot your password",
+    "link":"change password",
+    "login":"login"
+  },
+  "addVideo":"add video",
+  "addPhoto":"addPhoto",
+  "logOut":"log out",
+  "actions":"Actions",
+  "edit":"Edit",
+  "view":"View",
+  "delete":"Delete",
+  "play":"Play",
+  "deleteAlert":"Are sure you want to delete ?",
+  "changePhoto":"Change Photo",
+  "changeVideo":"Change Video",
+  "choosePhoto":"Choose Photo",
+  "chooseVideo":"Choose Video",
+  "fileSelected":"File Selected",
+  "noFileSelected":"No File Selected"
 }

@@ -18,6 +18,9 @@ import addVideoValidation from "@/utils/validations/addVideoValidation"
 import { useAddVideoMutation } from "@/store/Reducers/videoApiSlice"
 import ConditionalLoader from "@/components/conditionals/ConditionalLoader"
 import { t } from "i18next"
+import LinkButton from "@/components/buttons/LinkButton"
+import { IoIosArrowRoundBack } from "react-icons/io"
+import IconButton from "@/components/buttons/IconButton"
 
 const AddVideoPage = memo(function AddVideoPage() {
   const [addVideoMutation,{isLoading}] = useAddVideoMutation()
@@ -45,22 +48,37 @@ const AddVideoPage = memo(function AddVideoPage() {
   return (
     <div className="p-[6%]">
     <ConditionalLoader condition={isLoading} />
+    <LinkButton 
+      className={` font-semibold gap-2 p-[3%] rtl:flex-row-reverse`} 
+      to={".."} text={t("navigators.videos")} direction={"left"}>
+      <IoIosArrowRoundBack />
+    </LinkButton>
+
     <Squircle cornerRadius={16} className="rounded border-transparent bg-[#d4d4d420]">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 p-[6%] overflow-x-scroll">
-        <FormField
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 p-[6%]">
+          <FormField
             control={form.control}
             name="image"
             render={({ field }) => (
               <FormItem className="">
                 <FormControl>
-                  <Input 
-                    className="file:text-slate-500 file:bg-slate-800 file:rounded-md 
-                     border-0"
-                    onChange={(e)=>handleFileChange(e, field.onChange)}
-                    type="file" 
-                    accept="image/*"
-                    placeholder="upload the video" />
+                <div className="relative ">
+                      <Input 
+                        className="z-120 opacity-0 cursor-pointer outline w-full h-full  file:bg-slate-800 file:rounded-md border-0"
+                        onChange={(e)=>handleFileChange(e, field.onChange)}
+                        type="file" 
+                        accept="image/*"/>
+                        <div className="absolute flex justify-between items-center p-[3%] z-[-1] top-0 w-full h-full rtl:flex-row-reverse ">
+                          <h1>
+                            {
+                              form.getValues("image") ? t("fileSelected") : t("noFileSelected")
+                            }
+                          </h1>
+                          <IconButton className="c4" type="button"  direction={"left"} text={t("choosePhoto")} >
+                          </IconButton>
+                        </div>
+                    </div>
                 </FormControl>
                 <FormDescription>
                   {t("addVideoForm.image")}
@@ -69,19 +87,28 @@ const AddVideoPage = memo(function AddVideoPage() {
               </FormItem>
             )}
           />
-            <FormField
+          <FormField
             control={form.control}
             name="video"
             render={({ field }) => (
               <FormItem className="">
                 <FormControl>
-                  <Input 
-                    className="file:text-slate-500 file:bg-slate-800 file:rounded-md
-                      border-0 "
-                    onChange={(e)=>handleFileChange(e, field.onChange)}
-                    type="file" 
-                    accept="video/*"
-                    placeholder="upload the video" />
+                <div className="relative ">
+                      <Input 
+                        className="z-120 opacity-0 cursor-pointer outline w-full h-full  file:bg-slate-800 file:rounded-md border-0"
+                        onChange={(e)=>handleFileChange(e, field.onChange)}
+                        type="file" 
+                        accept="video/*" />
+                        <div className="absolute flex justify-between items-center p-[3%] z-[-1] top-0 w-full h-full rtl:flex-row-reverse ">
+                          <h1>
+                            {
+                              form.getValues("video") ? t("fileSelected") : t("noFileSelected")
+                            }
+                          </h1>
+                          <IconButton className="c4" type="button"  direction={"left"} text={t("chooseVideo")} >
+                          </IconButton>
+                        </div>
+                    </div>
                 </FormControl>
                 <FormDescription>
                 {t("addVideoForm.video")}
@@ -105,7 +132,7 @@ const AddVideoPage = memo(function AddVideoPage() {
               </FormItem>
             )}
           />
-           <FormField
+          <FormField
             control={form.control}
             name="enTitle"
             render={({ field }) => (
@@ -120,8 +147,7 @@ const AddVideoPage = memo(function AddVideoPage() {
               </FormItem>
             )}
           />
-          
-           <FormField
+          <FormField
             control={form.control}
             name="arDescription"
             render={({ field }) => (

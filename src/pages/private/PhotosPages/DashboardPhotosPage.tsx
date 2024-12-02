@@ -3,25 +3,27 @@ import useSetTimeout from '@/hooks/useSetTimeout'
 import Pagination from '@/components/shared/Pagination'
 import { Squircle } from 'corner-smoothing'
 import usePhotosPagination from '@/hooks/usePhotosPagination'
-import DashboardMediaHeader from '@/components/general/DashboardMediaHeader'
 import { useTranslation } from 'react-i18next'
-import { RiEyeFill } from 'react-icons/ri'
-import { MdDelete } from 'react-icons/md'
-import { TbEditCircle } from 'react-icons/tb'
-import useRedirect from '@/hooks/useRedirect'
 import { IPhoto } from '@/utils/types/types'
 import DeletePhotoPortal from '@/components/portals/DeletePhotoPortal'
-import PreviewImage from '@/components/shared/PreviewImage'
+import IconButton from '@/components/buttons/IconButton'
+import Masonry from 'react-masonry-css'
+import { MdKeyboardArrowDown } from "react-icons/md";
+import { MdKeyboardArrowUp } from "react-icons/md";
+import DashboardPhotosHeader from '@/components/dedicated/dashboardPhotosPage/DashboardPhotosHeader'
+import PreviewPhoto from '@/components/shared/PreviewPhoto'
+import { useNavigate } from 'react-router-dom'
+import useInitialRendersCounter from '@/hooks/useRendersCount'
 function DashboardPhotosPage() {
-  const redirect = useRedirect()
-  const [clickedImageId, setClickedImageId] = useState("")
-  const [selectedImage,setSelectedImage] = useState<string|undefined>()
+  useInitialRendersCounter("DashboardPhotosPage")
+  const [clickedPhotoId, setClickedPhotoId] = useState("")
+  const navigate = useNavigate()
+  const [previewPhoto,setPreviewPhoto] = useState<IPhoto|undefined>()
   const {timeouter} = useSetTimeout()
-  const [,{language}] = useTranslation()
+  const [t,{language}] = useTranslation()
   const [searchValue,setSearchValue] = useState("")
   const [photoToBeDeleted,setPhotoToBeDeleted] = useState<IPhoto|undefined>() 
-  const [isDeletePhoto,setIsDeletePhoto] = useState<boolean>(false)
-  const {photos, counter , handleLeft , handleRight} = usePhotosPagination(searchValue)
+  const {photos, counter , handleLeft , handleRight } = usePhotosPagination(searchValue)
   const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
    timeouter(()=>{
@@ -29,16 +31,7 @@ function DashboardPhotosPage() {
       setSearchValue(value);
    },2000)
   },[searchValue])
-  const handleDeletePhoto = (photo:IPhoto) =>{
-    setIsDeletePhoto(true)
-    setPhotoToBeDeleted(photo);
-  }
-  const handleExpand = (image:string) =>{
-    setSelectedImage(image ? image : undefined)
-  }
-  const handleImageClick = (photoId:string) =>{
-    setClickedImageId(prev => prev === photoId ? "" : photoId)
-  }
+
   const scrollTopAndLeft = () =>{
     window.scrollTo({top:0})
     handleLeft()
@@ -47,39 +40,70 @@ function DashboardPhotosPage() {
     window.scrollTo({top:0})
     handleRight()
   }
+
+  const handleMenuActionClick = (photo:IPhoto,action:string) =>{
+    switch(action) {
+      case "edit": 
+        navigate(`Edit/${photo._id}`,{state:photo})
+        break
+      case "view": 
+      setPreviewPhoto(photo ? photo : undefined)
+        break
+      case "delete":
+        setPhotoToBeDeleted(photo);
+        break
+    }
+    setClickedPhotoId("")
+  }
   return (
    <div>
-    <DeletePhotoPortal condition={isDeletePhoto} photo={photoToBeDeleted} setIsDeletePhoto={setIsDeletePhoto} />
-    <DashboardMediaHeader url='photo' onSearchChange={handleSearchChange} />
-    <PreviewImage selectedImage={selectedImage} handleExpand={handleExpand} />
+    <DeletePhotoPortal  photo={photoToBeDeleted} setPhotoToBeDeleted={setPhotoToBeDeleted}  />
+    <DashboardPhotosHeader onSearchChange={handleSearchChange} />
+    <PreviewPhoto previewPhoto={previewPhoto} setPreviewPhoto={setPreviewPhoto} />
     <div className=' h-full '>
-      <div 
+      <Masonry 
+        breakpointCols={{
+          default:4,
+          640:2,
+          768:4
+        }}
         style={{ direction: language == "ar" ? "ltr" : "ltr"}}
-        className="columns-2 gap-0 md:columns-4 ltr:columns-">
+        className="my-masonry-grid">
         {
-          photos&&photos.map((photo:IPhoto) =>(
-            <div key={photo._id} onClick={()=>handleImageClick(photo._id)}  className="group relative p-[6%] overflow-hidden">
-              <Squircle cornerRadius={16} className="group border-transparent rounded-[16px]">
+          photos && photos.map((photo:IPhoto) =>(
+            <div onClick={()=>setClickedPhotoId(photo._id == clickedPhotoId ? "" : photo._id)}  key={photo._id} className="relative flex flex-col items-center p-[6%] ">
+              <Squircle cornerRadius={16} className="flex flex-col flex-nowrap rounded-[16px]">
                 <img className="w-full grayscale group-hover:grayscale-0 transition-all" src={photo.image.url} loading="lazy" alt="" />
-              </Squircle>
-            <div className={` ${clickedImageId == photo._id ? "!top-1/2" : "group-hover:top-1/2" } 
-                absolute left-1/2 -translate-x-1/2 translate-y-full top-full flex items-center gap-2 z-40 transition-all `}>
-                <div onClick={() => handleExpand(photo.image.url)} className="flex justify-center items-center bg-white rounded-full p-[6%] cursor-pointer">
-                  <RiEyeFill className='text-black' />
-                </div>
-                <div onClick={()=>handleDeletePhoto(photo)} className="flex justify-center items-center bg-white rounded-full p-[6%] cursor-pointer">
-                  <MdDelete className='text-black'/>
-                </div>
-                <div
-                  onClick={()=>redirect(`Edit/${photo._id}`,photo)} 
-                  className="flex justify-center items-center bg-white rounded-full p-[6%] cursor-pointer">
-                  <TbEditCircle className='text-black'/>
-                </div>
-              </div>
+                <IconButton  className='w-full bottom-0 mt-1 p-[6%]' text={t("actions")} direction={'left'}>
+                  { 
+                    clickedPhotoId == photo._id ?
+                    <MdKeyboardArrowUp />
+                    :
+                    <MdKeyboardArrowDown />
+
+                  }
+                </IconButton>
+              </Squircle> 
+              {
+                  clickedPhotoId == photo._id && 
+                  <div className='absolute  rounded-[16px]  top-full w-full z-50 p-[6%]'>
+                   <Squircle cornerRadius={16} className=' flex flex-col gap-3 bg-[#d4d4d48a]  items-stretch p-[6%]'>
+                      <Squircle cornerRadius={16} 
+                        onClick={()=>handleMenuActionClick(photo,"edit")} 
+                        className='text-center bg-w cursor-pointer p-[6%] bg-zinc-950'>{t("edit")}</Squircle>
+                      <Squircle cornerRadius={16} 
+                        onClick={() =>handleMenuActionClick(photo,"view") }
+                        className='text-center p-[6%] cursor-pointer bg-green-500'>{t("view")}</Squircle>
+                      <Squircle cornerRadius={16} 
+                        onClick={()=>handleMenuActionClick(photo,"delete")}
+                        className=' text-center p-[6%] cursor-pointer bg-red-500' >{t("delete")}</Squircle>
+                   </Squircle>
+                  </div>
+                }
           </div>
           ))
         }
-      </div>
+      </Masonry>
       {
         photos&&photos.length > 8 ?
         <Pagination className='flex mt-[10%]  justify-center text-white' onLeftClick={scrollTopAndLeft} onRightClick={scrollTopAndRight} counter={counter} />
@@ -93,3 +117,4 @@ function DashboardPhotosPage() {
 }
 
 export default DashboardPhotosPage
+
