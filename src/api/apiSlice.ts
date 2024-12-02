@@ -30,24 +30,21 @@ const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
   let response:any = await baseQuery(args, api, extraOptions); 
   
   if (response?.error?.originalStatus === 500 || response?.error?.status == 500) {
-    if(import.meta.env.ENV == "development"){
+    if(import.meta.env.ENV == "development")
       console.log("500 status error",response)
-      toast.error("something went wrong")
-    }
+    toast.error("something went wrong")
     return response
   }
 
   if (response?.error?.originalStatus === 400 || response?.error?.status == 400){
-    if(import.meta.env.ENV === "development"){
-      console.log("mode is >>",import.meta.env.ENV)
-      toast.error(response?.error?.data?.message)
+    if(import.meta.env.ENV === "development")
       console.error("400 status error >>",response?.error)
-    }
+    toast.error(response?.error?.data?.message)
     return response
   }
   if (response?.error?.originalStatus === 403 || response?.error?.status == 403){ 
-    console.log("initial auth error >>", response?.error)
-
+    if(import.meta.env.ENV === "development")
+      console.log("initial auth error >>", response?.error)
     const refreshResult = await baseQuery('/refresh', api,extraOptions);
     if(refreshResult.data) {
       const { user } = refreshResult.data as AuthResponse;
