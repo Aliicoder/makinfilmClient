@@ -75,5 +75,7 @@
   "choosePhoto": "اختر صورة",
   "chooseVideo": "اختر فيديو",
   "fileSelected": "تم اختيار الملف",
-  "noFileSelected": "لم يتم اختيار أي ملف"
+  "noFileSelected": "لم يتم اختيار أي ملف",
+  "copy":"تم نسخ الرابط",
+  "copyFail":"فشل في نسخ الرابط"
 }

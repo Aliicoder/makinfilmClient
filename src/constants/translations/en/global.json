@@ -75,5 +75,7 @@
   "choosePhoto":"Choose Photo",
   "chooseVideo":"Choose Video",
   "fileSelected":"File Selected",
-  "noFileSelected":"No File Selected"
+  "noFileSelected":"No File Selected",
+  "copy":"link copied",
+  "copyFail":"failed to copy the link"
 }

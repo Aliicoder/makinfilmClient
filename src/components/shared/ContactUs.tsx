@@ -39,7 +39,7 @@ const ContactUs = memo(function ContactUs() {
         <div className="md:flex md:justify-center">
           <div className="p-[6%]">
             <h1 className=" ">{t("email")}</h1>
-            <p className="pt-[3%]">info@gmail.com</p>
+            <p className="pt-[3%]">info@makinfilm.com</p>
             <div className="hidden md:flex justify-center p-[6%] mt-[6%] ">
             <LinkButton  className="border border-white bg-transparent p-[4%] md:p-[6%] mt-[6%] " text={`${t("dashboard")}`} direction={"right"} to={"/login"}>
             </LinkButton>
@@ -47,7 +47,8 @@ const ContactUs = memo(function ContactUs() {
           </div>
           <div className="p-[6%]">
             <h1>{t("address")}</h1>
-            <p className="pt-[3%]">{t("riyadh")}</p>
+            <a  href="https://maps.app.goo.gl/u8pzA6ZE4zh1BrcR8?g_st=com.google.maps.preview.copy"
+             target="_blank" className=" underline pt-[3%]">{t("riyadh")}</a>
           </div>
           <div className="p-[6%]">
             <h1>{t("contactNumbers")}</h1>

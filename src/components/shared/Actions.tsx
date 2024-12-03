@@ -1,9 +1,24 @@
 import { lazy, memo , useState } from "react"
 import { Squircle } from "corner-smoothing"
+import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
 const ConditionalMenu = lazy(()=>import("@/components/shared/ConditionalMenu"))
 const Actions = memo(function Actions() {
   const [isOpenMenu, setIsOpenMenu] = useState(false)
-
+  const [t] = useTranslation()
+  const copyUrlToClipboard = () => {
+    const currentUrl = window.location.href;
+    console.log(currentUrl);
+    navigator.clipboard.writeText(currentUrl)
+      .then(() => {
+        console.log('URL copied to clipboard');
+        toast.success(t("copy"))
+      })
+      .catch(err => {
+        console.error('Failed to copy URL: ', err);
+        toast.error(t("copyFail"))
+      });
+  };
   return (
     <div className="fixed bottom-0 z-40 w-full md:w-fit p-[4%] md:hidden l">
       <Squircle cornerRadius={16} className="flex justify-between p-[8%] bg-[#d4d4d420] backdrop-blur rtl:flex-row-reverse  text-white">    
@@ -14,7 +29,7 @@ const Actions = memo(function Actions() {
           </svg>
         </a>
         <div>
-          <svg className="text-[25px]" width="1em" height="1em" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg onClick={copyUrlToClipboard} className="text-[25px]" width="1em" height="1em" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M11.0764 14.7726L5.9661 11.9854C5.47556 12.4723 4.85184 12.8031 4.17357 12.9361C3.4953 13.069 2.79285 12.9982 2.15478 12.7325C1.5167 12.4668 0.971567 12.0182 0.5881 11.4431C0.204633 10.8681 0 10.1924 0 9.50122C0 8.81004 0.204633 8.13433 0.5881 7.55928C0.971567 6.98423 1.5167 6.53559 2.15478 6.26991C2.79285 6.00423 3.4953 5.9334 4.17357 6.06636C4.85184 6.19933 5.47556 6.53013 5.9661 7.01705L11.0764 4.22987C10.9012 3.40756 11.0278 2.54963 11.433 1.81297C11.8383 1.07632 12.4953 0.510163 13.2837 0.218046C14.0721 -0.0740706 14.9393 -0.0726318 15.7267 0.2221C16.5142 0.516831 17.1692 1.08516 17.5721 1.82315C17.9749 2.56115 18.0987 3.4195 17.9207 4.24123C17.7427 5.06296 17.2748 5.79316 16.6027 6.29831C15.9306 6.80345 15.0991 7.04978 14.2603 6.99225C13.4214 6.93472 12.6314 6.57717 12.0345 5.98499L6.92416 8.77217C7.02638 9.25249 7.02638 9.74894 6.92416 10.2293L12.0345 13.0174C12.6314 12.4253 13.4214 12.0677 14.2603 12.0102C15.0991 11.9526 15.9306 12.199 16.6027 12.7041C17.2748 13.2093 17.7427 13.9395 17.9207 14.7612C18.0987 15.5829 17.9749 16.4413 17.5721 17.1793C17.1692 17.9173 16.5142 18.4856 15.7267 18.7803C14.9393 19.0751 14.0721 19.0765 13.2837 18.7844C12.4953 18.4923 11.8383 17.9261 11.433 17.1895C11.0278 16.4528 10.9012 15.5949 11.0764 14.7726Z" fill="white"/>
           </svg>
         </div>
