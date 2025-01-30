@@ -14,14 +14,14 @@ import { Input } from "@/components/ui/input"
 import { ChangeEvent, memo } from "react"
 import {Squircle} from "corner-smoothing"
 import toast from "react-hot-toast"
-import { useUpdatePhotoMutation } from "@/store/Reducers/photosApiSlice"
 import ConditionalLoader from "@/components/conditionals/ConditionalLoader"
-import updatePhotoValidation from "@/utils/validations/updatePhotoValidation"
+import updatePhotoValidation from "@/validations/updatePhotoValidation"
 import { useTranslation } from "react-i18next"
 import { useLocation, useParams } from "react-router-dom"
 import IconButton from "@/components/buttons/IconButton"
 import LinkButton from "@/components/buttons/LinkButton"
 import { IoIosArrowRoundBack } from "react-icons/io"
+import { useUpdatePhotoMutation } from "@/store/apiSlices/photosApiSlice"
 
 const AddPhotoPage = memo(function AddVideoPage() {
   const { photoId } = useParams()

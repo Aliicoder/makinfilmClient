@@ -2,19 +2,19 @@ import useSegment from "@/hooks/useSegment"
 import { useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
 import IconButton from "../buttons/IconButton";
-import { useLogOutMutation } from "@/store/Reducers/authApiSlice";
 import { useDispatch } from "react-redux";
-import { logOut } from "@/store/Reducers/authReducer";
+import { logout } from "@/store/Reducers/authReducer";
+import { useLogoutMutation } from "@/store/apiSlices/authApiSlice";
 
 function DashboardConditionalMenu() {
   const [t] = useTranslation()
   const secondSegment = useSegment(2) ; //console.log(secondSegment)
-  const [logOutMutation] = useLogOutMutation()
+  const [logOutMutation] = useLogoutMutation()
   const dispatch = useDispatch()
   const handleLogOut = async () =>{
     try{
       await logOutMutation({}).unwrap(); //console.log("response >>",response)
-      dispatch(logOut())
+      dispatch(logout())
     }catch(error){}
   }
   return (

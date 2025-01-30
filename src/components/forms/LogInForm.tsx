@@ -3,8 +3,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import {Form,FormControl,FormField,FormItem,FormLabel,FormMessage,FormDescription} from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import loginValidation from "@/utils/validations/loginValidation";
-import { useLoginMutation } from "@/store/Reducers/authApiSlice";
+import loginValidation from "@/validations/loginValidation";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "@/store/Reducers/authReducer";
 import IconButton from "../buttons/IconButton";
@@ -17,6 +16,7 @@ import LinkButton from "../buttons/LinkButton";
 import { useTranslation } from "react-i18next";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import useShowInput from "@/hooks/useShowInput";
+import { useLoginMutation } from "@/store/apiSlices/authApiSlice"
 
 const LogInForm = () => {
   const [t,{language}] = useTranslation()

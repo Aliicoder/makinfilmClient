@@ -1,4 +1,4 @@
-import { ICounter } from "@/utils/types/types"
+import { ICounter } from "@/types/types"
 import { t } from "i18next"
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa"
 

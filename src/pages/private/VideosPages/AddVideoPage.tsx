@@ -14,13 +14,13 @@ import { Input } from "@/components/ui/input"
 import { ChangeEvent, memo } from "react"
 import {Squircle} from "corner-smoothing"
 import toast from "react-hot-toast"
-import addVideoValidation from "@/utils/validations/addVideoValidation"
-import { useAddVideoMutation } from "@/store/Reducers/videoApiSlice"
+import addVideoValidation from "@/validations/addVideoValidation"
 import ConditionalLoader from "@/components/conditionals/ConditionalLoader"
 import { t } from "i18next"
 import LinkButton from "@/components/buttons/LinkButton"
 import { IoIosArrowRoundBack } from "react-icons/io"
 import IconButton from "@/components/buttons/IconButton"
+import { useAddVideoMutation } from "@/store/apiSlices/videoApiSlice"
 
 const AddVideoPage = memo(function AddVideoPage() {
   const [addVideoMutation,{isLoading}] = useAddVideoMutation()

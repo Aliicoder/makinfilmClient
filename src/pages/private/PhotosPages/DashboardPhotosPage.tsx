@@ -4,16 +4,16 @@ import Pagination from '@/components/shared/Pagination'
 import { Squircle } from 'corner-smoothing'
 import usePhotosPagination from '@/hooks/usePhotosPagination'
 import { useTranslation } from 'react-i18next'
-import { IPhoto } from '@/utils/types/types'
+import { IPhoto } from '@/types/types'
 import DeletePhotoPortal from '@/components/portals/DeletePhotoPortal'
 import IconButton from '@/components/buttons/IconButton'
 import Masonry from 'react-masonry-css'
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { MdKeyboardArrowUp } from "react-icons/md";
-import DashboardPhotosHeader from '@/components/dedicated/dashboardPhotosPage/DashboardPhotosHeader'
 import PreviewPhoto from '@/components/shared/PreviewPhoto'
 import { useNavigate } from 'react-router-dom'
 import useInitialRendersCounter from '@/hooks/useRendersCount'
+import DashboardPhotosHeader from '@/components/pages/dashboardPhotosPage/DashboardPhotosHeader'
 function DashboardPhotosPage() {
   useInitialRendersCounter("DashboardPhotosPage")
   const [clickedPhotoId, setClickedPhotoId] = useState("")

@@ -4,7 +4,15 @@
     "home":"Home",
     "about":"About us",
     "videos":"Videos",
+    "equipments": "Equipments",
     "photos":"Photos"
+  },
+  "equipments": {
+    "title":"We offer a wide range of digital cameras, lenses, lighting, grip, and sound equipment—everything you need for a seamless shoot. Our team is ready to support your next production! 🎬 Additionally, we provide production spaces and fully equipped studio facilities to bring your vision to life.",
+    "cameras": "cameras",
+    "lighting": "lighting",
+    "sound": "sound",
+    "lenses": "lenses"
   },
   "MKN": {
     "part1": "Makin",
@@ -12,10 +20,10 @@
     "part3": "Production"
   },
   "intro":"Turn your ideas into stunning visuals. Explore a world of creativity and excellence with a team committed to delivering nothing less than remarkable film production",
-  "contactButton":"Contact Now",
-  "ViewMoreButton":"View More",
+  "contactButton":"Contact now",
+  "ViewMoreButton":"View more",
   "behindTheSince": "Behind the since",
-  "recentWork": "Recent Work",
+  "recentWork": "Recent work",
   "services": "Services",
   "videosProduction":"Videos production",
   "advertisement":"Advertisements",
@@ -77,5 +85,8 @@
   "fileSelected":"File Selected",
   "noFileSelected":"No File Selected",
   "copy":"link copied",
-  "copyFail":"failed to copy the link"
+  "copyFail":"failed to copy the link",
+  "footer": {
+    "text": "© 2024 Stunning Portfolio Co. All rights reserved."
+  }
 }

@@ -1,6 +1,6 @@
-import { ICounter } from "@/utils/types/types";
+import { ICounter } from "@/types/types";
 import { useCallback, useEffect, useState } from "react"
-import { useFetchPhotosQuery , util} from "@/store/Reducers/photosApiSlice";
+import { useFetchPhotosQuery , util} from "@/store/apiSlices/photosApiSlice";
 const perPage = 8 ;
 const usePhotosPagination = (searchValue:string = "") =>{
   const [counter,setCounter] = useState<ICounter>({prev:0,curPage:1,next:2,pagesLen:2});

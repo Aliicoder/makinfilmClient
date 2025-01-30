@@ -1,4 +1,4 @@
-import { IPhoto } from "@/utils/types/types"
+import { IPhoto } from "@/types/types"
 
 interface PreviewImage {
   previewPhoto:IPhoto | undefined

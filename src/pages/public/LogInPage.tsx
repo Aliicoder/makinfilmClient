@@ -1,10 +1,10 @@
-import { lazy } from "react"
-const LogInForm = lazy(()=>import("@/components/forms/LogInForm"))
+import LogInForm from "@/components/forms/LogInForm"
+import Frame from "@/components/styled/Frame"
 function LogInPage() {
   return (
-    <div className='bg-black'>
+    <Frame className='bg-black'>
       <LogInForm />
-    </div>
+    </Frame>
   )
 }
 

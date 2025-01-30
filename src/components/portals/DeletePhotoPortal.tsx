@@ -4,10 +4,10 @@ import IconButton from "../buttons/IconButton";
 import { IoClose } from "react-icons/io5";
 import React, { useRef } from "react";
 import toast from "react-hot-toast";
-import { IPhoto } from "@/utils/types/types";
+import { IPhoto } from "@/types/types";
 import { Squircle } from "corner-smoothing";
-import { useDeletePhotoMutation , util} from "@/store/Reducers/photosApiSlice";
 import { useTranslation } from "react-i18next";
+import { useDeletePhotoMutation, util } from "@/store/apiSlices/photosApiSlice";
 interface DeleteVideoParams {
   photo?:IPhoto
   setPhotoToBeDeleted:React.Dispatch<React.SetStateAction<IPhoto | undefined>>

@@ -6,13 +6,13 @@ import useVideosPagination from '@/hooks/useVideosPagination'
 import { HiPlay } from 'react-icons/hi'
 import { useTranslation } from 'react-i18next'
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
-import { IVideo } from '@/utils/types/types'
+import { IVideo } from '@/types/types'
 import DeleteVideoPortal from '@/components/portals/DeleteVideoPortal'
 import VideoPlayer from '@/components/conditionals/VideoPlayer'
-import DashboardVideosHeader from '@/components/dedicated/dashboardVideosPage/DashboardVideosHeader'
 import IconButton from '@/components/buttons/IconButton'
 import { useNavigate } from 'react-router-dom'
 import useInitialRendersCounter from '@/hooks/useRendersCount'
+import DashboardVideosHeader from '@/components/pages/dashboardVideosPage/DashboardVideosHeader'
 function DashboardVideosPage() {
   useInitialRendersCounter("DashboardVideosPage")
   const [t,{language}] = useTranslation()

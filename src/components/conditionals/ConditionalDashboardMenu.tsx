@@ -6,22 +6,22 @@ import { useNavigate } from 'react-router-dom';
 import useSegment from '@/hooks/useSegment';
 import IconButton from '../buttons/IconButton';
 import { useDispatch } from 'react-redux';
-import { logOut } from '@/store/Reducers/authReducer';
-import { useLogOutMutation } from '@/store/Reducers/authApiSlice';
+import { logout } from '@/store/Reducers/authReducer';
+import { useLogoutMutation } from '@/store/apiSlices/authApiSlice';
 interface ConditionalDashboardMenu {
   condition : boolean
   setIsOpenMenu: React.Dispatch<SetStateAction<boolean>>
 }
 const ConditionalDashboardMenu = memo(function ConditionalMenu({condition,setIsOpenMenu}:ConditionalDashboardMenu) {
   const dispatch = useDispatch()
-  const [logOutMutation] = useLogOutMutation()
+  const [logOutMutation] = useLogoutMutation()
   const [t,{language}] = useTranslation()
   const redirect = useNavigate()
   const  firstSegment = useSegment(2)
   const handleLogOut = async () =>{
     try{
       await logOutMutation({}).unwrap(); //console.log("response >>",response)
-      dispatch(logOut())
+      dispatch(logout())
     }catch(error){}
   }
   const handleGoToAndClose = useCallback((link:string)=>{

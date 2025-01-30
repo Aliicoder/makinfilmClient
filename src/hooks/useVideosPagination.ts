@@ -1,6 +1,6 @@
-import { ICounter } from "@/utils/types/types";
+import { ICounter } from "@/types/types";
 import { useCallback, useEffect, useState } from "react"
-import { useFetchVideosQuery , util } from "@/store/Reducers/videoApiSlice";
+import { useFetchVideosQuery , util } from "@/store/apiSlices/videoApiSlice";
 const perPage = 8 ;
 const useVideosPagination = (searchValue:string = "") =>{
   const [counter,setCounter] = useState<ICounter>({prev:0,curPage:1,next:2,pagesLen:2});

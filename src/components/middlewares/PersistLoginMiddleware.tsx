@@ -1,9 +1,9 @@
-import { usePersistLoginMutation } from "@/store/Reducers/authApiSlice"
 import { setCredentials } from "@/store/Reducers/authReducer"
 import { Outlet, useNavigate } from "react-router-dom"
 import { memo, useEffect , useState,  } from 'react';
 import { useDispatch } from "react-redux";
 import useInitialRendersCounter from "@/hooks/useRendersCount";
+import { usePersistLoginMutation } from "@/store/apiSlices/authApiSlice";
 
 const PersistLoginMiddleware = memo(function PersistLoginMiddleware() {
   useInitialRendersCounter("persistLoginMiddleware")

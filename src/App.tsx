@@ -1,26 +1,28 @@
 import { Route, Routes } from "react-router-dom"
-import { lazy, Suspense } from "react"
+import { lazy } from "react"
 import ProtectedRoutesMiddleware from "./components/middlewares/ProtectedRoutesMiddleware"
+import RootLayout from "./pages/layouts/RootLayout"
+import VideosLayout from "./pages/layouts/VideosLayout"
+import DashboardLayout from "./pages/layouts/DashboardLayout"
+import PublicLayout from "./pages/layouts/PublicLayout"
+import PhotosLayout from "./pages/layouts/PhotosLayout"
+import PhotosPage from "./pages/public/PhotosPage"
+import VideosPage from "./pages/public/VideosPage"
+import AboutUsPage from "./pages/public/AboutUsPage"
+import HomePage from "./pages/public/HomePage"
+import EquipmentsPage from "./pages/public/EquipmentsPage"
 
 
 const PersistLoginMiddleware = lazy(()=>import("@/components/middlewares/PersistLoginMiddleware"))
-const PublicLayout = lazy(() =>import("@/components/layouts/PublicLayout"))
-const HomePage = lazy(()=>import("@/pages/public/HomePages/HomePage"))
-const AboutUsPage = lazy(()=>import("@/pages/public/AboutUsPages/AboutUsPage"))
 const LogInPage = lazy(()=>import("@/pages/public/LogInPage"))
 const DashboardVideosPage = lazy(()=>import("@/pages/private/VideosPages/DashboardVideosPage"))
 const DashboardPhotosPage = lazy(()=>import("@/pages/private/PhotosPages/DashboardPhotosPage"))
-const DashboardLayout = lazy(()=>import("@/components/layouts/DashboardLayout"))
 const AddVideoPage = lazy(()=>import("@/pages/private/VideosPages/AddVideoPage"))
 const AddPhotoPage = lazy(()=>import("@/pages/private/PhotosPages/AddPhotoPage"))
-const VideosPage = lazy(()=>import("@/pages/public/VideosPages/VideosPage"))
-const PhotosPage = lazy(()=>import("@/pages/public/PhotosPages/PhotosPage"))
 const NotFoundPage = lazy(()=>import("@/pages/public/NotFoundPage"))
 const EditVideoPage = lazy(()=>import("@/pages/private/VideosPages/EditVideoPage"))
 const EditPhotoPage = lazy(()=>import("./pages/private/PhotosPages/EditPhotoPage"))
-const VideosLayout = lazy(()=>import("@/components/layouts/VideosLayout"))
-const PhotosLayout = lazy(()=>import("@/components/layouts/PhotosLayout"))
-const RootLayout = lazy(()=>import("@/components/layouts/RootLayout"))
+
 
 
 function App() {
@@ -45,10 +47,11 @@ function App() {
             </Route>
           </Route>
           <Route path="/" element={<PublicLayout/>} >  
-            <Route index element={<Suspense> <HomePage/> </Suspense>} />
-            <Route path="aboutUs" element={<Suspense ><AboutUsPage/></Suspense>} />
-            <Route path="videos" element={<Suspense ><VideosPage/></Suspense>} />
-            <Route path="photos" element={<Suspense ><PhotosPage/></Suspense>} />
+            <Route index element={<HomePage/>} />
+            <Route path="aboutUs" element={<AboutUsPage/>} />
+            <Route path="videos" element={<VideosPage/>} />
+            <Route path="photos" element={<PhotosPage/>} />
+            <Route path="equipments" element={<EquipmentsPage/>} />
           </Route>
           <Route path="*" element={<NotFoundPage/>} />
         </Route>

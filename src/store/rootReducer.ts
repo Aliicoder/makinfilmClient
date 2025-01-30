@@ -1,4 +1,4 @@
-import { apiSlice } from "@/api/apiSlice"
+import { apiSlice } from "@/store/api/apiSlice"
 import authReducer from "./Reducers/authReducer"
 const rootReducer = {
   [apiSlice.reducerPath]:apiSlice.reducer,

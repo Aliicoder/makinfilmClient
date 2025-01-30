@@ -15,18 +15,17 @@ import { ChangeEvent, memo } from "react"
 import {Squircle} from "corner-smoothing"
 import toast from "react-hot-toast"
 import ConditionalLoader from "@/components/conditionals/ConditionalLoader"
-import { useLocation } from "react-router-dom"
-import updateVideoValidation from "@/utils/validations/updateVideoValidation"
-import { useUpdateVideoMutation } from "@/store/Reducers/videoApiSlice"
+import { useLocation, useNavigate } from "react-router-dom"
+import updateVideoValidation from "@/validations/updateVideoValidation"
 import { useTranslation } from "react-i18next"
-import useRedirect from "@/hooks/useRedirect"
 import LinkButton from "@/components/buttons/LinkButton"
 import { IoIosArrowRoundBack } from "react-icons/io"
 import IconButton from "@/components/buttons/IconButton"
+import { useUpdateVideoMutation } from "@/store/apiSlices/videoApiSlice"
 const EditVideoPage = memo(function AddVideoPage() {
   const [t] = useTranslation()
   const { state } = useLocation(); console.log(state)
-  const redirect = useRedirect()
+  const navigate = useNavigate()
   const [updateVideoMutation,{isLoading}] = useUpdateVideoMutation()
   const form = useForm<z.infer<typeof updateVideoValidation>>({ 
     resolver:zodResolver(updateVideoValidation),
@@ -53,7 +52,7 @@ const EditVideoPage = memo(function AddVideoPage() {
         arDescription:undefined,
         enDescription:undefined
       })
-      redirect("/dashboard/videos")
+      navigate("/dashboard/videos")
     } catch (error:any) { console.log(error)
       toast.error(error?.data?.message ?? "try again later")
     }

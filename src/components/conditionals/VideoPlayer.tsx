@@ -1,6 +1,6 @@
 import { IoCaretBackOutline } from 'react-icons/io5'
 import IconButton from '../buttons/IconButton'
-import { IVideo } from '@/utils/types/types'
+import { IVideo } from '@/types/types'
 import { useTranslation } from 'react-i18next'
 interface VideoPlayer {
   playVideo?:IVideo 

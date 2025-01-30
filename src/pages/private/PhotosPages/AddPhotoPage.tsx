@@ -13,13 +13,13 @@ import {
 import { Input } from "@/components/ui/input"
 import { ChangeEvent, memo } from "react"
 import {Squircle} from "corner-smoothing"
-import addPhotoValidation from "@/utils/validations/addPhotoValidation"
-import { useAddPhotoMutation } from "@/store/Reducers/photosApiSlice"
+import addPhotoValidation from "@/validations/addPhotoValidation"
 import ConditionalLoader from "@/components/conditionals/ConditionalLoader"
 import { useTranslation } from "react-i18next"
 import LinkButton from "@/components/buttons/LinkButton"
 import { IoIosArrowRoundBack } from "react-icons/io"
 import IconButton from "@/components/buttons/IconButton"
+import { useAddPhotoMutation } from "@/store/apiSlices/photosApiSlice"
 
 const AddPhotoPage = memo(function AddVideoPage() {
   const [t] = useTranslation()
