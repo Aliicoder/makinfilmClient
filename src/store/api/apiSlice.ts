@@ -6,7 +6,7 @@ import { HttpStatus } from "@/constants/enum/enum";
 import { AuthResponse } from "@/types/types";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'http://localhost:3000/api/v1',
+  baseUrl: 'https://makinfilmserver.site/api/v1',
   credentials: 'include',
   prepareHeaders: (headers, { getState }) => {
     const state = getState() as RootState;
