@@ -45,3 +45,6 @@ export interface AuthResponse {
     accessToken:string
   }
 }
+export interface IResetPasswordForm {
+  className?: string
+}

@@ -4,7 +4,6 @@ export const authApiSlice = apiSlice.injectEndpoints({
     persistLogin:builder.mutation({
       query:()=>("/refresh")
     }),
-
     Login:builder.mutation({
       query:credentials=>({
         url:'/user/login',
@@ -15,15 +14,32 @@ export const authApiSlice = apiSlice.injectEndpoints({
     logout:builder.mutation({
       query:()=>{
         return{
-          url:'/refresh/cancel',
-          method:'get',
+          url:'/user/logout',
+          method:'POST',
         }
       }
     }),
+    resetPassword:builder.mutation({
+      query:credentials=>({
+        url:'/user/resetPassword',
+        method: 'PATCH',
+        body:{...credentials}
+      })
+    }), 
+    changePassword:builder.mutation({
+      query:credentials=>({
+        url:'/user/changePassword',
+        method: 'PATCH',
+        body:{...credentials}
+      })
+    }), 
+    
   })
 })
 export const {
  usePersistLoginMutation,
+ useChangePasswordMutation,
+ useResetPasswordMutation,
  useLoginMutation,
  useLogoutMutation,
 } = authApiSlice

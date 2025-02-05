@@ -5,11 +5,12 @@ import { HTMLProps, ReactNode } from 'react'
 interface ISquircle extends MotionProps, Omit<HTMLProps<HTMLDivElement>, keyof MotionProps> {
   className?: string;
   children?: ReactNode;
+  onClick?: (e: any) => void
 }
-function SquircleBorder({className,children}:ISquircle) {
+function SquircleBorder({className,children,onClick}:ISquircle) {
   const cornerRadius = useSquircle()
   return (
-    <Squircle cornerRadius={cornerRadius} className={className}>
+    <Squircle onClick={onClick} cornerRadius={cornerRadius} className={className}>
       {children}
     </Squircle>
   )

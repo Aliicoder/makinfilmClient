@@ -12,24 +12,30 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { ChangeEvent, memo } from "react"
-import {Squircle} from "corner-smoothing"
 import toast from "react-hot-toast"
 import ConditionalLoader from "@/components/conditionals/ConditionalLoader"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useLocation,useParams } from "react-router-dom"
 import updateVideoValidation from "@/validations/updateVideoValidation"
 import { useTranslation } from "react-i18next"
 import LinkButton from "@/components/buttons/LinkButton"
 import { IoIosArrowRoundBack } from "react-icons/io"
 import IconButton from "@/components/buttons/IconButton"
 import { useUpdateVideoMutation } from "@/store/apiSlices/videoApiSlice"
+import Frame from "@/components/styled/Frame"
+import SquircleBorder from "@/components/borders/SquircleBorder"
+import Relative from "@/components/styled/Relative"
+import Absolute from "@/components/styled/Absolute"
+import Text from "@/components/styled/Text"
+import formData from "@/utils/functions/formData"
 const EditVideoPage = memo(function AddVideoPage() {
+  const { videoId } = useParams()
   const [t] = useTranslation()
   const { state } = useLocation(); console.log(state)
-  const navigate = useNavigate()
   const [updateVideoMutation,{isLoading}] = useUpdateVideoMutation()
   const form = useForm<z.infer<typeof updateVideoValidation>>({ 
     resolver:zodResolver(updateVideoValidation),
     defaultValues: {
+      videoId,
       arTitle:state.title.ar,
       enTitle:state.title.en,
       arDescription:state.description.ar,
@@ -43,55 +49,56 @@ const EditVideoPage = memo(function AddVideoPage() {
   }
   async function onSubmit(values: z.infer<typeof updateVideoValidation>) {
     try {
-      const response = await updateVideoMutation({values,videoId:state._id}).unwrap()
+      const credentials = formData(values) 
+      const response = await updateVideoMutation({credentials,videoId:values.videoId}).unwrap()
       toast.success(response.message)
-      form.reset({
-        image: undefined,
-        video: undefined,
-        arTitle: undefined,
-        arDescription:undefined,
-        enDescription:undefined
-      })
-      navigate("/dashboard/videos")
+      form.reset({})
     } catch (error:any) { console.log(error)
       toast.error(error?.data?.message ?? "try again later")
     }
   }
   return (
-    <div className="p-[6%]">
+    <Frame className="p-6">
       <ConditionalLoader condition={isLoading} />
       <LinkButton 
-        className={` font-semibold gap-2 p-[3%] rtl:flex-row-reverse`} 
-        to={".."} text={t("navigators.photos")} direction={"left"}>
+        className={`gap-2 p-3 font-semibold  rtl:flex-row-reverse`} 
+        to={".."} 
+        text={t("navigators.photos")} 
+        direction={"left"}>
        <IoIosArrowRoundBack />
       </LinkButton>
-      <Squircle cornerRadius={16} className="rounded border-transparent bg-[#d4d4d420]">
+      <SquircleBorder className="rounded border-transparent bg-[#d4d4d420]">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 p-[6%] overflow-x-scroll">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 p-3"
+            encType="multipart/form-data">
           <FormField
               control={form.control}
               name="image"
               render={({ field }) => (
                 <FormItem className="">
                   <FormControl>
-                  <div className="relative ">
-                      <Input 
-                        className="z-120 opacity-0 cursor-pointer outline w-full h-full  file:bg-slate-800 file:rounded-md border-0"
-                        onChange={(e)=>handleFileChange(e, field.onChange)}
-                        type="file" 
-                        accept="image/*"
-                        placeholder="upload the video" />
+                  <Relative>
+                    <Input 
+                      className="relative z-[100] opacity-0 cursor-pointer outline w-full h-full border-0
+                        file:bg-slate-800 file:rounded-md "
+                      onChange={(e)=>handleFileChange(e, field.onChange)}
+                      type="file" 
+                      accept="image/*"
+                      placeholder="upload the video" />
 
-                        <div className="absolute flex justify-between items-center p-[3%] z-[-1] top-0 w-full h-full rtl:flex-row-reverse ">
-                          <h1>
-                            {
-                              form.getValues("image") ? t("fileSelected") : t("noFileSelected")
-                            }
-                          </h1>
-                          <IconButton className="c4" type="button"  direction={"left"} text={t("changePhoto")} >
-                          </IconButton>
-                        </div>
-                    </div>
+                      <Absolute className="p-3 z-50 top-0 w-full h-full flex justify-between items-center 
+                        rtl:flex-row-reverse ">
+                        <Text>
+                          { form.getValues("image") ? t("fileSelected") : t("noFileSelected")}
+                        </Text>
+                        <IconButton 
+                          className="fs-16" 
+                          type="button"  
+                          direction={"left"} 
+                          text={t("changePhoto")} >
+                        </IconButton>
+                      </Absolute>
+                    </Relative>
                   </FormControl>
                   <FormDescription>
                     {t("addVideoForm.image")}
@@ -106,23 +113,26 @@ const EditVideoPage = memo(function AddVideoPage() {
               render={({ field }) => (
                 <FormItem className="">
                   <FormControl>
-                  <div className="relative ">
-                      <Input 
-                        className="z-120 opacity-0 cursor-pointer outline w-full h-full  file:bg-slate-800 file:rounded-md border-0"
-                        onChange={(e)=>handleFileChange(e, field.onChange)}
-                        type="file" 
-                        accept="video/*"/>
-
-                        <div className="absolute flex justify-between items-center p-[3%] z-[-1] top-0 w-full h-full rtl:flex-row-reverse ">
-                          <h1>
-                            {
-                              form.getValues("video") ? t("fileSelected") : t("noFileSelected")
-                            }
-                          </h1>
-                          <IconButton className="c4" type="button"  direction={"left"} text={t("changeVideo")} >
-                          </IconButton>
-                        </div>
-                    </div>
+                  <Relative>
+                    <Input 
+                      className="relative z-[100] w-full h-full opacity-0 cursor-pointer outline border-0
+                        file:bg-slate-800 file:rounded-md"
+                      onChange={(e)=>handleFileChange(e, field.onChange)}
+                      type="file" 
+                      accept="video/*"/>
+                      <Absolute className="p-3 z-50 top-0 w-full h-full  flex justify-between items-center 
+                        rtl:flex-row-reverse ">
+                        <Text>
+                          { form.getValues("video") ? t("fileSelected") : t("noFileSelected") }
+                        </Text>
+                        <IconButton 
+                          className="fs-10" 
+                          type="button"  
+                          direction={"left"} 
+                          text={t("changeVideo")} >
+                        </IconButton>
+                      </Absolute>
+                    </Relative>
                   </FormControl>
                   <FormDescription>
                   {t("addVideoForm.video")}
@@ -195,8 +205,8 @@ const EditVideoPage = memo(function AddVideoPage() {
             <Button disabled={isLoading ? true : false} type="submit">{t("addVideoForm.submit")}</Button>
           </form>
         </Form>
-      </Squircle>
-    </div>
+      </SquircleBorder>
+    </Frame>
   )
 })
 export default EditVideoPage

@@ -1,5 +1,4 @@
 import { apiSlice } from "@/store/api/apiSlice"
-import { formidable } from "@/utils/functions/formidable"
 export const productApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     fetchPhotos:builder.query({
@@ -8,29 +7,27 @@ export const productApiSlice = apiSlice.injectEndpoints({
       providesTags:["Photos"]
     }),
     addPhoto:builder.mutation({
-      query:credentials=>{
-        const formData = formidable(credentials);
+      query:({credentials})=>{
         return{
           url:`/photo`,
           method:'POST',
-          body:formData
+          body:credentials
         }
       }  
     }),
     updatePhoto:builder.mutation({
-      query:credentials=>{
-        const formData = formidable(credentials);console.log(formData)
+      query:({credentials,photoId})=>{
         return{
-          url:`/photo/${credentials.photoId}`,
+          url:`/photo/${photoId}`,
           method:'PATCH',
-          body:formData
+          body:credentials
         }
       }  
     }),
     deletePhoto:builder.mutation({
-      query:credentials=>{
+      query:({photoId})=>{
         return{
-          url:`/photo/${credentials.photoId}`,
+          url:`/photo/${photoId}`,
           method:'DELETE',
         }
       }  

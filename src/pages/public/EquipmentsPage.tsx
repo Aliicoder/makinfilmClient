@@ -3,13 +3,30 @@ import { useTranslation } from 'react-i18next'
 import FlexColContainer from '@/components/styled/FlexColContainer'
 import Grid from '@/components/styled/Grid'
 import Frame from '@/components/styled/Frame'
-import { EQUIPMENTS } from '@/constants/equipments'
 import FlexCol from '@/components/styled/FlexCol'
 import Text from '@/components/styled/Text'
 import FlexRow from '@/components/styled/FlexRow'
 
 const EquipmentsPage = () => {
   const [t,{language}] = useTranslation()
+  const EQUIPMENTS = [
+    {
+      url: "/equipments/cameras.avif",
+      title: t("equipments.cameras"),
+    },
+    {
+      url: "/equipments/lighting.avif",
+      title: t("equipments.lighting"),
+    },
+    {
+      url: "/equipments/sound.avif",
+      title: t("equipments.sound"),
+    },
+    {
+      url: "/equipments/lenses.avif",
+      title: t("equipments.lenses"),
+    },
+  ]
   return (
     <FlexColContainer
       className='mt-6'

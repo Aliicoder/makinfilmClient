@@ -11,7 +11,7 @@ const Header = memo(function Header() {
   const location = useLocation()
   const [background,setBackground] = useState(false)
   const [t,{language,changeLanguage}] = useTranslation()
-  const redirect = useNavigate()
+  const navigate = useNavigate()
   const firstSegment = useSegment(1)
   const handleChangeLanguage = useCallback((lang:string)=>{
     changeLanguage(lang)
@@ -37,7 +37,7 @@ const Header = memo(function Header() {
       className={`px-10 justify-center flex-col items-center lg:rtl:flex-row-reverse 
           lg:flex-row md:justify-between`}>
           
-      <Flex onClick={()=>redirect("/")} 
+      <Flex onClick={()=>navigate("/")} 
           className="-mt-4 pt-2 justify-center items-center cursor-pointer
           border-[linear-gradient(108deg, rgba(0,0,0,0.3309698879551821) 17%, rgba(102,102,102,1) 100%)] ">
           <Makin />

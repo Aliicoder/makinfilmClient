@@ -1,26 +1,31 @@
 import useSegment from "@/hooks/useSegment"
 import { useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
-import IconButton from "../buttons/IconButton";
 import { useDispatch } from "react-redux";
 import { logout } from "@/store/Reducers/authReducer";
 import { useLogoutMutation } from "@/store/apiSlices/authApiSlice";
-
-function DashboardConditionalMenu() {
+import CustomButton from "@/components/buttons/CustomButton";
+import FlexCol from "@/components/styled/FlexCol";
+interface ISidebar {
+  className?: string
+}
+function Sidebar({className}:ISidebar) {
   const [t] = useTranslation()
   const secondSegment = useSegment(2) ; //console.log(secondSegment)
   const [logOutMutation] = useLogoutMutation()
   const dispatch = useDispatch()
   const handleLogOut = async () =>{
     try{
-      await logOutMutation({}).unwrap(); //console.log("response >>",response)
+      await logOutMutation({}).unwrap()
       dispatch(logout())
-    }catch(error){}
+    }catch(error){
+
+    }
   }
   return (
-    <div className="hidden md:flex flex-col justify-between p-[3%]   h-full bg-[#d4d4d420] text-[#ffffff42]">
-      <div className=" flex flex-col items-center rtl:items-center  ">
-      <Link to={"videos"} replace className="flex justify-between text-nowrap items-center 
+    <div className={` ${className} `}>
+      <FlexCol className="items-center">
+        <Link to={"videos"} replace className="flex justify-between text-nowrap items-center 
         rtl:flex-row-reverse rtl:justify-start rtl:text-end ">
           <h1 className={` ${secondSegment === "videos" ? "text-white font-semibold " : ""}
             c4 transition-all py-[6%] `}>{t("navigators.videos")}</h1>
@@ -31,14 +36,15 @@ function DashboardConditionalMenu() {
             t("navigators.photos")}
           </h1>
         </Link>
-      </div>
+      </FlexCol>
 
-      <div>
-      <IconButton onClick={handleLogOut}  className="border text-nowrap border-white bg-transparent px-[4%] py-[4%] " text={t("logOut")} direction={"right"}>
-      </IconButton>
-      </div>
+      <CustomButton 
+        onClick={handleLogOut} 
+        className="px-3 py-2 rounded-lg border text-nowrap bg-transparent border-white text-white" 
+        text={t("logOut")} direction={"right"}>
+      </CustomButton>
     </div>
   )
 }
 
-export default DashboardConditionalMenu
+export default Sidebar

@@ -14,7 +14,7 @@ const PersistLoginMiddleware = memo(function PersistLoginMiddleware() {
   useEffect(()=>{
     const persistLogin = async () =>{
       try {
-        const response = await persistLoginMutation({}).unwrap();
+        const response = await persistLoginMutation({}).unwrap(); console.log("persist login response >> ",response)
         dispatch(setCredentials(response?.user))
         navigate("/dashboard/videos")
       } catch (error) {

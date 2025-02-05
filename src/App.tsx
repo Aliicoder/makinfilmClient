@@ -11,12 +11,14 @@ import VideosPage from "./pages/public/VideosPage"
 import AboutUsPage from "./pages/public/AboutUsPage"
 import HomePage from "./pages/public/HomePage"
 import EquipmentsPage from "./pages/public/EquipmentsPage"
+import LogInPage from "./pages/public/LogInPage"
+import ChangePasswordPage from "./pages/public/ChangePasswordPage"
+import ResetPasswordPage from "./pages/public/ResetPasswordPage"
 
 
 const PersistLoginMiddleware = lazy(()=>import("@/components/middlewares/PersistLoginMiddleware"))
-const LogInPage = lazy(()=>import("@/pages/public/LogInPage"))
-const DashboardVideosPage = lazy(()=>import("@/pages/private/VideosPages/DashboardVideosPage"))
-const DashboardPhotosPage = lazy(()=>import("@/pages/private/PhotosPages/DashboardPhotosPage"))
+const DashboardVideosPage = lazy(()=>import("@/pages/private/VideosPages/VideosPage"))
+const DashboardPhotosPage = lazy(()=>import("@/pages/private/PhotosPages/PhotosPage"))
 const AddVideoPage = lazy(()=>import("@/pages/private/VideosPages/AddVideoPage"))
 const AddPhotoPage = lazy(()=>import("@/pages/private/PhotosPages/AddPhotoPage"))
 const NotFoundPage = lazy(()=>import("@/pages/public/NotFoundPage"))
@@ -29,9 +31,18 @@ function App() {
   return (
       <Routes  >
         <Route element={<RootLayout/>}>
+          <Route path="/" element={<PublicLayout/>} >  
+            <Route index element={<HomePage/>} />
+            <Route path="aboutUs" element={<AboutUsPage/>} />
+            <Route path="videos" element={<VideosPage/>} />
+            <Route path="photos" element={<PhotosPage/>} />
+            <Route path="equipments" element={<EquipmentsPage/>} />
+          </Route>
           <Route element={<PersistLoginMiddleware/>}>
-              <Route path="/login" element={<LogInPage/>} />
-              <Route element={<ProtectedRoutesMiddleware/>}>
+            <Route path="/login" element={<LogInPage/>} />
+            <Route path="/login/changePassword" element={<ChangePasswordPage/>} />
+            <Route path="/login/resetPassword" element={<ResetPasswordPage/>} />
+            <Route element={<ProtectedRoutesMiddleware/>}>
               <Route path="/dashboard" element={<DashboardLayout/>}>
                 <Route path="videos" element={<VideosLayout/>}>
                   <Route index element={<DashboardVideosPage/>} />
@@ -45,13 +56,6 @@ function App() {
                 </Route>
               </Route>
             </Route>
-          </Route>
-          <Route path="/" element={<PublicLayout/>} >  
-            <Route index element={<HomePage/>} />
-            <Route path="aboutUs" element={<AboutUsPage/>} />
-            <Route path="videos" element={<VideosPage/>} />
-            <Route path="photos" element={<PhotosPage/>} />
-            <Route path="equipments" element={<EquipmentsPage/>} />
           </Route>
           <Route path="*" element={<NotFoundPage/>} />
         </Route>

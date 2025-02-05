@@ -1,15 +1,21 @@
 import { z } from "zod";
 
 export default z.object({
+  videoId:z.string(),
   image: z
-  .any()
-  .refine((file) => file instanceof File && file.type == "image/*", {
-    message: "Only image files are allowed because it enhance the performance of the website.",
+  .instanceof(File,{message:"file is required"})
+  .refine((file) => 
+      file.type === "image/jpg" || 
+      file.type === "image/jpeg" || 
+      file.type === "image/webp" , {
+    message: "unsupported file type",
   }).optional(),
   video: z
-  .any()
-  .refine((file) => file instanceof File  , {
-    message: "Only video files are allowed because it enhance the performance of the website.",
+  .instanceof(File,{message:"file is required"})
+  .refine((file) => 
+    file.type === "video/mp4" || 
+    file.type === "video/webm", {
+    message: "unsupported file type",
   }).optional(),
   arTitle: z.string().min(2, {
     message: "title must be at least 10 characters long.",

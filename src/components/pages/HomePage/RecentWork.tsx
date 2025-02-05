@@ -4,21 +4,18 @@ import { HiPlay } from "react-icons/hi2";
 import { Squircle } from "corner-smoothing"
 import { IVideo } from "@/types/types";
 import { useTranslation } from "react-i18next";
-import { IoCaretBackOutline } from "react-icons/io5";
 import useVideosPagination from "@/hooks/useVideosPagination";
-import IconButton from "@/components/buttons/IconButton";
 import FlexRow from "@/components/styled/FlexRow";
 import Text from "@/components/styled/Text";
 import FlexColContainer from "@/components/styled/FlexColContainer";
 import Grid from "@/components/styled/Grid";
-import Fixed from "@/components/styled/Fixed";
-import FlexCol from "@/components/styled/FlexCol";
 import SquircleBorder from "@/components/borders/SquircleBorder";
 import Frame from "@/components/styled/Frame";
 import Relative from "@/components/styled/Relative";
 import Absolute from "@/components/styled/Absolute";
 import CustomButton from "@/components/buttons/CustomButton";
 import { useNavigate } from "react-router-dom";
+import VideoPlayer from "@/components/conditionals/VideoPlayer";
 
 const RecentWork = memo(function RecentWork() {
   const navigate = useNavigate()
@@ -35,25 +32,7 @@ const RecentWork = memo(function RecentWork() {
           {t("recentWork")}
         </Text>
       </FlexRow>
-      {
-        playVideo &&
-        <Fixed className='top-0 left-0 z-50 w-[100%] h-[100%] bg-black '>
-          <Grid className='relative place-items-center w-lvw h-lvh text-white'>
-            <IconButton onClick={()=>setPlayVideo(undefined)} className='flex items-center c4 absolute top-10 left-10' 
-              text={t("back")}  direction={`${language == "en" ? "left":"right"}`}>
-              <IoCaretBackOutline />
-            </IconButton>
-            <FlexCol>
-              <video controls autoPlay playsInline controlsList="nodownload" preload="metadata" >
-                <source src={playVideo?.video.url} type="video/mp4" />
-                <source src={playVideo?.video.url} type="video/webm" />
-              </video>
-              <Text className='c5 p-[5%] font-semibold'>{playVideo.title[language as "en" | "ar"]}</Text>
-              <Text className='c4 px-[5%]'>{playVideo.description[language as "en" | "ar"]}</Text>
-            </FlexCol>
-          </Grid>
-        </Fixed>
-      }
+      <VideoPlayer playVideo={playVideo} setPlayVideo={setPlayVideo} />
       <Grid
         style={{ direction: language == "ar" ? "ltr" : "ltr"}}
         className="grid-cols-2 my-[6%] md:grid-cols-4">
@@ -129,7 +108,7 @@ const RecentWork = memo(function RecentWork() {
           <FiArrowUpRight />
         </CustomButton>
       </FlexRow>
-     
+      
     </FlexColContainer>
   )
 })

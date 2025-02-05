@@ -1,7 +1,6 @@
 import { useCallback, useState } from 'react'
 import useSetTimeout from '@/hooks/useSetTimeout'
 import Pagination from '@/components/shared/Pagination'
-import { Squircle } from 'corner-smoothing'
 import usePhotosPagination from '@/hooks/usePhotosPagination'
 import { useTranslation } from 'react-i18next'
 import { IPhoto } from '@/types/types'
@@ -13,7 +12,13 @@ import { MdKeyboardArrowUp } from "react-icons/md";
 import PreviewPhoto from '@/components/shared/PreviewPhoto'
 import { useNavigate } from 'react-router-dom'
 import useInitialRendersCounter from '@/hooks/useRendersCount'
-import DashboardPhotosHeader from '@/components/pages/dashboardPhotosPage/DashboardPhotosHeader'
+import FlexCol from '@/components/styled/FlexCol'
+import PhotosHeader from '@/components/pages/dashboardPhotosPage/PhotosHeader'
+import FlexRow from '@/components/styled/FlexRow'
+import Block from '@/components/styled/Block'
+import RelativeFlexCol from '@/components/styled/RelativeFlexCol'
+import SquircleBorder from '@/components/borders/SquircleBorder'
+import Absolute from '@/components/styled/Absolute'
 function DashboardPhotosPage() {
   useInitialRendersCounter("DashboardPhotosPage")
   const [clickedPhotoId, setClickedPhotoId] = useState("")
@@ -42,6 +47,7 @@ function DashboardPhotosPage() {
   }
 
   const handleMenuActionClick = (photo:IPhoto,action:string) =>{
+    console.log("clicked")
     switch(action) {
       case "edit": 
         navigate(`Edit/${photo._id}`,{state:photo})
@@ -56,11 +62,8 @@ function DashboardPhotosPage() {
     setClickedPhotoId("")
   }
   return (
-   <div>
-    <DeletePhotoPortal  photo={photoToBeDeleted} setPhotoToBeDeleted={setPhotoToBeDeleted}  />
-    <DashboardPhotosHeader onSearchChange={handleSearchChange} />
-    <PreviewPhoto previewPhoto={previewPhoto} setPreviewPhoto={setPreviewPhoto} />
-    <div className=' h-full '>
+   <FlexCol>
+    <PhotosHeader onSearchChange={handleSearchChange} />
       <Masonry 
         breakpointCols={{
           default:4,
@@ -71,8 +74,9 @@ function DashboardPhotosPage() {
         className="my-masonry-grid">
         {
           photos && photos.map((photo:IPhoto) =>(
-            <div onClick={()=>setClickedPhotoId(photo._id == clickedPhotoId ? "" : photo._id)}  key={photo._id} className="relative flex flex-col items-center p-[6%] ">
-              <Squircle cornerRadius={16} className="flex flex-col flex-nowrap rounded-[16px]">
+            <RelativeFlexCol onClick={()=>setClickedPhotoId(photo._id == clickedPhotoId ? "" : photo._id)}  
+              key={photo._id} className="p-3 items-center">
+              <SquircleBorder className="flex flex-col flex-nowrap rounded-[16px]">
                 <img className="w-full grayscale group-hover:grayscale-0 transition-all" src={photo.image.url} loading="lazy" alt="" />
                 <IconButton  className='w-full bottom-0 mt-1 p-[6%]' text={t("actions")} direction={'left'}>
                   { 
@@ -83,36 +87,33 @@ function DashboardPhotosPage() {
 
                   }
                 </IconButton>
-              </Squircle> 
-              {
-                  clickedPhotoId == photo._id && 
-                  <div className='absolute  rounded-[16px]  top-full w-full z-50 p-[6%]'>
-                   <Squircle cornerRadius={16} className=' flex flex-col gap-3 bg-[#d4d4d48a]  items-stretch p-[6%]'>
-                      <Squircle cornerRadius={16} 
-                        onClick={()=>handleMenuActionClick(photo,"edit")} 
-                        className='text-center bg-w cursor-pointer p-[6%] bg-zinc-950'>{t("edit")}</Squircle>
-                      <Squircle cornerRadius={16} 
-                        onClick={() =>handleMenuActionClick(photo,"view") }
-                        className='text-center p-[6%] cursor-pointer bg-green-500'>{t("view")}</Squircle>
-                      <Squircle cornerRadius={16} 
-                        onClick={()=>handleMenuActionClick(photo,"delete")}
-                        className=' text-center p-[6%] cursor-pointer bg-red-500' >{t("delete")}</Squircle>
-                   </Squircle>
-                  </div>
-                }
-          </div>
+              </SquircleBorder> 
+              { clickedPhotoId == photo._id && 
+              <Absolute className='z-50 p-6 top-full w-full rounded-lg'>
+                <SquircleBorder className='gap-3 p-6 flex flex-col items-stretch  text-white bg-[#d4d4d420]'>
+                  <SquircleBorder 
+                    onClick={()=>handleMenuActionClick(photo,"edit")} 
+                    className='p-3 text-center cursor-pointer bg-zinc-950'>{t("edit")}</SquircleBorder>
+                  <SquircleBorder
+                    onClick={() =>handleMenuActionClick(photo,"view") }
+                    className='p-3 text-center cursor-pointer bg-green-500'>{t("view")}</SquircleBorder>
+                  <SquircleBorder 
+                    onClick={()=>handleMenuActionClick(photo,"delete")}
+                    className='p-3 text-center cursor-pointer bg-red-500' >{t("delete")}</SquircleBorder>
+                </SquircleBorder>
+              </Absolute>
+              }
+          </RelativeFlexCol>
           ))
         }
       </Masonry>
-      {
-        photos&&photos.length > 8 ?
-        <Pagination className='flex mt-[10%]  justify-center text-white' onLeftClick={scrollTopAndLeft} onRightClick={scrollTopAndRight} counter={counter} />
-        :
-        <></>
-      }
-      <div className="h-[30vh]" />
-    </div>
-  </div>
+      <FlexRow className='justify-center'>
+        <Pagination className='text-white' onLeftClick={scrollTopAndLeft} onRightClick={scrollTopAndRight} counter={counter} />
+      </FlexRow>
+      <Block className="h-[30vh]" />
+      <DeletePhotoPortal  photo={photoToBeDeleted} setPhotoToBeDeleted={setPhotoToBeDeleted}  />
+      <PreviewPhoto previewPhoto={previewPhoto} setPreviewPhoto={setPreviewPhoto} />
+    </FlexCol>
   )
 }
 

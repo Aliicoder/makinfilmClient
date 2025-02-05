@@ -1,6 +1,6 @@
+import Hero from "@/components/pages/HomePage/Hero"
 import useInitialRendersCounter from "@/hooks/useRendersCount"
 import {lazy, memo } from "react"
-const Hero = lazy(()=>import("@/components/pages/HomePage/Hero"))
 const BehindTheSince = lazy(()=>import("@/components/pages/HomePage/BehindTheSince"))
 const RecentWork = lazy(()=>import("@/components/pages/HomePage/RecentWork"))
 const Services = lazy(()=>import("@/components/pages/HomePage/Services"))

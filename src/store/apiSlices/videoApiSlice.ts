@@ -1,6 +1,4 @@
 import { apiSlice } from "@/store/api/apiSlice"
-import { formidable } from "@/utils/functions/formidable"
-
 export const productApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     fetchVideos:builder.query({
@@ -9,29 +7,27 @@ export const productApiSlice = apiSlice.injectEndpoints({
         providesTags:["Videos"]      
     }),
     addVideo:builder.mutation({
-      query:credentials=>{
-        const formData = formidable(credentials);console.log(formData)
+      query:({credentials})=>{
         return{
           url:`/video`,
           method:'POST',
-          body:formData
+          body:credentials
         }
       }  
     }),
     updateVideo:builder.mutation({
-      query:credentials=>{
-        const formData = formidable(credentials.values);console.log(formData)
+      query:({credentials,videoId})=>{
         return{
-          url:`/video/${credentials.videoId}`,
+          url:`/video/${videoId}`,
           method:'PATCH',
-          body:formData
+          body:credentials
         }
       }  
     }),
     deleteVideo:builder.mutation({
-      query:credentials=>{
+      query:({videoId})=>{
         return{
-          url:`/video/${credentials.videoId}`,
+          url:`/video/${videoId}`,
           method:'DELETE',
         }
       }  

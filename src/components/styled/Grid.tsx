@@ -1,11 +1,12 @@
 import { motion, MotionProps } from 'framer-motion';
-import{ HTMLProps } from 'react'
+import{ CSSProperties, HTMLProps } from 'react'
 interface IGrid extends MotionProps, Omit<HTMLProps<HTMLDivElement>, keyof MotionProps> {
   className?: string;
+  style?:CSSProperties
 }
-function Grid({className,children}:IGrid) {
+function Grid({className,style,children}:IGrid) {
   return (
-    <motion.div className={` ${className} grid`}>
+    <motion.div style={style} className={` grid ${className} `}>
       {children}
     </motion.div>
   )

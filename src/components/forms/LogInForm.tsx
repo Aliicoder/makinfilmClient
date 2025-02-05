@@ -6,19 +6,19 @@ import { Input } from "@/components/ui/input"
 import loginValidation from "@/validations/loginValidation";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "@/store/Reducers/authReducer";
-import IconButton from "../buttons/IconButton";
 import { IoLogIn } from "react-icons/io5";
 import { VscEyeClosed } from "react-icons/vsc";
 import { VscEye } from "react-icons/vsc";
-import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
-import LinkButton from "../buttons/LinkButton";
+import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { IoIosArrowRoundBack } from "react-icons/io";
 import useShowInput from "@/hooks/useShowInput";
 import { useLoginMutation } from "@/store/apiSlices/authApiSlice"
-
-const LogInForm = () => {
+import FlexRow from "../styled/FlexRow"
+import CustomButton from "../buttons/CustomButton"
+interface ILoginForm {
+  className?: string
+}
+const LogInForm = ({className}:ILoginForm) => {
   const [t,{language}] = useTranslation()
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -30,27 +30,14 @@ const LogInForm = () => {
       const response = await login(values).unwrap()
       dispatch(setCredentials(response.user))
       navigate("/dashboard/videos")
-    }catch(error){} 
+    }catch(error){
+      console.log("login error",error)
+    } 
   }
-  return ( 
-   <div 
-    className="relative flex justify-center items-center  h-lvh bg-black ">
-      <LinkButton className="text-white absolute top-6 left-6 font-semibold gap-2" to={"/"} text={t("navigators.home")} direction={"left"}>
-       <IoIosArrowRoundBack />
-      </LinkButton>
-      <Form {...form}>
-      <motion.form
-          initial={{
-            x:"100vw"
-          }} 
-          animate={{
-            x:0,
-          }}
-          exit={{
-            x:"100vw"
-          }}
-       className={`   
-        relative space-8  p-5 rounded-sm text-white  bg-[#d4d4d420] `} 
+  return (
+    <Form {...form}>
+      <form
+       className={` ${className} `} 
        onSubmit={form.handleSubmit(onSubmit)} >
         <FormField
           control={form.control}
@@ -97,22 +84,27 @@ const LogInForm = () => {
                 </div>
               </FormControl>
               <FormDescription className="text-white">
-                {t("loginForm.note")}? <span className="underline cursor-pointer">{t("loginForm.link")}</span>
+                {t("loginForm.note")}? <Link to={"resetPassword"} className="underline cursor-pointer">{t("loginForm.link")}</Link>
               </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
        
-        <div className="flex justify-end cp-24 mt-[6%] rtl:justify-start">
-          <IconButton className="border mt-[10%] rtl:flex-row-reverse" {...( isLoading == true ? dispatch: null)} text={t("loginForm.login")} direction={"right"}>
+        <FlexRow className="mt-6 justify-end  
+          rtl:justify-start">
+          <CustomButton 
+            className="px-3 py-2 flex items-center rounded-md border  
+            rtl:flex-row-reverse" 
+            {...( isLoading == true ? dispatch: null)} 
+            text={t("loginForm.login")} 
+            direction={"right"}>
             <IoLogIn />
-          </IconButton>
-        </div>
+          </CustomButton>
+        </FlexRow>
        
-      </motion.form>
+      </form>
     </Form>
-   </div>
    );
 }
  

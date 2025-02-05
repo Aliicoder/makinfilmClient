@@ -2,9 +2,7 @@ import { Outlet } from 'react-router-dom'
 
 function VideosLayout() {
   return (
-    <>
-      <Outlet />
-    </>
+    <Outlet />
   )
 }
 

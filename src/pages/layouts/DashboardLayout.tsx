@@ -1,18 +1,21 @@
 import { Outlet } from "react-router-dom"
 
 import useInitialRendersCounter from "@/hooks/useRendersCount"
-import DashboardHeader from "@/components/shared/DashBoardHeader"
-import DashboardConditionalMenu from "@/components/shared/DashboardConditionalMenu"
+import FlexRowContainer from "@/components/styled/FlexRowContainer"
+import Frame from "@/components/styled/Frame"
+import Header from "@/components/shared/dashboard/Header"
+import Sidebar from "@/components/shared/dashboard/Sidebar"
 function DashboardLayout() { 
   useInitialRendersCounter("dashboardLayout")
   return (
-    <div className="container mx-auto flex h-lvh bg-black text-white overflow-hidden rtl:flex-row-reverse ">
-      <div className="grow relative overflow-y-scroll scroll-bar">
-        <DashboardHeader />
+    <FlexRowContainer className="h-lvh rtl:flex-row-reverse text-white">
+      <Frame className=" grow overflow-y-scroll hide-scrollbar
+        md:p-10">
+        <Header/>
         <Outlet />
-      </div>
-      <DashboardConditionalMenu />
-    </div>
+      </Frame>
+      <Sidebar className="hidden md:flex flex-col justify-between p-[3%]   h-full bg-[#d4d4d420] text-[#ffffff42]"/>
+    </FlexRowContainer>
   
   )
 }

@@ -65,6 +65,7 @@
   "loginForm":{
     "email":"Email",
     "password":"Password",
+    "confirmPassword": "confirm password",
     "note":"forgot your password",
     "link":"change password",
     "login":"login"
@@ -88,5 +89,15 @@
   "copyFail":"failed to copy the link",
   "footer": {
     "text": "© 2024 Stunning Portfolio Co. All rights reserved."
-  }
+  },
+  "reset": {
+    "success": "A reset URL has been sent to your email",
+    "error": "error sending the reset link make sure you typed the correct email.",
+    "description": "You will receive a link via email that allows you to reset your password."
+  },
+  "changePassword": {
+    "success": "Your password changed successfully",
+    "error": "Error changing password. Please try again later."
+  },
+  "continue": "Continue"
 }

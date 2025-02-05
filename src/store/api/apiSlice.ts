@@ -6,7 +6,7 @@ import { HttpStatus } from "@/constants/enum/enum";
 import { AuthResponse } from "@/types/types";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'https://makinfilmserver.site/api/v1',
+  baseUrl: 'http://localhost:3000/api/v1',
   credentials: 'include',
   prepareHeaders: (headers, { getState }) => {
     const state = getState() as RootState;
@@ -18,28 +18,21 @@ const baseQuery = fetchBaseQuery({
 });
 
 const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
-  let response:any = await baseQuery(args, api, extraOptions); 
-  
+  let response:any = await baseQuery(args, api, extraOptions);
+    console.log("response object :",response)
   switch (response?.error?.originalStatus || response?.error?.status) {
 
     case HttpStatus.INTERNAL_SERVER_ERROR:
       if (import.meta.env.ENV === "development") 
         console.error("500 status error", response)
       toast.error("Something went wrong. Please try again later.");
-      break;
-
-    case HttpStatus.BAD_REQUEST:
-      if (import.meta.env.ENV === "development") 
-        console.error("400 status error >>", response?.error);
-      
-      toast.error(response?.error?.data?.message || "Bad request.");
-      break;
+      break
 
     case HttpStatus.FORBIDDEN:
       if (import.meta.env.ENV === "development") 
         console.log("403 status error >>", response?.error);
 
-      const refreshResult = await baseQuery('/refresh/client', api, extraOptions);
+      const refreshResult = await baseQuery('/refresh', api, extraOptions);
       if (refreshResult.data) {
         const { user } = refreshResult.data as AuthResponse;
         if (user) {
@@ -57,10 +50,6 @@ const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
       toast.error("Unauthorized access. Please log in.")
       api.dispatch(logout());
       break;
-
-    default:
-      console.log("Success response:", response.data)
-      // toast.success(response.data.message)
   }
   return response; 
 };

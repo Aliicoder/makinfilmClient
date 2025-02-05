@@ -12,12 +12,22 @@ const Hero = () => {
   const refButton = useRef<HTMLButtonElement>(null)
   const navigate = useNavigate()
   const [t] = useTranslation()
+
+  const contactOnWhatsApp = () => {
+    const phoneNumber = "+966533899206"
+    // const message = encodeURIComponent("Hello, I’d like to get in touch!")
+    // const whatsappURL = `https://wa.me/${phoneNumber}?text=${message}`
+    const whatsappURL = `https://wa.me/${phoneNumber}`
+    window.open(whatsappURL, "_blank");
+  };
+
   useEffect(()=>{
     if(refButton.current){
       let width = refButton.current.clientWidth ; console.log("width: ",width)
       document.documentElement.style.setProperty('--button-width', `${width}px`)
     }
   },[])
+  
   return (
     <RelativeFlexColContainer
       initial={{ opacity: 0, scale:0.5 }}
@@ -42,6 +52,7 @@ const Hero = () => {
               <FiArrowUpRight />
             </CustomButton>
             <CustomButton 
+              onClick={contactOnWhatsApp}
               style={{ width: "var(--button-width)"}}
               className=" gap-2 p-3 py-2  border-white rounded-md border">
               {t("contactButton")}
