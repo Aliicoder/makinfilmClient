@@ -15,6 +15,7 @@ import useShowInput from "@/hooks/useShowInput";
 import { useLoginMutation } from "@/store/apiSlices/authApiSlice"
 import FlexRow from "../styled/FlexRow"
 import CustomButton from "../buttons/CustomButton"
+import toast from "react-hot-toast"
 interface ILoginForm {
   className?: string
 }
@@ -30,8 +31,9 @@ const LogInForm = ({className}:ILoginForm) => {
       const response = await login(values).unwrap()
       dispatch(setCredentials(response.user))
       navigate("/dashboard/videos")
-    }catch(error){
-      console.log("login error",error)
+    }catch(error:any){
+      console.log(error)
+      toast.error(error.data.message ?? "something went wrong , try again later")
     } 
   }
   return (

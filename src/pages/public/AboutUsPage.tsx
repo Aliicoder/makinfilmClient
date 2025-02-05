@@ -18,8 +18,8 @@ function AboutUsPage() { useInitialRendersCounter("AboutUsPage")
       }}}
       className="container text-white mx-auto">
       <Flex className="p-10 justify-center">
-        <Text className="w-3/4 font-semibold text-center text-balance
-          md:fs-31">
+        <Text className="w-full font-semibold text-center text-balance
+          md:fs-31 md:w-3/4">
           {t("aboutMakin")}
         </Text>
       </Flex>

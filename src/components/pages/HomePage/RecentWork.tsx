@@ -56,11 +56,11 @@ const RecentWork = memo(function RecentWork() {
               <Relative className="relative z-40">
                 <HiPlay className="opacity-0" />
                 <Absolute className="p-2 top-0 right-0 | flex justify-center items-center -translate-y-1/2
-                    bg-white rounded-full ">
+                    bg-white rounded-full rtl:right-auto rtl:left-0 ">
                   <HiPlay className=" z m-[6%]]" />
                 </Absolute>
               </Relative>
-              <Text className="fs-20 text-white font-bold 
+              <Text className="fs-20 text-white font-bold line-clamp-1
                   rtl:text-end">
                 {video.title[language as "ar" | "en"]}
               </Text>

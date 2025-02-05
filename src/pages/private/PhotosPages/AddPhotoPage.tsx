@@ -43,7 +43,7 @@ const AddPhotoPage = memo(function AddVideoPage() {
       toast.success(response.message)
       form.reset({})
     } catch (error:any) {
-      toast.error(error.message || "something went wrong , try again later")
+      toast.error(error?.data?.message ?? "try again later")
     }
   }
   return (

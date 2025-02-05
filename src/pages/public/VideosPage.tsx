@@ -61,8 +61,8 @@ const VideosPage = memo(function VideosPage() { useInitialRendersCounter("Videos
               <Relative className="relative z-40">
                 <HiPlay className="opacity-0" />
                 <Absolute className="p-2 top-0 right-0 | flex justify-center items-center -translate-y-1/2
-                    bg-white rounded-full ">
-                  <HiPlay className=" z m-[6%]]" />
+                    bg-white rounded-full rtl:right-auto rtl:left-0">
+                  <HiPlay/>
                 </Absolute>
               </Relative>
               <Text className="fs-20 text-white font-bold 
